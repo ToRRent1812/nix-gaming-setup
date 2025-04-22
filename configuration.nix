@@ -24,8 +24,6 @@ in
     ];
   };
 
-  nixpkgs.config.
-
   # Automatyczne czyszczenie garbo
   nix.gc = {
     automatic = true;
@@ -54,7 +52,6 @@ in
   programs.cdemu.group = "wheel";
 
   networking.hostName = "nixos"; # Nazwa hosta
-  # networking.wireless.enable = true;  # WIFI
 
   # Proxy
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -62,6 +59,13 @@ in
 
   # Włącz internet
   networking.networkmanager.enable = true;
+  networking.wireless.enable = false;  # WIFI
+
+  # Optymalizacja RAM
+  zramSwap = {
+    enable = true;
+    algorithm = "lz4";
+  };
 
   # Strefa czasowa
   time.timeZone = "Europe/Warsaw";
@@ -151,7 +155,6 @@ in
   # Włącz wsparcie Flatpak, portal XDG oraz dodaj Flathub
   services.flatpak.enable = true;
   fonts.fontDir.enable = true;
-  xdg.portal.enable = true;
   systemd.services.flatpak-repo = {
     wantedBy = [ "multi-user.target" ];
     path = [ pkgs.flatpak ];
@@ -159,6 +162,10 @@ in
       flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo && flatpak --user override --filesystem=host
     '';
   };
+
+  # XDG
+  xdg.portal.xdgOpenUsePortal = true;
+  xdg.portal.enable = true;
 
   # Włącz wsparcie Appimage
   programs.appimage.enable = true;
@@ -179,15 +186,18 @@ in
   onlyoffice-desktopeditors # Pakiet biurowy
   upscaler          # Upscale zdjęć
   qbittorrent       # Torrenty czasem się przydają
-  rustdesk          # Zdalny pulpit
+  unstable.rustdesk-flutter # Zdalny pulpit
   teamspeak3        # TS3
   qdirstat          # Analiza danych
   # KDE Plazma
+  kdePackages.flatpak-kcm # Uprawnienia flatpak KDE
+  kdePackages.discover # Odkrywca
   kdePackages.kdenlive # Do montażu
   avidemux          # Przycinanie filmów
   haruna            # Oglądanie filmów
   # Gaming tools
   mangohud          # FPSY, temperatury
+  gamescope
   unstable.protonup-qt # Najnowszy protonup-qt
   unstable.wineWowPackages.staging # Wine-staging
   unstable.winetricks # Najnowszy winetricks
