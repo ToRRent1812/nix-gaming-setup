@@ -9,6 +9,7 @@ in
   imports =
     [ # Inne configi
       ./hardware-configuration.nix
+      ./zerotier.nix
     ];
 
   # Dodaj opcjonalne repo Bleeding Edge. By zainstalować program, przed nazwą dopisz unstable.
@@ -44,6 +45,7 @@ in
 
   # Włącz wsparcie płyt
   programs.cdemu.enable = true;
+  programs.cdemu.gui = true;
   programs.cdemu.group = "wheel";
 
   networking.hostName = "nixos"; # Nazwa hosta
@@ -150,8 +152,6 @@ in
   gitkraken
   zsh
   oh-my-zsh
-  cdemu-daemon
-  cdemu-client
   adwaita-icon-theme
   distrobox # Żeby mieć Faugus launcher
   onlyoffice-desktopeditors
@@ -201,7 +201,6 @@ in
     package = pkgs.gitFull;
     #config.credential.helper = "libsecret";
   };
-
 
   programs.zsh = {
   enable = true; # Włącz zsh
