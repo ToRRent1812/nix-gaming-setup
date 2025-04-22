@@ -19,7 +19,12 @@ in
         config = config.nixpkgs.config;
       };
     };
+    permittedInsecurePackages = [
+      "openssl-1.1.1w"
+    ];
   };
+
+  nixpkgs.config.
 
   # Automatyczne czyszczenie garbo
   nix.gc = {
@@ -143,40 +148,77 @@ in
   # Programy nie-wolnościowe
   nixpkgs.config.allowUnfree = true;
 
+  # Włącz wsparcie Flatpak, portal XDG oraz dodaj Flathub
+  services.flatpak.enable = true;
+  fonts.fontDir.enable = true;
+  xdg.portal.enable = true;
+  systemd.services.flatpak-repo = {
+    wantedBy = [ "multi-user.target" ];
+    path = [ pkgs.flatpak ];
+    script = ''
+      flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo && flatpak --user override --filesystem=host
+    '';
+  };
+
+  # Włącz wsparcie Appimage
+  programs.appimage.enable = true;
+
   # Programy zainstalowane dla wszystkich użytkowników
   environment.systemPackages = with pkgs; [
   # System
-  floorp
-  kitty
-  gitFull
-  gitkraken
-  zsh
-  oh-my-zsh
-  adwaita-icon-theme
-  distrobox # Żeby mieć Faugus launcher
-  onlyoffice-desktopeditors
-  upscaler
+  ffmpeg-full       # Kodeki multimedialne
+  floorp            # Przeglądarka moja
+  kitty             # Ulubiony terminal
+  gitFull           # Pełny git
+  gitkraken         # GUI dla git
+  sublime4          # Najlepszy edytor tekstu
+  zsh               # Lepszy shell konsoli
+  oh-my-zsh         # Upiększanie zsh
+  adwaita-icon-theme # Ikony dla aplikacji GTK4
+  distrobox         # Żeby mieć Faugus launcher
+  onlyoffice-desktopeditors # Pakiet biurowy
+  upscaler          # Upscale zdjęć
+  qbittorrent       # Torrenty czasem się przydają
+  rustdesk          # Zdalny pulpit
+  teamspeak3        # TS3
+  qdirstat          # Analiza danych
   # KDE Plazma
-  kdePackages.kdenlive
+  kdePackages.kdenlive # Do montażu
+  avidemux          # Przycinanie filmów
+  haruna            # Oglądanie filmów
   # Gaming tools
-  mangohud
-  unstable.protonup-qt
+  mangohud          # FPSY, temperatury
+  unstable.protonup-qt # Najnowszy protonup-qt
   unstable.wineWowPackages.staging # Wine-staging
-  winetricks
-  unstable.umu-launcher
-  unstable.lutris
+  unstable.winetricks # Najnowszy winetricks
+  unstable.umu-launcher # środowisko UMU do gier spoza steam
+  unstable.lutris   # Najnowszy lutris
+  adwsteamgtk       # Upiększ steam
   # Twitch/Youtube
-  cameractrls
-  chatterino2
-  obs-studio
+  cameractrls       # Zarządzanie kamerą
+  chatterino2       # Czytam chat
+  audacious         # Muzyka
+  audacious-plugins # Pluginy
+  easyeffects       # Efekty mikrofonu
+  scrcpy            # Przechwyć wideo z telefonu
+  sqlitebrowser     # Przeglądaj bazę sqlite
+  (pkgs.wrapOBS { # Obs-studio z wtyczkami
+    plugins = with pkgs.obs-studio-plugins; [
+      waveform
+      obs-vkcapture
+      obs-tuna
+      obs-text-pthread
+      obs-pipewire-audio-capture
+    ];
+  })
   # Gry
   unstable.vcmi
   fheroes2
   # Komunikacja
   discord
   (discord.override { withOpenASAR = true; withVencord = true; })
-  discord-rpc # Rich presence
-  caprine
+  discord-rpc       # Rich presence
+  caprine           # Messenger
   ];
 
   # Włącz keyring dla github-desktop
@@ -186,10 +228,14 @@ in
   # Włącz Steam
   programs.steam = {
     enable = true;
+    protontricks.enable = true; # Włącz wsparcie protontricks
     remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
     dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
     localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
   };
+
+  # Włącz obs-studio
+  programs.obs-studio.enable = true;
 
   # Włącz java
   programs.java.enable = true;
