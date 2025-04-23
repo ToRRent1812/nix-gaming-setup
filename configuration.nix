@@ -12,11 +12,14 @@ in
       ./zerotier.nix
     ];
 
-  # Dodaj opcjonalne repo Bleeding Edge. By zainstalować program, przed nazwą dopisz unstable.
+  # Dodaj opcjonalne repo Bleeding Edge oraz Nix User Repo. By zainstalować program, przed nazwą dopisz unstable. lub nur.repos.
   nixpkgs.config = {
     packageOverrides = pkgs: {
       unstable = import unstableTarball {
         config = config.nixpkgs.config;
+      };
+      nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/main.tar.gz") {
+        inherit pkgs;
       };
     };
     permittedInsecurePackages = [ # Któryś program, chyba rustdesk tego wymaga
@@ -196,6 +199,8 @@ in
   kdePackages.kdenlive # Do montażu
   avidemux          # Przycinanie filmów
   haruna            # Oglądanie filmów
+  nur.repos.shadowrz.klassy-qt6 # Motyw Klassy
+  flat-remix-icon-theme # Pakiet ikon
   # Gaming tools
   mangohud          # FPSY, temperatury
   gamescope
