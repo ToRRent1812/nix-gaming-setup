@@ -19,7 +19,7 @@ in
         config = config.nixpkgs.config;
       };
     };
-    permittedInsecurePackages = [
+    permittedInsecurePackages = [ # Któryś program, chyba rustdesk tego wymaga
       "openssl-1.1.1w"
     ];
   };
@@ -137,7 +137,7 @@ in
   users.users.rabbit = {
     isNormalUser = true;
     description = "Rabbit";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
     #packages = with pkgs; [ # Programy tylko dla użytkownika
     #  kdePackages.kate
     #];
@@ -183,6 +183,7 @@ in
   oh-my-zsh         # Upiększanie zsh
   adwaita-icon-theme # Ikony dla aplikacji GTK4
   distrobox         # Żeby mieć Faugus launcher
+  boxbuddy          # GUI dla distrobox
   onlyoffice-desktopeditors # Pakiet biurowy
   upscaler          # Upscale zdjęć
   qbittorrent       # Torrenty czasem się przydają
@@ -265,7 +266,7 @@ in
   syntaxHighlighting.enable = true;
   enableLsColors = true;
   shellAliases = {
-    update-config = "sudo nixos-rebuild";
+    config = "sudo cp configuration.nix hardware-configuration.nix zerotier.nix /etc/nixos/ && sudo nixos-rebuild";
     upd = "sudo nixos-rebuild switch --upgrade";
     refresh = "sudo nix-channel --update";
     };
@@ -283,6 +284,9 @@ in
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   networking.firewall.enable = false;
+
+  # Włącz Docker dla Distrobox
+  virtualisation.docker.enable = true;
 
   # Wersja na której zainstalowałeś system
   # (man configuration.nix or on https://nixos.org/nixos/options.html).
