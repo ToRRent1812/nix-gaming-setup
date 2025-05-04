@@ -42,12 +42,11 @@ in
 
   # Jądro systemu i jego moduły
   boot.kernelPackages = pkgs.linuxPackages_zen;
-  boot.extraModulePackages = with config.boot.kernelPackages; [ xpadneo xone vhba v4l2loopback ];
+  boot.extraModulePackages = with config.boot.kernelPackages; [ xpadneo xone vhba ];
 
-  # Aktywacja sterowników
+  # Aktywacja sterowników do padów
   hardware.xpadneo.enable = true; # Włącz sterownik do xpadów
   hardware.xone.enable = true; # Włącz sterownik xone
-  programs.obs-studio.enableVirtualCamera = true; # Włącz wirtualną kamerę dla obs-studio
 
   # Włącz wsparcie płyt
   programs.cdemu.enable = true;
@@ -72,6 +71,7 @@ in
 
   # Strefa czasowa
   time.timeZone = "Europe/Warsaw";
+  time.hardwareClockInLocalTime = true;
 
   # Język
   i18n.defaultLocale = "pl_PL.UTF-8";
@@ -179,14 +179,12 @@ in
   ffmpeg-full       # Kodeki multimedialne
   floorp            # Przeglądarka moja
   kitty             # Ulubiony terminal
-  gitFull           # Pełny git
   gitkraken         # GUI dla git
   sublime4          # Najlepszy edytor tekstu
-  zsh               # Lepszy shell konsoli
-  oh-my-zsh         # Upiększanie zsh
   adwaita-icon-theme # Ikony dla aplikacji GTK4
-  distrobox         # Żeby mieć Faugus launcher
-  boxbuddy          # GUI dla distrobox
+  #distrobox         # Żeby mieć Faugus launcher
+  #boxbuddy          # GUI dla distrobox
+  hugo              # Strona internetowa
   onlyoffice-desktopeditors # Pakiet biurowy
   upscaler          # Upscale zdjęć
   qbittorrent       # Torrenty czasem się przydają
@@ -200,15 +198,15 @@ in
   avidemux          # Przycinanie filmów
   haruna            # Oglądanie filmów
   nur.repos.shadowrz.klassy-qt6 # Motyw Klassy
-  flat-remix-icon-theme # Pakiet ikon
+  papirus-icon-theme # Pakiet ikon
   # Gaming tools
   mangohud          # FPSY, temperatury
-  gamescope
   unstable.protonup-qt # Najnowszy protonup-qt
   unstable.wineWowPackages.staging # Wine-staging
   unstable.winetricks # Najnowszy winetricks
   unstable.umu-launcher # środowisko UMU do gier spoza steam
   unstable.lutris   # Najnowszy lutris
+  unstable.heroic   # Najnowszy Heroic Games Launcher
   adwsteamgtk       # Upiększ steam
   # Twitch/Youtube
   cameractrls       # Zarządzanie kamerą
@@ -218,20 +216,10 @@ in
   easyeffects       # Efekty mikrofonu
   scrcpy            # Przechwyć wideo z telefonu
   sqlitebrowser     # Przeglądaj bazę sqlite
-  (pkgs.wrapOBS { # Obs-studio z wtyczkami
-    plugins = with pkgs.obs-studio-plugins; [
-      waveform
-      obs-vkcapture
-      obs-tuna
-      obs-text-pthread
-      obs-pipewire-audio-capture
-    ];
-  })
   # Gry
   unstable.vcmi
   fheroes2
   # Komunikacja
-  discord
   (discord.override { withOpenASAR = true; withVencord = true; })
   discord-rpc       # Rich presence
   caprine           # Messenger
@@ -250,8 +238,18 @@ in
     localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
   };
 
+  # Włącz Gamescope
+  programs.gamescope = {
+    enable = true;
+    capSysNice = true;
+  };
+
   # Włącz obs-studio
-  programs.obs-studio.enable = true;
+  programs.obs-studio = {
+    enable = true;
+    enableVirtualCamera = true;
+    plugins = with pkgs.obs-studio-plugins; [ waveform obs-vkcapture obs-tuna obs-text-pthread obs-pipewire-audio-capture ];
+  };
 
   # Włącz java
   programs.java.enable = true;
@@ -264,6 +262,9 @@ in
     #config.credential.helper = "libsecret";
   };
 
+  # Włącz npm dla hugo
+  programs.npm.enable = true;
+
   programs.zsh = {
   enable = true; # Włącz zsh
   enableCompletion = true;
@@ -271,9 +272,9 @@ in
   syntaxHighlighting.enable = true;
   enableLsColors = true;
   shellAliases = {
-    config = "sudo cp configuration.nix hardware-configuration.nix zerotier.nix /etc/nixos/ && sudo nixos-rebuild";
-    upd = "sudo nixos-rebuild switch --upgrade";
-    refresh = "sudo nix-channel --update";
+    apply-config = "cd /home/rabbit/github/nix/nix-gaming-setup/ && sudo cp configuration.nix hardware-configuration.nix zerotier.nix /etc/nixos/ && sudo nixos-rebuild boot";
+    system-update = "sudo nix-channel --update && sudo nixos-rebuild switch --upgrade";
+    repo-refresh = "sudo nix-channel --update";
     };
   histSize = 3000;
   ohMyZsh = { # Włącz i ustaw oh-my-zsh
@@ -291,7 +292,7 @@ in
   networking.firewall.enable = false;
 
   # Włącz Docker dla Distrobox
-  virtualisation.docker.enable = true;
+  #virtualisation.docker.enable = true;
 
   # Wersja na której zainstalowałeś system
   # (man configuration.nix or on https://nixos.org/nixos/options.html).
