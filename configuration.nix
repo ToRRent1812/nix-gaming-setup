@@ -106,6 +106,7 @@ in
     networkmanager.enable = true; # Włącz internet
     wireless.enable = false;  # Włącz WIFI
     firewall.enable = false; # Zapora sieciowa
+    nameservers = [ "1.1.1.1" "1.0.0.1" ]; # Cloudflare DNS
   };
 
   # Strefa czasowa
@@ -139,8 +140,11 @@ in
 
     displayManager = {
       sddm.enable = true; # Plasma login manager
+      sddm.wayland.enable = true; # Włącz SDDM w trybie Wayland
       autoLogin.user = "rabbit";
       autoLogin.enable = true;
+      defaultSession = "plasma"; # Plasma-wayland jako default
+
     };
     desktopManager.plasma6.enable = true; # Plasma 6
 
@@ -171,14 +175,12 @@ in
             pulse.max.quantum = "32/48000";
           };
         }
-      ];
-      stream.properties = {
-        node.latency = "32/48000";
-        resample.quality = 1;
+        ];
+        stream.properties = {
+          node.latency = "32/48000";
+          resample.quality = 1;
+        };
       };
-    };
-};
-
     };
 
     libinput.enable = false; # Wsparcie touchpadów
@@ -280,14 +282,11 @@ in
     };
 
     firefox.enable = false; # Wyłącz Instalację Firefox
-
     appimage.enable = true; # Włącz wsparcie AppImage
-
     java.enable = true; # Włącz wsparcie java
-
     npm.enable = true; # Włącz wsparcie npm dla Hugo
-
     virt-manager.enable = true; # Dodaj virt manager
+    dconf.enable = true;
 
     zsh = {
       enable = true; # Włącz zsh w konsoli
