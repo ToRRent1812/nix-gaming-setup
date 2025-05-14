@@ -86,6 +86,13 @@ in
     #nvidiaSettings = true;
   #};
 
+  # Profil zasilania CPU
+  powerManagement = {
+        enable = true;
+        powertop.enable = true;
+        cpuFreqGovernor = "performance"; #power, performance, ondemand
+  };
+
   # Aktywuj wirtualizację dla virt managera
   virtualisation = {
     libvirtd.enable = true;
