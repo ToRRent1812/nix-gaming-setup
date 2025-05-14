@@ -14,6 +14,7 @@ in
 
   # Dodaj opcjonalne repo Bleeding Edge oraz Nix User Repo. By zainstalować program, przed nazwą dopisz unstable. lub nur.repos.
   nixpkgs.config = {
+    allowUnfree = true; # Programy nie-wolnościowe
     packageOverrides = pkgs: {
       unstable = import unstableTarball {
         config = config.nixpkgs.config;
@@ -27,41 +28,29 @@ in
     ];
   };
 
-  # Automatyczne czyszczenie garbo
-  nix.gc = {
-    automatic = true;
-    dates = "daily";
-    options = "--delete-older-than 14d";
+  # Automatyczne czyszczenie staroci
+  nix = {
+    gc = {
+      automatic = true;
+      dates = "daily";
+      options = "--delete-older-than 14d";
+    };
+    settings = {
+      auto-optimise-store = true;
+      experimental-feautres = [ "nix-command" ];
+    };
   };
-  nix.settings.auto-optimise-store = true;
 
-  # Bootloader.
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/vda";
-  boot.loader.grub.useOSProber = true;
-
-  # Jądro systemu i jego moduły
-  boot.kernelPackages = pkgs.linuxPackages_zen;
-  boot.extraModulePackages = with config.boot.kernelPackages; [ xpadneo xone vhba ];
-
-  # Aktywacja sterowników do padów
-  hardware.xpadneo.enable = true; # Włącz sterownik do xpadów
-  hardware.xone.enable = true; # Włącz sterownik xone
-
-  # Włącz wsparcie płyt
-  programs.cdemu.enable = true;
-  programs.cdemu.gui = true;
-  programs.cdemu.group = "wheel";
-
-  networking.hostName = "nixos"; # Nazwa hosta
-
-  # Proxy
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Włącz internet
-  networking.networkmanager.enable = true;
-  networking.wireless.enable = false;  # WIFI
+  # Bootloader
+  boot = {
+    loader.grub = {
+      enable = true;
+      device = "/dev/vda";
+      useOSProber = true; # Dodaj Windows do bootloadera
+    };
+    kernelPackages = pkgs.linuxPackages_zen; # Jądro systemu zen dla graczy
+    extraModulePackages = with config.boot.kernelPackages; [ vhba ]; # Dodatkowe moduły/sterowniki jądra których nie ma niżej
+  };
 
   # Optymalizacja RAM
   zramSwap = {
@@ -69,13 +58,57 @@ in
     algorithm = "lz4";
   };
 
+    # Zmienne środowiskowe
+  environment.sessionVariables = {
+    EDITOR = "nano";
+    GTK_USE_PORTAL = 1;
+    OBS_VKCAPTURE_QUIET = 1;
+  };
+
+  # Sprzęt
+  hardware = {
+    xpadneo.enable = true; # Włącz sterownik xinput
+    #xone.enable = true; # Włącz wsparcie xboxowego dongla usb
+    pulseaudio.enable = false; # Pulseaudio
+
+    graphics = {
+        enable = true; # Aktywuj akcelerację w aplikacjach 64 bitowych
+        enable32Bit = true; # Aktywuj akcelerację w aplikacjach 32 bitowych
+    };
+  };
+
+    # Nvidia
+  #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta; // Kanał Beta/New-Feature
+  #services.xserver.videoDrivers = ["nvidia"];
+  #hardware.nvidia = {
+    #modesetting.enable = true;
+    #open = true;
+    #nvidiaSettings = true;
+  #};
+
+  # Aktywuj wirtualizację dla virt managera
+  virtualisation = {
+    libvirtd.enable = true;
+    spiceUSBRedirection.enable = true;
+    docker.enable = false;
+  };
+
+  # Ustawienia sieciowe
+  networking = {
+    hostName = "nixos"; # Nazwa hosta
+    networkmanager.enable = true; # Włącz internet
+    wireless.enable = false;  # Włącz WIFI
+    firewall.enable = false; # Zapora sieciowa
+  };
+
   # Strefa czasowa
-  time.timeZone = "Europe/Warsaw";
-  time.hardwareClockInLocalTime = true;
+  time = {
+    timeZone = "Europe/Warsaw";
+    hardwareClockInLocalTime = true;
+  };
 
   # Język
   i18n.defaultLocale = "pl_PL.UTF-8";
-
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "pl_PL.UTF-8";
     LC_IDENTIFICATION = "pl_PL.UTF-8";
@@ -88,72 +121,49 @@ in
     LC_TIME = "pl_PL.UTF-8";
   };
 
-  # Włącz X11. Wyłącz by zostawić tylko Wayland
-  services.xserver.enable = false;
+  # Usługi
+  services = {
+    xserver.enable = false; # Włącz X11. Wyłącz by zostawić tylko Wayland
 
-  # KDE Plazma
-  services.displayManager.sddm.enable = true; # login manager
-  services.desktopManager.plasma6.enable = true; # Plasma6
-
-  # Klawiatura w X11
-  services.xserver.xkb = {
-    layout = "pl";
-    variant = "";
-  };
-  console.keyMap = "pl2";
-
-  # Wsparcie drukarek
-  services.printing.enable = false;
-
-  # Pipewire
-  hardware.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = false;
-  };
-
-  # Grafika
-  hardware = {
-    graphics = {
-        enable = true;
-        enable32Bit = true;
+    xserver.xkb = { # Polska klawiatura
+      layout = "pl";
+      variant = "";
     };
+
+    displayManager = {
+      sddm.enable = true; # Plasma login manager
+      autoLogin.user = "rabbit";
+      autoLogin.enable = true;
+    };
+    desktopManager.plasma6.enable = true; # Plasma 6
+
+    printing.enable = false; # Wsparcie drukarek
+
+    pipewire = { # Włącz pipewire
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = false; # Emulacja Pulseaudio
+    };
+
+    libinput.enable = false; # Wsparcie touchpadów
   };
+  console.keyMap = "pl2"; # Polska klawiatura
 
-  # Nvidia
-  # hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta; // Kanał Beta/New-Feature
-  #services.xserver.videoDrivers = ["nvidia"];
-  #hardware.nvidia = {
-    #modesetting.enable = true;
-    #open = false;
-    #nvidiaSettings = true;
-  #};
-
-
-  # Touchpad
-  # services.xserver.libinput.enable = true;
+  # Zezwól na audio w priorytecie realtime
+  security.rtkit.enable = true;
 
   # Konto użytkownika.
   users.users.rabbit = {
     isNormalUser = true;
-    description = "Rabbit";
+    description = "rabbit";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     #packages = with pkgs; [ # Programy tylko dla użytkownika
     #  kdePackages.kate
     #];
   };
-  # Automatyczne logowanie
-  services.displayManager.autoLogin.enable = true;
-  services.displayManager.autoLogin.user = "rabbit";
-
-  # Firefox
-  programs.firefox.enable = false;
-
-  # Programy nie-wolnościowe
-  nixpkgs.config.allowUnfree = true;
+  users.defaultUserShell = pkgs.zsh; # Ustaw zsh domyślnie dla wszystkich
+  users.groups.libvirtd.members = ["rabbit"]; # Dodaj mnie do wirtualizacji
 
   # Włącz wsparcie Flatpak, portal XDG oraz dodaj Flathub
   services.flatpak.enable = true;
@@ -166,14 +176,13 @@ in
     '';
   };
 
-  # XDG
-  xdg.portal.xdgOpenUsePortal = true;
-  xdg.portal.enable = true;
+  # Aktywuj portale XDG
+  xdg.portal = {
+    enable = true;
+    xdgOpenUsePortal = true;
+  };
 
-  # Włącz wsparcie Appimage
-  programs.appimage.enable = true;
-
-  # Programy zainstalowane dla wszystkich użytkowników
+  # Programy zainstalowane dla wszystkich użytkowników, które nie posiadają modułów wbudowanych w nix (sekcja programs)
   environment.systemPackages = with pkgs; [
   # System
   ffmpeg-full       # Kodeki multimedialne
@@ -225,74 +234,82 @@ in
   caprine           # Messenger
   ];
 
+  # Wbudowane w nixos moduły programów i ich opcje
+  programs = {
+
+    cdemu = {  # Włącz wsparcie płyt i ich montowania
+      enable = true;
+      gui = true;
+      group = "wheel";
+    };
+
+    firefox.enable = false; # Wyłącz Instalację Firefox
+
+    appimage.enable = true; # Włącz wsparcie AppImage
+
+    java.enable = true; # Włącz wsparcie java
+
+    npm.enable = true; # Włącz wsparcie npm dla Hugo
+
+    virt-manager.enable = true; # Dodaj virt manager
+
+    zsh = {
+      enable = true; # Włącz zsh w konsoli
+      enableCompletion = true;
+      autosuggestions.enable = true;
+      syntaxHighlighting.enable = true;
+      enableLsColors = true;
+      shellAliases = { #aliasy komend
+        apply-config = "cd /home/rabbit/github/nix/nix-gaming-setup/ && sudo cp configuration.nix hardware-configuration.nix zerotier.nix /etc/nixos/ && sudo nixos-rebuild switch";
+        system-up = "flatpak update -y && sudo nix-channel --update && sudo nixos-rebuild boot --upgrade";
+        live-up = "flatpak update -y && sudo nix-channel --update && sudo nixos-rebuild switch --upgrade";
+        repo-refresh = "sudo nix-channel --update";
+        pbot = "cd /mnt/share/STREAM/PhantomBot && ./launch.sh";
+        split = "wine /home/rabbit/LiveSplit_1.6.9/LiveSplit.exe & sleep 10s && cd /home/rabbit/LiveSplit_1.6.9/amid\ evil-linux && ./AELAS";
+        kitty-themes = "kitty +kitten themes";
+        errorlog = "journalctl -p 3";
+        zero="sudo zerotier-cli";
+        zero-fix="sudo route add -host 255.255.255.255 dev ztks575eoa && route -n && sudo zerotier-cli status";
+      };
+      histSize = 3000;
+      ohMyZsh = { # Włącz i ustaw oh-my-zsh
+        enable = true;
+        plugins = [ "git" "command-not-found" "systemd" "zsh-kitty" ];
+        theme = "fox";
+      };
+    };
+
+    git = { # Włącz wsparcie git
+      enable = true;
+      package = pkgs.gitFull;
+      #config.credential.helper = "libsecret";
+    };
+
+    steam = { # Włącz steam
+      enable = true;
+      protontricks.enable = true; # Włącz wsparcie protontricks
+      remotePlay.openFirewall = true; # Steam Remote Play
+      dedicatedServer.openFirewall = true; # Otwórz porty dla Source Dedicated Server
+      localNetworkGameTransfers.openFirewall = true; # Otwórz porty dla Steam Local Network Game Transfers
+    };
+
+    gamescope = { # Włącz wsparcie Gamescope
+      enable = true;
+      capSysNice = true;
+    };
+
+    obs-studio = { # Włącz wsparcie Obs-studio
+      enable = true;
+      enableVirtualCamera = true;
+      plugins = with pkgs.obs-studio-plugins; [ waveform obs-vkcapture obs-tuna obs-text-pthread obs-pipewire-audio-capture ];
+    };
+  };
+
   # Włącz keyring dla github-desktop
   #services.gnome.gnome-keyring.enable = true;
   #security.pam.services.sddm.enableGnomeKeyring = true;
 
-  # Włącz Steam
-  programs.steam = {
-    enable = true;
-    protontricks.enable = true; # Włącz wsparcie protontricks
-    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-    localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
-  };
-
-  # Włącz Gamescope
-  programs.gamescope = {
-    enable = true;
-    capSysNice = true;
-  };
-
-  # Włącz obs-studio
-  programs.obs-studio = {
-    enable = true;
-    enableVirtualCamera = true;
-    plugins = with pkgs.obs-studio-plugins; [ waveform obs-vkcapture obs-tuna obs-text-pthread obs-pipewire-audio-capture ];
-  };
-
-  # Włącz java
-  programs.java.enable = true;
   #programs.steam.package = pkgs.steam.override { withJava = true; };
-
-  # Włącz git
-  programs.git = {
-    enable = true;
-    package = pkgs.gitFull;
-    #config.credential.helper = "libsecret";
-  };
-
-  # Włącz npm dla hugo
-  programs.npm.enable = true;
-
-  programs.zsh = {
-  enable = true; # Włącz zsh
-  enableCompletion = true;
-  autosuggestions.enable = true;
-  syntaxHighlighting.enable = true;
-  enableLsColors = true;
-  shellAliases = {
-    apply-config = "cd /home/rabbit/github/nix/nix-gaming-setup/ && sudo cp configuration.nix hardware-configuration.nix zerotier.nix /etc/nixos/ && sudo nixos-rebuild boot";
-    system-update = "sudo nix-channel --update && sudo nixos-rebuild switch --upgrade";
-    repo-refresh = "sudo nix-channel --update";
-    };
-  histSize = 3000;
-  ohMyZsh = { # Włącz i ustaw oh-my-zsh
-    enable = true;
-    plugins = [ "git" ];
-    theme = "fox";
-    };
-  };
-  users.defaultUserShell = pkgs.zsh; # Ustaw zsh domyślnie dla wszystkich
-
-  # Otwórz porty lub zablokuj zaporę sieciową
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  networking.firewall.enable = false;
-
-  # Włącz Docker dla Distrobox
-  #virtualisation.docker.enable = true;
 
   # Wersja na której zainstalowałeś system
   # (man configuration.nix or on https://nixos.org/nixos/options.html).
