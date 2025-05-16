@@ -3,7 +3,7 @@
 let
   unstableTarball =
     fetchTarball
-      https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz;
+      https://github.com/NixOS/nixpkgs/archive/nixos-unstable-small.tar.gz;
 in
 {
   imports =
@@ -37,7 +37,7 @@ in
     };
     settings = {
       auto-optimise-store = true;
-      experimental-feautres = [ "nix-command" ];
+      experimental-features = [ "nix-command" ];
     };
   };
 
@@ -50,6 +50,11 @@ in
     };
     kernelPackages = pkgs.linuxPackages_zen; # Jądro systemu zen dla graczy
     extraModulePackages = with config.boot.kernelPackages; [ vhba ]; # Dodatkowe moduły/sterowniki jądra których nie ma niżej
+    kernelParams = [ "mitigations=off" ];
+    kernel.sysctl = {
+      "kernel.split_lock_mitigate" = 0; #Wyłącza split_lock, rekomendowane do gier
+      "vm.max_map_count" = 2147483642; #Jak w SteamOS, niemal maksymalny możliwy map_count
+    };
   };
 
   # Optymalizacja RAM
@@ -69,7 +74,7 @@ in
   hardware = {
     xpadneo.enable = true; # Włącz sterownik xinput
     #xone.enable = true; # Włącz wsparcie xboxowego dongla usb
-    pulseaudio.enable = false; # Pulseaudio
+    pulseaudio.enable = false; # Systemowy pulseaudio
 
     graphics = {
         enable = true; # Aktywuj akcelerację w aplikacjach 64 bitowych
@@ -187,7 +192,6 @@ in
   };
   console.keyMap = "pl2"; # Polska klawiatura
 
-
   # Zezwól na audio w priorytecie realtime
   security.rtkit.enable = true;
 
@@ -236,25 +240,28 @@ in
   upscaler          # Upscale zdjęć
   qbittorrent       # Torrenty czasem się przydają
   unstable.rustdesk-flutter # Zdalny pulpit
-  teamspeak3        # TS3
   qdirstat          # Analiza danych
+  nettools          # narzędzia sieciowe
+  tealdeer          # tldr w konsoli
+  fastfetch
   # KDE Plazma
   kdePackages.flatpak-kcm # Uprawnienia flatpak KDE
   kdePackages.discover # Odkrywca
   kdePackages.kdenlive # Do montażu
   avidemux          # Przycinanie filmów
   haruna            # Oglądanie filmów
-  nur.repos.shadowrz.klassy-qt6 # Motyw Klassy
+  #nur.repos.shadowrz.klassy-qt6 # Motyw Klassy, obecnie nie kompatybilne
   papirus-icon-theme # Pakiet ikon
   # Gaming tools
   mangohud          # FPSY, temperatury
-  unstable.protonup-qt # Najnowszy protonup-qt
-  unstable.wineWowPackages.staging # Wine-staging
+  protonup-qt # Najnowszy protonup-qt
+  #unstable.wineWowPackages.staging # Wine-staging
   unstable.winetricks # Najnowszy winetricks
   unstable.umu-launcher # środowisko UMU do gier spoza steam
   unstable.lutris   # Najnowszy lutris
-  unstable.heroic   # Najnowszy Heroic Games Launcher
+  #unstable.heroic   # Najnowszy Heroic Games Launcher
   adwsteamgtk       # Upiększ steam
+  #unstable.faugus-launcher #Najnowszy Faugusik
   # Twitch/Youtube
   cameractrls       # Zarządzanie kamerą
   chatterino2       # Czytam chat
@@ -270,6 +277,7 @@ in
   (discord.override { withOpenASAR = true; withVencord = true; })
   discord-rpc       # Rich presence
   caprine           # Messenger
+  teamspeak3        # TS3
   ];
 
   # Wbudowane w nixos moduły programów i ich opcje
@@ -277,9 +285,17 @@ in
 
     cdemu = {  # Włącz wsparcie płyt i ich montowania
       enable = true;
-      gui = true;
+      gui = false;
       group = "wheel";
     };
+
+    nix-ld = { #Tutaj można dodać brakujące biblioteki dla aplikacji które pobraliśmy z sieci, np. TheXTech
+      enable = true;
+      libraries = with pkgs; [
+
+      ];
+    };
+
 
     firefox.enable = false; # Wyłącz Instalację Firefox
     appimage.enable = true; # Włącz wsparcie AppImage
@@ -296,8 +312,8 @@ in
       enableLsColors = true;
       shellAliases = { #aliasy komend
         apply-config = "cd /home/rabbit/github/nix/nix-gaming-setup/ && sudo cp configuration.nix hardware-configuration.nix zerotier.nix /etc/nixos/ && sudo nixos-rebuild switch";
-        system-up = "flatpak update -y && sudo nix-channel --update && sudo nixos-rebuild boot --upgrade";
-        live-up = "flatpak update -y && sudo nix-channel --update && sudo nixos-rebuild switch --upgrade";
+        system-up = "tldr --update && flatpak update -y && sudo nix-channel --update && sudo nixos-rebuild boot --upgrade";
+        live-up = "tldr --update && flatpak update -y && sudo nix-channel --update && sudo nixos-rebuild switch --upgrade";
         repo-refresh = "sudo nix-channel --update";
         pbot = "cd /mnt/share/STREAM/PhantomBot && ./launch.sh";
         split = "wine /home/rabbit/LiveSplit_1.6.9/LiveSplit.exe & sleep 10s && cd /home/rabbit/LiveSplit_1.6.9/amid\ evil-linux && ./AELAS";
@@ -309,7 +325,7 @@ in
       histSize = 3000;
       ohMyZsh = { # Włącz i ustaw oh-my-zsh
         enable = true;
-        plugins = [ "git" "command-not-found" "systemd" "zsh-kitty" ];
+        plugins = [ "git" "command-not-found" "systemd" ];
         theme = "fox";
       };
     };
