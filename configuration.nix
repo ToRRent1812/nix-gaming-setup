@@ -252,6 +252,7 @@ in
   haruna            # Oglądanie filmów
   #nur.repos.shadowrz.klassy-qt6 # Motyw Klassy, obecnie nie kompatybilne
   papirus-icon-theme # Pakiet ikon
+  unstable.darkly
   # Gaming tools
   mangohud          # FPSY, temperatury
   protonup-qt # Najnowszy protonup-qt
