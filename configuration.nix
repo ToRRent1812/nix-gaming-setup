@@ -136,6 +136,7 @@ in
 
   # Usługi
   services = {
+    fwupd.enable = true; # Włącz wsparcie aktualizatora firmware
     xserver.enable = false; # Włącz X11. Wyłącz by zostawić tylko Wayland
 
     xserver.xkb = { # Polska klawiatura
