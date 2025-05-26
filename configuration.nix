@@ -12,16 +12,12 @@ in
       ./zerotier.nix
     ];
 
-  # Dodaj opcjonalne repo Bleeding Edge oraz Nix User Repo. By zainstalować program, przed nazwą dopisz unstable. lub nur.repos.
+  # Dodaj opcjonalne repo Bleeding Edge. By zainstalować program, przed nazwą dopisz unstable.
   nixpkgs.config = {
     allowUnfree = true; # Programy nie-wolnościowe
-    packageOverrides = pkgs: {
-      unstable = import unstableTarball {
-        config = config.nixpkgs.config;
-      };
-      nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/main.tar.gz") {
-        inherit pkgs;
-      };
+    packageOverrides = pkgs:
+    {
+      unstable = import unstableTarball { config = config.nixpkgs.config; };
     };
     permittedInsecurePackages = [ # Któryś program, chyba rustdesk tego wymaga
       "openssl-1.1.1w"
@@ -33,7 +29,7 @@ in
     gc = {
       automatic = true;
       dates = "daily";
-      options = "--delete-older-than 14d";
+      options = "--delete-older-than 7d";
     };
     settings = {
       auto-optimise-store = true;
@@ -74,7 +70,7 @@ in
   hardware = {
     xpadneo.enable = true; # Włącz sterownik xinput
     #xone.enable = true; # Włącz wsparcie xboxowego dongla usb
-    pulseaudio.enable = false; # Systemowy pulseaudio
+    steam-hardware.enable = true;
 
     graphics = {
         enable = true; # Aktywuj akcelerację w aplikacjach 64 bitowych
@@ -138,6 +134,7 @@ in
   services = {
     fwupd.enable = true; # Włącz wsparcie aktualizatora firmware
     xserver.enable = false; # Włącz X11. Wyłącz by zostawić tylko Wayland
+    pulseaudio.enable = false; # Systemowy pulseaudio
 
     xserver.xkb = { # Polska klawiatura
       layout = "pl";
@@ -160,7 +157,7 @@ in
       enable = true;
       alsa.enable = true;
       alsa.support32Bit = true;
-      pulse.enable = true; # Emulacja Pulseaudio
+      pulse.enable = false; # Emulacja Pulseaudio
       extraConfig.pipewire."92-low-latency" = { # RT audio
         "context.properties" = {
           "default.clock.rate" = 48000;
@@ -184,7 +181,7 @@ in
         ];
         stream.properties = {
           node.latency = "32/48000";
-          resample.quality = 1;
+          resample.quality = 10;
         };
       };
     };
@@ -240,7 +237,7 @@ in
   onlyoffice-desktopeditors # Pakiet biurowy
   upscaler          # Upscale zdjęć
   qbittorrent       # Torrenty czasem się przydają
-  unstable.rustdesk-flutter # Zdalny pulpit
+  rustdesk-flutter # Zdalny pulpit
   qdirstat          # Analiza danych
   nettools          # narzędzia sieciowe
   tealdeer          # tldr w konsoli
@@ -251,14 +248,14 @@ in
   kdePackages.kdenlive # Do montażu
   avidemux          # Przycinanie filmów
   haruna            # Oglądanie filmów
-  #nur.repos.shadowrz.klassy-qt6 # Motyw Klassy, obecnie nie kompatybilne
+  #unstable.klassy-qt6 # Motyw Klassy, obecnie nie kompatybilne
   papirus-icon-theme # Pakiet ikon
-  unstable.darkly
+  darkly
   # Gaming tools
   mangohud          # FPSY, temperatury
-  protonup-qt # Najnowszy protonup-qt
-  #unstable.wineWowPackages.staging # Wine-staging
-  unstable.winetricks # Najnowszy winetricks
+  protonup-qt
+  wineWowPackages.stable # Wine-stable
+  winetricks
   unstable.umu-launcher # środowisko UMU do gier spoza steam
   unstable.lutris   # Najnowszy lutris
   #unstable.heroic   # Najnowszy Heroic Games Launcher
@@ -344,6 +341,7 @@ in
       remotePlay.openFirewall = true; # Steam Remote Play
       dedicatedServer.openFirewall = true; # Otwórz porty dla Source Dedicated Server
       localNetworkGameTransfers.openFirewall = true; # Otwórz porty dla Steam Local Network Game Transfers
+      extest.enable = true; # Tłumacz kliknięcia X11 na wayland dla steaminput
     };
 
     gamescope = { # Włącz wsparcie Gamescope
@@ -364,7 +362,7 @@ in
 
   #programs.steam.package = pkgs.steam.override { withJava = true; };
 
-  # Wersja na której zainstalowałeś system
-  # (man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "24.11";
+  # Wersja systemu. By dokonać dużej aktualizacji, zmień stateVersion a następnie wpisz w terminal
+  # sudo nix-channel --add https://channels.nixos.org/nixos-25.05 nixos
+  system.stateVersion = "25.05";
 }
