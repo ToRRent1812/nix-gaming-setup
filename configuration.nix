@@ -297,6 +297,7 @@ in
 
 
     firefox.enable = false; # Wyłącz Instalację Firefox
+    thunderbird.enable = true; # Aktywuj mozilla thunderbird
     appimage.enable = true; # Włącz wsparcie AppImage
     java.enable = true; # Włącz wsparcie java
     npm.enable = true; # Włącz wsparcie npm dla Hugo
