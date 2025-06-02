@@ -225,7 +225,7 @@ in
   # Programy zainstalowane dla wszystkich użytkowników, które nie posiadają modułów wbudowanych w nix (sekcja programs)
   environment.systemPackages = with pkgs; [
   # System
-  ffmpeg-full       # Kodeki multimedialne
+  (ffmpeg-full.override { withUnfree = true; withOpengl = true; })       # Kodeki multimedialne
   floorp            # Przeglądarka moja
   kitty             # Ulubiony terminal
   gitkraken         # GUI dla git
