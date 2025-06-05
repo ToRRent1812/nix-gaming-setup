@@ -53,6 +53,11 @@ in
     };
   };
 
+# Szybsze zamykanie systemu
+systemd.extraConfig = ''
+  DefaultTimeoutStopSec=15s
+'';
+
   # Optymalizacja RAM
   zramSwap = {
     enable = true;
