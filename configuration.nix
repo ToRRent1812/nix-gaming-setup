@@ -104,6 +104,18 @@ systemd.extraConfig = ''
         cpuFreqGovernor = "performance"; #power, performance, ondemand
   };
 
+# Wysoka wydajność AMD GPU
+systemd.user.services.highgpu = {
+  enable = true;
+  after = [ "network.target" ];
+  wantedBy = [ "multi-user.target" ];
+  description = "AMD GPU set to High";
+  serviceConfig = {
+      Type = "oneshot";
+      ExecStart = ''/bin/bash -c 'echo high > /sys/class/drm/card1/device/power_dpm_force_performance_level''';
+  };
+};
+
   # Aktywuj wirtualizację dla virt managera
   virtualisation = {
     libvirtd.enable = true;
@@ -340,7 +352,7 @@ environment.plasma6.excludePackages = with pkgs.kdePackages; [ #Usuwanie zbędny
       histSize = 3000;
       ohMyZsh = { # Włącz i ustaw oh-my-zsh
         enable = true;
-        plugins = [ "git" "command-not-found" "systemd" ];
+        plugins = [ "git" "command-not-found" "" ];
         theme = "fox";
       };
     };
