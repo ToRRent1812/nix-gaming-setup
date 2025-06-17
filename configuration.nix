@@ -81,6 +81,11 @@ systemd.extraConfig = ''
         enable = true; # Aktywuj akcelerację w aplikacjach 64 bitowych
         enable32Bit = true; # Aktywuj akcelerację w aplikacjach 32 bitowych
     };
+
+    bluetooth = {
+      enable = false;
+      powerOnBoot = true;
+    };
   };
 
     # Nvidia
@@ -283,6 +288,11 @@ systemd.extraConfig = ''
   caprine           # Messenger
   teamspeak3        # TS3
   ];
+
+environment.plasma6.excludePackages = with pkgs.kdePackages; [ #Usuwanie zbędnych aplikacji domyślnych z plazmy
+  kdepim-runtime
+  elisa
+];
 
   # Wbudowane w nixos moduły programów i ich opcje
   programs = {
