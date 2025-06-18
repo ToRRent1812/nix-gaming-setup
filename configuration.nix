@@ -381,7 +381,7 @@ environment.plasma6.excludePackages = with pkgs.kdePackages; [ #Usuwanie zbędny
     obs-studio = { # Włącz wsparcie Obs-studio
       enable = true;
       enableVirtualCamera = true;
-      plugins = with pkgs.obs-studio-plugins; [ waveform obs-vkcapture obs-tuna obs-text-pthread obs-pipewire-audio-capture ];
+      plugins = with pkgs.obs-studio-plugins; [ waveform obs-vkcapture obs-tuna obs-text-pthread obs-pipewire-audio-capture obs-vaapi obs-gstreamer ];
     };
   };
 
