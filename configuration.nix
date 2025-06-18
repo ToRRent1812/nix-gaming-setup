@@ -82,7 +82,7 @@ systemd.extraConfig = ''
         enable32Bit = true; # Aktywuj akcelerację w aplikacjach 32 bitowych
     };
 
-    bluetooth = {
+    bluetooth = { # Ja nie mam bluetooth, to po co włączać
       enable = false;
       powerOnBoot = true;
     };
@@ -104,17 +104,17 @@ systemd.extraConfig = ''
         cpuFreqGovernor = "performance"; #power, performance, ondemand
   };
 
-# Wysoka wydajność AMD GPU
-systemd.user.services.highgpu = {
-  enable = true;
-  after = [ "network.target" ];
-  wantedBy = [ "multi-user.target" ];
-  description = "AMD GPU set to High";
-  serviceConfig = {
+  # Wysoka wydajność AMD GPU
+  systemd.user.services.highgpu = {
+    enable = true;
+    after = [ "network.target" ];
+    wantedBy = [ "multi-user.target" ];
+    description = "AMD GPU set to High";
+    serviceConfig = {
       Type = "oneshot";
-      ExecStart = ''/bin/bash -c 'echo high > /sys/class/drm/card1/device/power_dpm_force_performance_level''';
+      ExecStart = "/bin/bash -c 'echo high > /sys/class/drm/card1/device/power_dpm_force_performance_level'";
+    };
   };
-};
 
   # Aktywuj wirtualizację dla virt managera
   virtualisation = {
@@ -247,7 +247,7 @@ systemd.user.services.highgpu = {
   # Programy zainstalowane dla wszystkich użytkowników, które nie posiadają modułów wbudowanych w nix (sekcja programs)
   environment.systemPackages = with pkgs; [
   # System
-  (ffmpeg-full.override { withUnfree = true; withOpengl = true; })       # Kodeki multimedialne
+  #(ffmpeg-full.override { withUnfree = true; withOpengl = true; })       # Kodeki multimedialne
   floorp            # Przeglądarka moja
   kitty             # Ulubiony terminal
   gitkraken         # GUI dla git
@@ -322,7 +322,7 @@ environment.plasma6.excludePackages = with pkgs.kdePackages; [ #Usuwanie zbędny
       ];
     };
 
-
+    kdeconnect.enable = true; # KDE Connect
     firefox.enable = false; # Wyłącz Instalację Firefox
     thunderbird.enable = true; # Aktywuj mozilla thunderbird
     appimage.enable = true; # Włącz wsparcie AppImage
