@@ -294,6 +294,11 @@ systemd.extraConfig = ''
   # Gry
   unstable.vcmi
   fheroes2
+#Emulacja
+  rpcs3
+  pcsx2-bin
+  shadps4
+  ppsspp-qt
   # Komunikacja
   (discord.override { withOpenASAR = true; withVencord = true; })
   discord-rpc       # Rich presence
