@@ -273,6 +273,7 @@ systemd.extraConfig = ''
   #unstable.klassy-qt6 # Motyw Klassy, obecnie nie kompatybilne
   papirus-icon-theme # Pakiet ikon
   darkly
+  plasma-panel-colorizer
   # Gaming tools
   mangohud          # FPSY, temperatury
   protonup-qt
