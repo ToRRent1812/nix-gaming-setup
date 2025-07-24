@@ -3,7 +3,7 @@
 let
   unstableTarball =
     fetchTarball
-      https://github.com/NixOS/nixpkgs/archive/nixos-unstable-small.tar.gz;
+      https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz;
 in
 {
   imports =
@@ -29,7 +29,7 @@ in
     gc = {
       automatic = true;
       dates = "daily";
-      options = "--delete-older-than 7d";
+      options = "--delete-older-than 14d";
     };
     settings = {
       auto-optimise-store = true;
@@ -50,12 +50,14 @@ in
     kernel.sysctl = {
       "kernel.split_lock_mitigate" = 0; #Wyłącza split_lock, rekomendowane do gier
       "vm.max_map_count" = 2147483642; #Jak w SteamOS, niemal maksymalny możliwy map_count
+      "vm.dirty_bytes" = 50331648; #Przyspiesza kopiowanie na pendrive
+      "vm.dirty_background_bytes" = 16777216; #Przyspiesza kopiowanie na pendrive
     };
   };
 
 # Szybsze zamykanie systemu
 systemd.extraConfig = ''
-  DefaultTimeoutStopSec=15s
+  DefaultTimeoutStopSec=12s
 '';
 
   # Optymalizacja RAM
@@ -266,22 +268,20 @@ systemd.extraConfig = ''
   fastfetch
   # KDE Plazma
   kdePackages.flatpak-kcm # Uprawnienia flatpak KDE
-  kdePackages.discover # Odkrywca
+  kdePackages.discover # Odkrywca do flatpaków
   kdePackages.kdenlive # Do montażu
   avidemux          # Przycinanie filmów
   haruna            # Oglądanie filmów
   #unstable.klassy-qt6 # Motyw Klassy, obecnie nie kompatybilne
   papirus-icon-theme # Pakiet ikon
   darkly
-  plasma-panel-colorizer
   # Gaming tools
   mangohud          # FPSY, temperatury
-  protonup-qt
-  wineWowPackages.stable # Wine-stable
+  unstable.protonup-qt
   winetricks
   unstable.umu-launcher # środowisko UMU do gier spoza steam
   unstable.lutris   # Najnowszy lutris
-  #unstable.heroic   # Najnowszy Heroic Games Launcher
+  unstable.heroic   # Najnowszy Heroic Games Launcher
   adwsteamgtk       # Upiększ steam
   #unstable.faugus-launcher #Najnowszy Faugusik
   # Twitch/Youtube
@@ -345,17 +345,16 @@ environment.plasma6.excludePackages = with pkgs.kdePackages; [ #Usuwanie zbędny
       enableLsColors = true;
       shellAliases = { #aliasy komend
         apply-config = "cd /home/rabbit/github/nix/nix-gaming-setup/ && sudo cp configuration.nix hardware-configuration.nix zerotier.nix /etc/nixos/ && sudo nixos-rebuild switch";
-        system-up = "tldr --update && flatpak update -y && sudo nix-channel --update && sudo nixos-rebuild boot --upgrade";
-        live-up = "tldr --update && flatpak update -y && sudo nix-channel --update && sudo nixos-rebuild switch --upgrade";
+        system-upd = "tldr --update && flatpak update -y && sudo nix-channel --update && sudo nixos-rebuild boot --upgrade";
+        live-upd = "tldr --update && flatpak update -y && sudo nix-channel --update && sudo nixos-rebuild switch --upgrade";
         repo-refresh = "sudo nix-channel --update";
         pbot = "cd /mnt/share/STREAM/PhantomBot && ./launch.sh";
-        split = "wine /home/rabbit/LiveSplit_1.6.9/LiveSplit.exe & sleep 10s && cd /home/rabbit/LiveSplit_1.6.9/amid\ evil-linux && ./AELAS";
         kitty-themes = "kitty +kitten themes";
-        errorlog = "journalctl -p 3";
+        errors = "journalctl -p 3";
         zero="sudo zerotier-cli";
         zero-fix="sudo route add -host 255.255.255.255 dev ztks575eoa && route -n && sudo zerotier-cli status";
       };
-      histSize = 3000;
+      histSize = 30000;
       ohMyZsh = { # Włącz i ustaw oh-my-zsh
         enable = true;
         plugins = [ "git" "command-not-found" "" ];
@@ -387,7 +386,7 @@ environment.plasma6.excludePackages = with pkgs.kdePackages; [ #Usuwanie zbędny
     obs-studio = { # Włącz wsparcie Obs-studio
       enable = true;
       enableVirtualCamera = true;
-      plugins = with pkgs.obs-studio-plugins; [ waveform obs-vkcapture obs-tuna obs-text-pthread obs-pipewire-audio-capture obs-vaapi obs-gstreamer ];
+      plugins = with pkgs.obs-studio-plugins; [ waveform obs-vkcapture obs-tuna obs-text-pthread obs-pipewire-audio-capture obs-vaapi obs-gstreamer unstable.obs-aitum-multistream ];
     };
   };
 
