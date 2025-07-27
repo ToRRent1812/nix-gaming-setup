@@ -50,8 +50,15 @@ in
     kernel.sysctl = {
       "kernel.split_lock_mitigate" = 0; #Wyłącza split_lock, rekomendowane do gier
       "vm.max_map_count" = 2147483642; #Jak w SteamOS, niemal maksymalny możliwy map_count
-      "vm.dirty_bytes" = 50331648; #Przyspiesza kopiowanie na pendrive
-      "vm.dirty_background_bytes" = 16777216; #Przyspiesza kopiowanie na pendrive
+      "vm.swappiness" = 10; #Procent aktywnego ruszania w swapie
+      "vm.dirty_bytes" = 50331648; #To oraz opcje niżej przyspieszają kopiowanie na pendrive
+      "vm.dirty_background_bytes" = 16777216;
+      "vm.vfs_cache_pressure" = 75;
+      "vm.dirty_ratio" = 3;
+      "vm.dirty_background_ratio" = 2;
+      "vm.dirty_expire_centisecs" = 3000;
+      "vm.dirty_writeback_centisecs" = 1500;
+      "vm.min_free_kbytes" = 59030;
     };
   };
 
