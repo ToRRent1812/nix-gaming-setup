@@ -256,7 +256,6 @@ systemd.extraConfig = ''
   # Programy zainstalowane dla wszystkich użytkowników, które nie posiadają modułów wbudowanych w nix (sekcja programs)
   environment.systemPackages = with pkgs; [
   # System
-  #(ffmpeg-full.override { withUnfree = true; withOpengl = true; })       # Kodeki multimedialne
   floorp            # Przeglądarka moja
   kitty             # Ulubiony terminal
   gitkraken         # GUI dla git
@@ -301,12 +300,12 @@ systemd.extraConfig = ''
   sqlitebrowser     # Przeglądaj bazę sqlite
   # Gry
   unstable.vcmi
-  fheroes2
+  unstable.fheroes2
 #Emulacja
-  rpcs3
-  pcsx2-bin
+  unstable.rpcs3
+  unstable.pcsx2
   shadps4
-  ppsspp-qt
+  ppsspp
   # Komunikacja
   (discord.override { withOpenASAR = true; withVencord = true; })
   discord-rpc       # Rich presence
