@@ -54,6 +54,8 @@ in
       "vm.dirty_bytes" = 50331648; #To oraz opcje niżej przyspieszają kopiowanie na pendrive
       "vm.dirty_background_bytes" = 16777216;
       "vm.vfs_cache_pressure" = 75;
+      "kernel.sched_cfs_bandwidth_slice_us" = 3000;
+      "net.ipv4.tcp_fin_timeout" = 5;
       "vm.dirty_ratio" = 3;
       "vm.dirty_background_ratio" = 2;
       "vm.dirty_expire_centisecs" = 3000;
@@ -188,7 +190,7 @@ systemd.extraConfig = ''
       enable = true;
       alsa.enable = true;
       alsa.support32Bit = true;
-      pulse.enable = false; # Emulacja Pulseaudio
+      pulse.enable = true; # Emulacja Pulseaudio
       extraConfig.pipewire."92-low-latency" = { # RT audio
         "context.properties" = {
           "default.clock.rate" = 48000;
@@ -260,6 +262,7 @@ systemd.extraConfig = ''
   kitty             # Ulubiony terminal
   gitkraken         # GUI dla git
   sublime4          # Najlepszy edytor tekstu
+  vscode-fhs          # Programowanie
   adwaita-icon-theme # Ikony dla aplikacji GTK4
   #distrobox         # Żeby mieć Faugus launcher
   #boxbuddy          # GUI dla distrobox
@@ -391,8 +394,9 @@ environment.plasma6.excludePackages = with pkgs.kdePackages; [ #Usuwanie zbędny
 
     obs-studio = { # Włącz wsparcie Obs-studio
       enable = true;
+      package = pkgs.unstable.obs-studio; # Tymczasowo póki aitum-multistream nie jest w stable
       enableVirtualCamera = true;
-      plugins = with pkgs.obs-studio-plugins; [ waveform obs-vkcapture obs-tuna obs-text-pthread obs-pipewire-audio-capture obs-vaapi obs-gstreamer unstable.obs-aitum-multistream ];
+      plugins = with pkgs.obs-studio-plugins; [ waveform obs-vkcapture obs-tuna obs-text-pthread obs-pipewire-audio-capture obs-gstreamer obs-aitum-multistream ];
     };
   };
 
