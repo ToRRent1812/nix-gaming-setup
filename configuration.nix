@@ -140,8 +140,12 @@ systemd.extraConfig = ''
     networkmanager.enable = true; # Włącz internet
     wireless.enable = false;  # Włącz WIFI
     firewall.enable = false; # Zapora sieciowa
+    dhcpcd.wait = "background"; # Nie czekaj na internet by uruchomić system
+    dhcpcd.extraConfig = "noarp";
     nameservers = [ "1.1.1.1" "1.0.0.1" ]; # Cloudflare DNS
   };
+
+systemd.services.NetworkManager-wait-online.enable = false;
 
   # Strefa czasowa
   time = {
@@ -255,17 +259,20 @@ systemd.extraConfig = ''
     xdgOpenUsePortal = true;
   };
 
+xdg.terminal-exec = {
+  enable = true;
+  settings.default = ["kitty.desktop"];
+};
+
   # Programy zainstalowane dla wszystkich użytkowników, które nie posiadają modułów wbudowanych w nix (sekcja programs)
   environment.systemPackages = with pkgs; [
   # System
-  floorp            # Przeglądarka moja
+  #zen-browser            # Przeglądarka moja
   kitty             # Ulubiony terminal
   gitkraken         # GUI dla git
   sublime4          # Najlepszy edytor tekstu
   vscode-fhs          # Programowanie
   adwaita-icon-theme # Ikony dla aplikacji GTK4
-  #distrobox         # Żeby mieć Faugus launcher
-  #boxbuddy          # GUI dla distrobox
   hugo              # Strona internetowa
   onlyoffice-desktopeditors # Pakiet biurowy
   upscaler          # Upscale zdjęć
@@ -384,11 +391,11 @@ environment.plasma6.excludePackages = with pkgs.kdePackages; [ #Usuwanie zbędny
       dedicatedServer.openFirewall = true; # Otwórz porty dla Source Dedicated Server
       localNetworkGameTransfers.openFirewall = true; # Otwórz porty dla Steam Local Network Game Transfers
       extest.enable = true; # Tłumacz kliknięcia X11 na wayland dla steaminput
-      extraCompatPackages = [ pkgs.proton-ge-bin ]; # Dodaje auto-aktualizowany proton-ge
+      #extraCompatPackages = [ pkgs.proton-ge-bin ]; # Dodaje auto-aktualizowany proton-ge
     };
 
-    gamescope = { # Włącz wsparcie Gamescope
-      enable = true;
+    gamescope = { # Włącz/wyłącz wsparcie Gamescope
+      enable = false;
       capSysNice = true;
     };
 
@@ -405,6 +412,118 @@ environment.plasma6.excludePackages = with pkgs.kdePackages; [ #Usuwanie zbędny
   #security.pam.services.sddm.enableGnomeKeyring = true;
 
   #programs.steam.package = pkgs.steam.override { withJava = true; };
+
+# Kontrolery https://gitlab.com/fabiscafe/game-devices-udev
+    udev.extraRules = ''
+      # 8BitDo Generic Device
+## This rule applies to many 8BitDo devices.
+SUBSYSTEM=="usb", ATTR{idProduct}=="3106", ATTR{idVendor}=="2dc8", ENV{ID_INPUT_JOYSTICK}="1", TAG+="uaccess"
+# 8BitDo F30 P1
+SUBSYSTEM=="input", ATTRS{name}=="8Bitdo FC30 GamePad", ENV{ID_INPUT_JOYSTICK}="1", TAG+="uaccess"
+# 8BitDo F30 P2
+SUBSYSTEM=="input", ATTRS{name}=="8Bitdo FC30 II", ENV{ID_INPUT_JOYSTICK}="1", TAG+="uaccess"
+# 8BitDo N30
+SUBSYSTEM=="input", ATTRS{name}=="8Bitdo NES30 GamePad", ENV{ID_INPUT_JOYSTICK}="1", TAG+="uaccess"
+# 8BitDo SF30
+SUBSYSTEM=="input", ATTRS{name}=="8Bitdo SFC30 GamePad", ENV{ID_INPUT_JOYSTICK}="1", TAG+="uaccess"
+# 8BitDo SN30
+SUBSYSTEM=="input", ATTRS{name}=="8Bitdo SNES30 GamePad", ENV{ID_INPUT_JOYSTICK}="1", TAG+="uaccess"
+# 8BitDo F30 Pro
+SUBSYSTEM=="input", ATTRS{name}=="8Bitdo FC30 Pro", ENV{ID_INPUT_JOYSTICK}="1", TAG+="uaccess"
+# 8BitDo N30 Pro
+SUBSYSTEM=="input", ATTRS{name}=="8Bitdo NES30 Pro", ENV{ID_INPUT_JOYSTICK}="1", TAG+="uaccess"
+# 8BitDo SF30 Pro
+SUBSYSTEM=="input", ATTRS{name}=="8Bitdo SF30 Pro", ENV{ID_INPUT_JOYSTICK}="1", TAG+="uaccess"
+# 8BitDo SN30 Pro
+SUBSYSTEM=="input", ATTRS{name}=="8Bitdo SN30 Pro", ENV{ID_INPUT_JOYSTICK}="1", TAG+="uaccess"
+# 8BitDo SN30 Pro+; Bluetooth; USB
+SUBSYSTEM=="input", ATTRS{name}=="8BitDo SN30 Pro+", ENV{ID_INPUT_JOYSTICK}="1", TAG+="uaccess"
+SUBSYSTEM=="input", ATTRS{name}=="8Bitdo SF30 Pro   8BitDo SN30 Pro+", ENV{ID_INPUT_JOYSTICK}="1", TAG+="uaccess"
+# 8BitDo F30 Arcade
+SUBSYSTEM=="input", ATTRS{name}=="8Bitdo Joy", ENV{ID_INPUT_JOYSTICK}="1", TAG+="uaccess"
+# 8BitDo N30 Arcade
+SUBSYSTEM=="input", ATTRS{name}=="8Bitdo NES30 Arcade", ENV{ID_INPUT_JOYSTICK}="1", TAG+="uaccess"
+# 8BitDo ZERO
+SUBSYSTEM=="input", ATTRS{name}=="8Bitdo Zero GamePad", ENV{ID_INPUT_JOYSTICK}="1", TAG+="uaccess"
+# 8BitDo Retro-Bit xRB8-64
+SUBSYSTEM=="input", ATTRS{name}=="8Bitdo N64 GamePad", ENV{ID_INPUT_JOYSTICK}="1", TAG+="uaccess"
+# 8BitDo Pro 2; Bluetooth; USB
+SUBSYSTEM=="input", ATTRS{name}=="8BitDo Pro 2", ENV{ID_INPUT_JOYSTICK}="1", TAG+="uaccess"
+SUBSYSTEM=="input", ATTR{id/vendor}=="2dc8", ATTR{id/product}=="6006", ENV{ID_INPUT_JOYSTICK}="1", TAG+="uaccess"
+SUBSYSTEM=="input", ATTR{id/vendor}=="2dc8", ATTR{id/product}=="6003", ENV{ID_INPUT_JOYSTICK}="1", TAG+="uaccess"
+# 8BitDo Pro 2 Wired; USB
+# X-mode uses the 8BitDo Generic Device rule
+# B-Mode
+SUBSYSTEM=="usb", ATTR{idProduct}=="3010", ATTR{idVendor}=="2dc8", ENV{ID_INPUT_JOYSTICK}="1", TAG+="uaccess"
+SUBSYSTEMS=="input", ATTRS{id/product}=="3010", ATTRS{id/vendor}=="2dc8", ENV{ID_INPUT_JOYSTICK}="1", TAG+="uaccess"
+# 8BitDo Ultimate Wired Controller for Xbox; USB
+SUBSYSTEM=="usb", ATTR{idProduct}=="2003", ATTR{idVendor}=="2dc8", ENV{ID_INPUT_JOYSTICK}="1", TAG+="uaccess"
+# 8BitDo Ultimate 2.4G Wireless  Controller; USB/2.4GHz
+# X-mode uses the 8BitDo Generic Device rule
+# D-mode
+SUBSYSTEM=="usb", ATTR{idProduct}=="3012", ATTR{idVendor}=="2dc8", ENV{ID_INPUT_JOYSTICK}="1", TAG+="uaccess"
+# 8BitDo Ultimate 2C Wireless Controller; USB/2.4GHz
+SUBSYSTEM=="usb", ATTR{idProduct}=="310a", ATTR{idVendor}=="2dc8", ENV{ID_INPUT_JOYSTICK}="1", TAG+="uaccess"
+# 8BitDo Arcade Stick; Bluetooth (X-mode)
+SUBSYSTEM=="input", ATTRS{name}=="8BitDo Arcade Stick", ENV{ID_INPUT_JOYSTICK}="1", TAG+="uaccess"
+# 8BitDo Ultimate 2 Wireless; Bluetooth; USB/2.4GHz
+SUBSYSTEM=="input", ATTRS{name}=="8BitDo Ultimate 2 Wireless", ENV{ID_INPUT_JOYSTICK}="1", TAG+="uaccess"
+SUBSYSTEM=="usb", ATTR{idProduct}=="310b", ATTR{idVendor}=="2dc8", ENV{ID_INPUT_JOYSTICK}="1", TAG+="uaccess"
+# Sony PlayStation Strikepack; USB
+KERNEL=="hidraw*", ATTRS{idVendor}=="054c", ATTRS{idProduct}=="05c5", MODE="0660", TAG+="uaccess"
+# Sony PlayStation DualShock 3; Bluetooth; USB
+KERNEL=="hidraw*", KERNELS=="*054C:0268*", MODE="0660", TAG+="uaccess"
+KERNEL=="hidraw*", ATTRS{idVendor}=="054c", ATTRS{idProduct}=="0268", MODE="0660", TAG+="uaccess"
+## Motion Sensors
+SUBSYSTEM=="input", KERNEL=="event*|input*", KERNELS=="*054C:0268*", TAG+="uaccess"
+# Sony PlayStation DualShock 4; Bluetooth; USB
+KERNEL=="hidraw*", KERNELS=="*054C:05C4*", MODE="0660", TAG+="uaccess"
+KERNEL=="hidraw*", ATTRS{idVendor}=="054c", ATTRS{idProduct}=="05c4", MODE="0660", TAG+="uaccess"
+# Sony PlayStation DualShock 4 Slim; Bluetooth; USB
+KERNEL=="hidraw*", KERNELS=="*054C:09CC*", MODE="0660", TAG+="uaccess"
+KERNEL=="hidraw*", ATTRS{idVendor}=="054c", ATTRS{idProduct}=="09cc", MODE="0660", TAG+="uaccess"
+# Sony PlayStation DualShock 4 Wireless Adapter; USB
+KERNEL=="hidraw*", ATTRS{idVendor}=="054c", ATTRS{idProduct}=="0ba0", MODE="0660", TAG+="uaccess"
+# Sony DualSense Wireless-Controller; Bluetooth; USB
+KERNEL=="hidraw*", KERNELS=="*054C:0CE6*", MODE="0660", TAG+="uaccess"
+KERNEL=="hidraw*", ATTRS{idVendor}=="054c", ATTRS{idProduct}=="0ce6", MODE="0660", TAG+="uaccess"
+# Sony DualSense Edge Wireless-Controller; Bluetooth; USB
+KERNEL=="hidraw*", KERNELS=="*054C:0DF2*", MODE="0660", TAG+="uaccess"
+KERNEL=="hidraw*", ATTRS{idVendor}=="054c", ATTRS{idProduct}=="0df2", MODE="0660", TAG+="uaccess"
+# Valve generic(all) USB devices
+SUBSYSTEM=="usb", ATTRS{idVendor}=="28de", MODE="0660", TAG+="uaccess"
+# Valve HID devices; Bluetooth; USB
+KERNEL=="hidraw*", KERNELS=="*28DE:*", MODE="0660", TAG+="uaccess"
+KERNEL=="hidraw*", ATTRS{idVendor}=="28de", MODE="0660", TAG+="uaccess"
+# Microsoft Xbox 360 Controller; USB #EXPERIMENTAL
+SUBSYSTEM=="usb", ATTRS{idVendor}=="045e", ATTRS{idProduct}=="028e", MODE="0660", TAG+="uaccess"
+SUBSYSTEMS=="input", ATTRS{name}=="Microsoft X-Box 360 pad", MODE="0660", TAG+="uaccess"
+# Microsoft Xbox 360 Wireless Receiver for Windows; USB
+SUBSYSTEM=="usb", ATTRS{idVendor}=="045e", ATTRS{idProduct}=="0719", MODE="0660", TAG+="uaccess"
+SUBSYSTEMS=="input", ATTRS{name}=="Xbox 360 Wireless Receiver", MODE="0660", TAG+="uaccess"
+# Microsoft Xbox One S Controller; Bluetooth; USB #EXPERIMENTAL
+KERNEL=="hidraw*", KERNELS=="*045e:02ea*", MODE="0660", TAG+="uaccess"
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="045e", ATTRS{idProduct}=="02ea", MODE="0660", TAG+="uaccess"
+# Microsoft Xbox One Controller; Bluetooth; USB
+SUBSYSTEM=="usb", ATTRS{idVendor}=="045e", ATTRS{idProduct}=="02fd", MODE="0660", TAG+="uaccess"
+KERNEL=="hidraw*", KERNELS=="*045e:02fd*", MODE="0660", TAG+="uaccess"
+SUBSYSTEMS=="input", ATTRS{name}=="Xbox Wireless Controller", MODE="0660", TAG+="uaccess"
+# Hori RAP4
+KERNEL=="hidraw*", ATTRS{idVendor}=="0f0d", ATTRS{idProduct}=="008a", MODE="0660", TAG+="uaccess"
+# Hori HORIPAD 4 FPS
+KERNEL=="hidraw*", ATTRS{idVendor}=="0f0d", ATTRS{idProduct}=="0055", MODE="0660", TAG+="uaccess"
+# Hori HORIPAD 4 FPS Plus
+KERNEL=="hidraw*", ATTRS{idVendor}=="0f0d", ATTRS{idProduct}=="0066", MODE="0660", TAG+="uaccess"
+# Hori HORIPAD S; USB
+KERNEL=="hidraw*", ATTRS{idVendor}=="0f0d", ATTRS{idProduct}=="00c1", MODE="0660", TAG+="uaccess"
+# Hori Pokkén Tournament DX Pro Pad for Nintendo Switch; USB
+KERNEL=="hidraw*", ATTRS{idVendor}=="0f0d", ATTRS{idProduct}=="0092", MODE="0660", TAG+="uaccess"
+# Hori Nintendo Switch HORIPAD Wired Controller; USB
+KERNEL=="hidraw*", ATTRS{idVendor}=="0f0d", ATTRS{idProduct}=="00c1", MODE="0660", TAG+="uaccess"
+# Hori Wireless HORIPAD for Steam; USB
+KERNEL=="hidraw*", ATTRS{idVendor}=="0f0d", ATTRS{idProduct}=="01ab", MODE="0660", TAG+="uaccess"
+    '';
+  };
 
   # Wersja systemu. By dokonać dużej aktualizacji, zmień stateVersion a następnie wpisz w terminal
   # sudo nix-channel --add https://channels.nixos.org/nixos-25.05 nixos
