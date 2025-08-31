@@ -1,9 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  unstableTarball =
-    fetchTarball
-      https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz;
+  unstableTarball = fetchTarball https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz;
 in
 {
   imports =
@@ -18,6 +16,9 @@ in
     packageOverrides = pkgs:
     {
       unstable = import unstableTarball { config = config.nixpkgs.config; };
+      nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/main.tar.gz") {
+        inherit pkgs;
+      };
     };
     permittedInsecurePackages = [ # Któryś program, chyba rustdesk tego wymaga
       "openssl-1.1.1w"
@@ -64,10 +65,10 @@ in
     };
   };
 
-# Szybsze zamykanie systemu
-systemd.extraConfig = ''
-  DefaultTimeoutStopSec=12s
-'';
+  # Szybsze zamykanie systemu
+  systemd.extraConfig = ''
+    DefaultTimeoutStopSec=12s
+  '';
 
   # Optymalizacja RAM
   zramSwap = {
@@ -145,7 +146,7 @@ systemd.extraConfig = ''
     nameservers = [ "1.1.1.1" "1.0.0.1" ]; # Cloudflare DNS
   };
 
-systemd.services.NetworkManager-wait-online.enable = false;
+  systemd.services.NetworkManager-wait-online.enable = false;
 
   # Strefa czasowa
   time = {
@@ -224,6 +225,15 @@ systemd.services.NetworkManager-wait-online.enable = false;
     };
 
     libinput.enable = false; # Wsparcie touchpadów
+
+    # VR
+    wivrn = {
+      enable = true;
+      openFirewall = true;
+      defaultRuntime = true;
+      autoStart = false;
+      extraPackages = [pkgs.xrizer];
+    };
   };
   console.keyMap = "pl2"; # Polska klawiatura
 
@@ -259,15 +269,16 @@ systemd.services.NetworkManager-wait-online.enable = false;
     xdgOpenUsePortal = true;
   };
 
-xdg.terminal-exec = {
-  enable = true;
-  settings.default = ["kitty.desktop"];
-};
+  xdg.terminal-exec = {
+    enable = true;
+    settings.default = ["kitty.desktop"];
+  };
 
   # Programy zainstalowane dla wszystkich użytkowników, które nie posiadają modułów wbudowanych w nix (sekcja programs)
   environment.systemPackages = with pkgs; [
   # System
   #zen-browser            # Przeglądarka moja
+  floorp
   kitty             # Ulubiony terminal
   gitkraken         # GUI dla git
   sublime4          # Najlepszy edytor tekstu
@@ -286,6 +297,7 @@ xdg.terminal-exec = {
   kdePackages.flatpak-kcm # Uprawnienia flatpak KDE
   kdePackages.discover # Odkrywca do flatpaków
   kdePackages.kdenlive # Do montażu
+  nur.repos.shadowrz.klassy-qt6
   avidemux          # Przycinanie filmów
   haruna            # Oglądanie filmów
   #unstable.klassy-qt6 # Motyw Klassy, obecnie nie kompatybilne
@@ -401,9 +413,9 @@ environment.plasma6.excludePackages = with pkgs.kdePackages; [ #Usuwanie zbędny
 
     obs-studio = { # Włącz wsparcie Obs-studio
       enable = true;
-      package = pkgs.unstable.obs-studio; # Tymczasowo póki aitum-multistream nie jest w stable
+      #package = pkgs.unstable.obs-studio; # Tymczasowo póki aitum-multistream nie jest w stable
       enableVirtualCamera = true;
-      plugins = with pkgs.obs-studio-plugins; [ waveform obs-vkcapture obs-tuna obs-text-pthread obs-pipewire-audio-capture obs-gstreamer obs-aitum-multistream ];
+      plugins = with pkgs.obs-studio-plugins; [ waveform obs-vkcapture obs-tuna obs-text-pthread obs-pipewire-audio-capture obs-gstreamer];
     };
   };
 
@@ -414,7 +426,7 @@ environment.plasma6.excludePackages = with pkgs.kdePackages; [ #Usuwanie zbędny
   #programs.steam.package = pkgs.steam.override { withJava = true; };
 
 # Kontrolery https://gitlab.com/fabiscafe/game-devices-udev
-    udev.extraRules = ''
+    services.udev.extraRules = ''
       # 8BitDo Generic Device
 ## This rule applies to many 8BitDo devices.
 SUBSYSTEM=="usb", ATTR{idProduct}=="3106", ATTR{idVendor}=="2dc8", ENV{ID_INPUT_JOYSTICK}="1", TAG+="uaccess"
@@ -523,7 +535,6 @@ KERNEL=="hidraw*", ATTRS{idVendor}=="0f0d", ATTRS{idProduct}=="00c1", MODE="0660
 # Hori Wireless HORIPAD for Steam; USB
 KERNEL=="hidraw*", ATTRS{idVendor}=="0f0d", ATTRS{idProduct}=="01ab", MODE="0660", TAG+="uaccess"
     '';
-  };
 
   # Wersja systemu. By dokonać dużej aktualizacji, zmień stateVersion a następnie wpisz w terminal
   # sudo nix-channel --add https://channels.nixos.org/nixos-25.05 nixos
