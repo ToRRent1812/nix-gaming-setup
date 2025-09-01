@@ -253,7 +253,7 @@ in
   users.groups.libvirtd.members = ["rabbit"]; # Dodaj mnie do wirtualizacji
 
   # Włącz wsparcie Flatpak, portal XDG oraz dodaj Flathub
-  services.flatpak.enable = true;
+  /*services.flatpak.enable = true;
   fonts.fontDir.enable = true;
   systemd.services.flatpak-repo = {
     wantedBy = [ "multi-user.target" ];
@@ -261,7 +261,7 @@ in
     script = ''
       flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo && flatpak --user override --filesystem=host
     '';
-  };
+  };*/
 
   # Aktywuj portale XDG
   xdg.portal = {
@@ -277,8 +277,7 @@ in
   # Programy zainstalowane dla wszystkich użytkowników, które nie posiadają modułów wbudowanych w nix (sekcja programs)
   environment.systemPackages = with pkgs; [
   # System
-  #zen-browser            # Przeglądarka moja
-  floorp
+  nur.repos.novel2430.zen-browser  # Przeglądarka
   kitty             # Ulubiony terminal
   gitkraken         # GUI dla git
   sublime4          # Najlepszy edytor tekstu
@@ -294,8 +293,8 @@ in
   tealdeer          # tldr w konsoli
   fastfetch
   # KDE Plazma
-  kdePackages.flatpak-kcm # Uprawnienia flatpak KDE
-  kdePackages.discover # Odkrywca do flatpaków
+  #kdePackages.flatpak-kcm # Uprawnienia flatpak KDE
+  #kdePackages.discover # Odkrywca do flatpaków
   kdePackages.kdenlive # Do montażu
   nur.repos.shadowrz.klassy-qt6
   avidemux          # Przycinanie filmów
@@ -311,7 +310,7 @@ in
   unstable.lutris   # Najnowszy lutris
   unstable.heroic   # Najnowszy Heroic Games Launcher
   adwsteamgtk       # Upiększ steam
-  #unstable.faugus-launcher #Najnowszy Faugusik
+  nur.repos.rogreat.faugus-launcher
   # Twitch/Youtube
   cameractrls       # Zarządzanie kamerą
   chatterino2       # Czytam chat
@@ -373,8 +372,8 @@ environment.plasma6.excludePackages = with pkgs.kdePackages; [ #Usuwanie zbędny
       enableLsColors = true;
       shellAliases = { #aliasy komend
         apply-config = "cd /home/rabbit/github/nix/nix-gaming-setup/ && sudo cp configuration.nix hardware-configuration.nix zerotier.nix /etc/nixos/ && sudo nixos-rebuild switch";
-        system-upd = "tldr --update && flatpak update -y && sudo nix-channel --update && sudo nixos-rebuild boot --upgrade";
-        live-upd = "tldr --update && flatpak update -y && sudo nix-channel --update && sudo nixos-rebuild switch --upgrade";
+        system-upd = "tldr --update && sudo nix-channel --update && sudo nixos-rebuild boot --upgrade";
+        live-upd = "tldr --update && sudo nix-channel --update && sudo nixos-rebuild switch --upgrade";
         repo-refresh = "sudo nix-channel --update";
         pbot = "cd /mnt/share/STREAM/PhantomBot && ./launch.sh";
         kitty-themes = "kitty +kitten themes";
