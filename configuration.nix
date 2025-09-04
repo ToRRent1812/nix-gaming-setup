@@ -322,6 +322,7 @@ in
   # Gry
   unstable.vcmi
   unstable.fheroes2
+bs-manager        # Beat Saber menedżer
 #Emulacja
   unstable.rpcs3
   unstable.pcsx2
