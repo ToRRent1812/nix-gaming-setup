@@ -74,6 +74,8 @@ in
   zramSwap = {
     enable = true;
     algorithm = "lz4";
+memoryPercent = 25;
+      priority = 5;
   };
 
     # Zmienne środowiskowe
@@ -360,6 +362,7 @@ environment.plasma6.excludePackages = with pkgs.kdePackages; [ #Usuwanie zbędny
     firefox.enable = false; # Wyłącz Instalację Firefox
     thunderbird.enable = true; # Aktywuj mozilla thunderbird
     appimage.enable = true; # Włącz wsparcie AppImage
+    appimage.binfmt = true;
     java.enable = true; # Włącz wsparcie java
     npm.enable = true; # Włącz wsparcie npm dla Hugo
     virt-manager.enable = true; # Dodaj virt manager
