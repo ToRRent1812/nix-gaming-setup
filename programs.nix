@@ -10,6 +10,7 @@
   sublime4          # Najlepszy edytor tekstu
   vscode-fhs          # Programowanie
   adwaita-icon-theme # Ikony dla aplikacji GTK4
+epapirus-icon-theme
   hugo              # Strona internetowa
   onlyoffice-desktopeditors # Pakiet biurowy
   upscaler          # Upscale zdjęć
@@ -37,6 +38,7 @@
   unstable.heroic   # Najnowszy Heroic Games Launcher
   adwsteamgtk       # Upiększ steam
   nur.repos.rogreat.faugus-launcher
+unstable.nexusmods-app-unfree
   # Twitch/Youtube
   cameractrls       # Zarządzanie kamerą
   chatterino2       # Czytam chat
@@ -51,12 +53,14 @@
   (tetrio-desktop.override {withTetrioPlus = true;})
 #Emulacja
   unstable.rpcs3
+ps3-disk-dumper
   unstable.pcsx2
   shadps4
   dolphin-emu
   ppsspp
   unstable.xemu
   unstable.xenia-canary
+fceux
   # Komunikacja
   (discord.override { withOpenASAR = true; withVencord = true; })
   discord-rpc       # Rich presence
