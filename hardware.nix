@@ -40,6 +40,10 @@
     #nvidiaSettings = true;
   #};
 
+# Dodaj wsparcie montowania pendrive do systemu (LOL)
+services.udisks2.enable = true;
+services.udisks2.mountOnMedia = true;
+
   # Aktywuj wirtualizację dla virt managera
   virtualisation = {
     libvirtd.enable = true;
