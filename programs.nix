@@ -19,7 +19,10 @@
   nettools          # narzędzia sieciowe
   tealdeer          # tldr w konsoli
   fastfetch
-  # KDE Plazma
+  #unstable.glxinfo
+  filezilla
+  gparted
+# KDE Plazma
   kdePackages.kdenlive # Do montażu
   nur.repos.shadowrz.klassy-qt6 # Motyw Klassy, obecnie nie kompatybilne
   avidemux          # Przycinanie filmów
@@ -50,6 +53,7 @@
   unstable.rpcs3
   unstable.pcsx2
   shadps4
+  dolphin-emu
   ppsspp
   unstable.xemu
   unstable.xenia-canary

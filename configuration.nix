@@ -36,7 +36,7 @@ in
     gc = {
       automatic = true;
       dates = "daily";
-      options = "--delete-older-than 30d";
+      options = "--delete-older-than 14d";
     };
     settings = {
       auto-optimise-store = true;
@@ -114,10 +114,10 @@ in
       syntaxHighlighting.enable = true;
       enableLsColors = true;
       shellAliases = { #aliasy komend
-        apply-config = "cd /home/rabbit/github/nix/nix-gaming-setup/ && sudo cp configuration.nix hardware-configuration.nix zerotier.nix /etc/nixos/ && sudo nixos-rebuild switch";
-        system-update = "tldr --update && sudo nix-channel --update && sudo nixos-rebuild boot --upgrade";
-        live-update = "tldr --update && sudo nix-channel --update && sudo nixos-rebuild switch --upgrade";
-        nix-refresh = "sudo nix-channel --update";
+        nconf = "cd /home/rabbit/github/nix/nix-gaming-setup/ && sudo cp configuration.nix hardware-configuration.nix zerotier.nix /etc/nixos/ && sudo nixos-rebuild switch";
+        nup = "tldr --update && sudo nix-channel --update && sudo nixos-rebuild boot --upgrade";
+        nlive = "tldr --update && sudo nix-channel --update && sudo nixos-rebuild switch --upgrade";
+        nref = "sudo nix-channel --update";
         pbot = "cd /mnt/share/STREAM/PhantomBot && ./launch.sh";
         kitty-themes = "kitty +kitten themes";
         errors = "journalctl -p 3";

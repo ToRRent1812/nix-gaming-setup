@@ -26,6 +26,7 @@
       "vm.dirty_writeback_centisecs" = 1500;
       "vm.min_free_kbytes" = 59030;
     };
+    supportedFilesystems.exfat = true;
   };
 
   # Szybsze zamykanie systemu

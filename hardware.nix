@@ -18,6 +18,19 @@
     };
   };
 
+  # Wymień stabilny mesa na kanał niestabilny. Wymusi bardzo długą kompilację!!!
+  #nixpkgs.overlays = [
+  #  (self: super: {
+  #    mesa = pkgs.unstable.mesa;
+  #    mesa_drivers = pkgs.unstable.mesa_drivers;
+  #    libGL = pkgs.unstable.libGL;
+  #    libglvnd = pkgs.unstable.libglvnd;
+  #    driversi686Linux.mesa = pkgs.unstable.driversi686Linux.mesa;
+  #  })
+ # ];
+
+
+
     # Nvidia
   #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta; // Kanał Beta/New-Feature
   #services.xserver.videoDrivers = ["nvidia"];
