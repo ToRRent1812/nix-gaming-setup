@@ -7,7 +7,7 @@ in
   imports =
     [ # Inne configi
       ./hardware-configuration.nix
-      #./zerotier.nix
+      ./zerotier.nix
       ./services.nix
       ./vr.nix
       ./programs.nix
@@ -118,16 +118,17 @@ in
         nup = "tldr --update && sudo nix-channel --update && sudo nixos-rebuild boot --upgrade";
         nlive = "tldr --update && sudo nix-channel --update && sudo nixos-rebuild switch --upgrade";
         nref = "sudo nix-channel --update";
-        pbot = "cd /mnt/share/STREAM/PhantomBot && ./launch.sh";
+        pbot = "/home/rabbit/Dokumenty/STREAM/PhantomBot/launch.sh";
         kitty-themes = "kitty +kitten themes";
         errors = "journalctl -p 3";
+	kimsufi = "kitty +kitten ssh debian@54.38.195.168";
         zero="sudo zerotier-cli";
         zero-fix="sudo route add -host 255.255.255.255 dev ztks575eoa && route -n && sudo zerotier-cli status";
       };
       histSize = 30000;
       ohMyZsh = { # Włącz i ustaw oh-my-zsh
         enable = true;
-        plugins = [ "git" "command-not-found" "" ];
+        plugins = [ "git" "command-not-found" ];
         theme = "fox";
       };
     };

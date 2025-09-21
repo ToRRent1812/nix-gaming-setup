@@ -21,7 +21,6 @@
   #nettools          # narzędzia sieciowe
   tealdeer          # tldr w konsoli
   fastfetch
-  filezilla
   gparted
 # KDE Plazma
   kdePackages.kdenlive # Do montażu
@@ -44,6 +43,7 @@
   chatterino2       # Czytam chat
   audacious         # Muzyka
   audacious-plugins # Pluginy
+qmmp
   easyeffects       # Efekty mikrofonu
   scrcpy            # Przechwyć wideo z telefonu
   sqlitebrowser     # Przeglądaj bazę sqlite
