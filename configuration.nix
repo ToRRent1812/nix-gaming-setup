@@ -7,7 +7,7 @@ in
   imports =
     [ # Inne configi
       ./hardware-configuration.nix
-      ./zerotier.nix
+      #./zerotier.nix
       ./services.nix
       ./vr.nix
       ./programs.nix

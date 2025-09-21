@@ -3,14 +3,12 @@
 {
 # Bootloader
   boot = {
-    loader.grub = {
-      enable = true;
-      device = "/dev/vda";
-      useOSProber = true; # Dodaj Windows do bootloadera
-    };
+    # Bootloader.
+    loader.systemd-boot.enable = true;
+    loader.efi.canTouchEfiVariables = true;
     kernelPackages = pkgs.linuxPackages_zen; # Jądro systemu zen dla graczy
-    extraModulePackages = with config.boot.kernelPackages; [ vhba ]; # Dodatkowe moduły/sterowniki jądra których nie ma niżej
-    kernelParams = [ "mitigations=off" ];
+    extraModulePackages = [ config.boot.kernelPackages.vhba ]; # Dodatkowe moduły/sterowniki jądra których nie ma niżej
+    kernelParams = [ "usbcore.autosuspend=600" "mitigations=off" ];
     kernel.sysctl = {
       "kernel.split_lock_mitigate" = 0; #Wyłącza split_lock, rekomendowane do gier
       "vm.max_map_count" = 2147483642; #Jak w SteamOS, niemal maksymalny możliwy map_count

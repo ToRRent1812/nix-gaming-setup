@@ -6,21 +6,21 @@
   # System
   nur.repos.novel2430.zen-browser-bin  # Przeglądarka
   kitty             # Ulubiony terminal
-  gitkraken         # GUI dla git
+  #gitkraken         # GUI dla git
+  github-desktop
   sublime4          # Najlepszy edytor tekstu
   vscode-fhs          # Programowanie
   adwaita-icon-theme # Ikony dla aplikacji GTK4
-epapirus-icon-theme
+  epapirus-icon-theme
   hugo              # Strona internetowa
   onlyoffice-desktopeditors # Pakiet biurowy
-  upscaler          # Upscale zdjęć
+  #upscaler          # Upscale zdjęć
   qbittorrent       # Torrenty czasem się przydają
   rustdesk-flutter # Zdalny pulpit
   qdirstat          # Analiza danych
-  nettools          # narzędzia sieciowe
+  #nettools          # narzędzia sieciowe
   tealdeer          # tldr w konsoli
   fastfetch
-  #unstable.glxinfo
   filezilla
   gparted
 # KDE Plazma
@@ -28,7 +28,6 @@ epapirus-icon-theme
   nur.repos.shadowrz.klassy-qt6 # Motyw Klassy, obecnie nie kompatybilne
   avidemux          # Przycinanie filmów
   haruna            # Oglądanie filmów
-  papirus-icon-theme # Pakiet ikon
   darkly
   # Gaming tools
   mangohud          # FPSY, temperatury
@@ -38,9 +37,10 @@ epapirus-icon-theme
   unstable.heroic   # Najnowszy Heroic Games Launcher
   adwsteamgtk       # Upiększ steam
   nur.repos.rogreat.faugus-launcher
-unstable.nexusmods-app-unfree
+  #unstable.nexusmods-app-unfree
+  r2modman # Mod manager
   # Twitch/Youtube
-  cameractrls       # Zarządzanie kamerą
+  cameractrls-gtk4       # Zarządzanie kamerą
   chatterino2       # Czytam chat
   audacious         # Muzyka
   audacious-plugins # Pluginy
@@ -49,18 +49,19 @@ unstable.nexusmods-app-unfree
   sqlitebrowser     # Przeglądaj bazę sqlite
   # Gry
   vcmi
+  bs-manager #Beat Saber Launcher
   unstable.fheroes2
   (tetrio-desktop.override {withTetrioPlus = true;})
 #Emulacja
-  unstable.rpcs3
-ps3-disk-dumper
-  unstable.pcsx2
-  shadps4
-  dolphin-emu
-  ppsspp
-  unstable.xemu
-  unstable.xenia-canary
-fceux
+  #unstable.rpcs3
+  #ps3-disk-dumper
+  #unstable.pcsx2
+  #shadps4
+  #dolphin-emu
+  #ppsspp
+  #unstable.xemu
+  #unstable.xenia-canary
+  #fceux
   # Komunikacja
   (discord.override { withOpenASAR = true; withVencord = true; })
   discord-rpc       # Rich presence
