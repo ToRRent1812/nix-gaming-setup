@@ -102,6 +102,7 @@ in
     };
 
     appimage.enable = true; # Włącz wsparcie AppImage
+    appimage.binfmt = true;
     java.enable = true; # Włącz wsparcie java
     npm.enable = true; # Włącz wsparcie npm dla Hugo
     virt-manager.enable = true; # Dodaj virt manager

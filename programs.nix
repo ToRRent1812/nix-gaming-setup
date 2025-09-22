@@ -6,8 +6,9 @@
   # System
   nur.repos.novel2430.zen-browser-bin  # Przeglądarka
   kitty             # Ulubiony terminal
-  #gitkraken         # GUI dla git
+  gtk3         # GUI Potrzebne do niektórych programów
   github-desktop
+  #dotnetCorePackages.dotnet_8.sdk
   sublime4          # Najlepszy edytor tekstu
   vscode-fhs          # Programowanie
   adwaita-icon-theme # Ikony dla aplikacji GTK4
@@ -43,36 +44,50 @@
   chatterino2       # Czytam chat
   audacious         # Muzyka
   audacious-plugins # Pluginy
-qmmp
   easyeffects       # Efekty mikrofonu
   scrcpy            # Przechwyć wideo z telefonu
   sqlitebrowser     # Przeglądaj bazę sqlite
   # Gry
-  vcmi
-  bs-manager #Beat Saber Launcher
-  unstable.fheroes2
+  vcmi		    # Heroes 3
+  bs-manager 	    # Beat Saber Launcher
+  unstable.fheroes2 # Heroes 2
   (tetrio-desktop.override {withTetrioPlus = true;})
 #Emulacja
-  #unstable.rpcs3
+  unstable.rpcs3
   #ps3-disk-dumper
   #unstable.pcsx2
   #shadps4
   #dolphin-emu
   #ppsspp
-  #unstable.xemu
-  #unstable.xenia-canary
+  unstable.xemu
+  unstable.xenia-canary
   #fceux
   # Komunikacja
   (discord.override { withOpenASAR = true; withVencord = true; })
   discord-rpc       # Rich presence
   caprine           # Messenger
   teamspeak3        # TS3
+# Pytong dla kdenlive AI + programowanie 
+dotnet-sdk
+dotnet-runtime
+dotnet-aspnetcore
+(python3.withPackages (python-pkgs: with python-pkgs; [
+        pip
+	pygobject3
+        openai-whisper
+        srt
+        torch
+      ]))
   ];
 
 environment.plasma6.excludePackages = with pkgs.kdePackages; [ #Usuwanie zbędnych aplikacji domyślnych z plazmy
   kdepim-runtime
   elisa
 ];
+
+environment.variables = rec { # Naprawia integracje systemu z GTK (Np Zen browser)
+    GSETTINGS_SCHEMA_DIR="${pkgs.gtk3}/share/gsettings-schemas/${pkgs.gtk3.name}/glib-2.0/schemas";
+  }; 
 
 programs = {
     kdeconnect.enable = true; # KDE Connect
