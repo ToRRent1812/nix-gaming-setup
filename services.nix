@@ -5,8 +5,9 @@
   services = {
     fwupd.enable = true; # Włącz wsparcie aktualizatora firmware
     xserver.enable = false; # Włącz X11. Wyłącz by zostawić tylko Wayland
-passSecretService.package = pkgs.libsecret;
-passSecretService.enable = true;
+    passSecretService.package = pkgs.libsecret; # Wsparcie dla menedżera haseł, wymagane do niektórych programów
+    passSecretService.enable = true; # Włącz wsparcie dla menedżera haseł
+    envfs.enable = true;
 
     xserver.xkb = { # Polska klawiatura
       layout = "pl";

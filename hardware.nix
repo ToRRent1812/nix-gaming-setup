@@ -3,13 +3,15 @@
 {
 # Sprzęt
   hardware = {
-    xpadneo.enable = true; # Włącz sterownik xinput
-    #xone.enable = true; # Włącz wsparcie xboxowego dongla usb
-    steam-hardware.enable = true;
+    xpadneo.enable = true;            # Włącz sterownik xinput
+    #xone.enable = true;              # Włącz wsparcie xboxowego dongla usb
+    steam-hardware.enable = true;     # Włącz wsparcie dla kontrolerów steamowych + Valve index
+
+    amdgpu.opencl.enable = true;      # Włącz OpenCL dla AMD GPU
 
     graphics = {
-        enable = true; # Aktywuj akcelerację w aplikacjach 64 bitowych
-        enable32Bit = true; # Aktywuj akcelerację w aplikacjach 32 bitowych
+        enable = true;                # Aktywuj akcelerację w aplikacjach 64 bitowych
+        enable32Bit = true;           # Aktywuj akcelerację w aplikacjach 32 bitowych
     };
 
     bluetooth = { # Ja nie mam bluetooth, to po co włączać
@@ -31,8 +33,8 @@
 
 
 
-    # Nvidia
-  #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta; // Kanał Beta/New-Feature
+    ## Nvidia
+  #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta; # Kanał Beta/New-Feature
   #services.xserver.videoDrivers = ["nvidia"];
   #hardware.nvidia = {
     #modesetting.enable = true;

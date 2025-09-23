@@ -21,15 +21,15 @@
   fileSystems."/mnt/nvme" =
     { device = "/dev/disk/by-uuid/dae26402-a2d8-46a9-bce1-bc1e62dd5dec";
       fsType = "ext4";
-	options = [
-"defaults"
-"noatime"
-"errors=remount-ro"
-"nofail"
-"rw"
-"users"
-"exec"
-];
+	    options = [
+      "defaults"
+      "noatime"
+      "errors=remount-ro"
+      "nofail"
+      "rw"
+      "users"
+      "exec"
+      ];
     };
 
   fileSystems."/boot" =

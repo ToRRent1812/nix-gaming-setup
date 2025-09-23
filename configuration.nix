@@ -1,11 +1,11 @@
 { config, lib, pkgs, ... }:
 
 let
-  unstableTarball = fetchTarball https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz;
+  #unstableTarball = fetchTarball https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz; #Dodaj repozytorium Bleeding Edge
 in
 {
   imports =
-    [ # Inne configi
+    [ # Inne configi do zaimportowania
       ./hardware-configuration.nix
       ./zerotier.nix
       ./services.nix
@@ -18,16 +18,16 @@ in
       ./network.nix
     ];
 
-  # Dodaj opcjonalne repo Bleeding Edge. By zainstalować program, przed nazwą dopisz unstable. by zainstalować z NUR, dodaj nur.repos.
+  # Dodaj opcjonalne repozytoria. By zainstalować program, przed nazwą dopisz unstable. by zainstalować z NUR, dodaj nur.repos.
   nixpkgs.config = {
-    allowUnfree = true; # Programy nie-wolnościowe
+    allowUnfree = true;         # Programy nie-wolnościowe (steam, discord, itp)
     packageOverrides = pkgs:
     {
-      unstable = import unstableTarball { config = config.nixpkgs.config; };
-      nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/main.tar.gz") { inherit pkgs; };
+      unstable = import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz") { config = config.nixpkgs.config; };
+      nur = import (fetchTarball "https://github.com/nix-community/NUR/archive/main.tar.gz") { inherit pkgs; };
     };
-    permittedInsecurePackages = [ # Któryś program, chyba rustdesk tego wymaga
-      "openssl-1.1.1w"
+    permittedInsecurePackages = [ 
+      "openssl-1.1.1w"          # Któryś program, chyba rustdesk tego tymczasowo wymaga
     ];
   };
 
@@ -36,7 +36,7 @@ in
     gc = {
       automatic = true;
       dates = "daily";
-      options = "--delete-older-than 14d";
+      options = "--delete-older-than 14d"; # Usuwaj generacje starsze niż 14 dni
     };
     settings = {
       auto-optimise-store = true;
@@ -44,11 +44,11 @@ in
     };
   };
 
-    # Zmienne środowiskowe
+  # Zmienne środowiskowe
   environment.sessionVariables = {
-    EDITOR = "nano";
-    GTK_USE_PORTAL = 1;
-    OBS_VKCAPTURE_QUIET = 1;
+    EDITOR = "nano";                       # Domyślny edytor tekstu w terminalu
+    GTK_USE_PORTAL = 1;                    # Wymuś użycie portali XDG w programach GTK, by np. program używał systemowego file pickera
+    OBS_VKCAPTURE_QUIET = 1;               # Wyłącz zbędne logi z vk capture do OBS Studio
   };
 
   # Konto użytkownika.
@@ -60,7 +60,7 @@ in
     #  kdePackages.kate
     #];
   };
-  users.defaultUserShell = pkgs.zsh; # Ustaw zsh domyślnie dla wszystkich
+  users.defaultUserShell = pkgs.zsh;        # Ustaw zsh domyślnie dla wszystkich
   users.groups.libvirtd.members = ["rabbit"]; # Dodaj mnie do wirtualizacji
 
   # Włącz wsparcie Flatpak, portal XDG oraz dodaj Flathub
@@ -82,7 +82,7 @@ in
 
   xdg.terminal-exec = {
     enable = true;
-    settings.default = ["kitty.desktop"];
+    settings.default = ["kitty.desktop"]; # Ustaw kitty jako domyślny terminal
   };
 
   # Wbudowane w nixos moduły programów i ich opcje. Programy użytkowe są w programs.nix
@@ -94,39 +94,38 @@ in
       group = "wheel";
     };
 
-    nix-ld = { #Tutaj można dodać brakujące biblioteki dla aplikacji które pobraliśmy z sieci, np. TheXTech
+    nix-ld = { #Tutaj można dodać brakujące biblioteki dla aplikacji które pobraliśmy z sieci
       enable = true;
-      libraries = with pkgs; [
-
-      ];
+      #libraries = with pkgs; [
+      #
+      #];
     };
 
-    appimage.enable = true; # Włącz wsparcie AppImage
-    appimage.binfmt = true;
-    java.enable = true; # Włącz wsparcie java
-    npm.enable = true; # Włącz wsparcie npm dla Hugo
-    virt-manager.enable = true; # Dodaj virt manager
-    dconf.enable = true;
+    appimage.enable = true;           # Włącz wsparcie AppImage
+    appimage.binfmt = true; 
+    java.enable = true;               # Włącz wsparcie java
+    npm.enable = true;                # Włącz wsparcie npm dla Hugo
+    virt-manager.enable = true;       # Dodaj virt manager
+    dconf.enable = true;              # Włącz dconf by działały niektóre programy gnome
 
     zsh = {
-      enable = true; # Włącz zsh w konsoli
-      enableCompletion = true;
-      autosuggestions.enable = true;
-      syntaxHighlighting.enable = true;
-      enableLsColors = true;
-      shellAliases = { #aliasy komend
-        nconf = "cd /home/rabbit/github/nix/nix-gaming-setup/ && sudo cp configuration.nix hardware-configuration.nix zerotier.nix /etc/nixos/ && sudo nixos-rebuild switch";
+      enable = true;                  # Włącz zsh w konsoli
+      enableCompletion = true;        # Włącz autouzupełnianie
+      autosuggestions.enable = true;  # Włącz podpowiedzi w stylu fish
+      syntaxHighlighting.enable = true; # Włącz podświetlanie składni
+      enableLsColors = true;          # Włącz kolory w ls
+      shellAliases = {                # Aliasy komend
         nup = "tldr --update && sudo nix-channel --update && sudo nixos-rebuild boot --upgrade";
         nlive = "tldr --update && sudo nix-channel --update && sudo nixos-rebuild switch --upgrade";
         nref = "sudo nix-channel --update";
         pbot = "/home/rabbit/Dokumenty/STREAM/PhantomBot/launch.sh";
         kitty-themes = "kitty +kitten themes";
         errors = "journalctl -p 3";
-	kimsufi = "kitty +kitten ssh debian@54.38.195.168";
+        kimsufi = "kitty +kitten ssh debian@54.38.195.168";
         zero="sudo zerotier-cli";
         zero-fix="sudo route add -host 255.255.255.255 dev ztks575eoa && route -n && sudo zerotier-cli status";
       };
-      histSize = 30000;
+      histSize = 30000;              # Rozmiar historii
       ohMyZsh = { # Włącz i ustaw oh-my-zsh
         enable = true;
         plugins = [ "git" "command-not-found" ];
@@ -141,11 +140,9 @@ in
     };
   };
 
-  # Włącz keyring dla github-desktop
-  #services.gnome.gnome-keyring.enable = true;
-  #security.pam.services.sddm.enableGnomeKeyring = true;
-
-  # Wersja systemu. By dokonać dużej aktualizacji, zmień stateVersion a następnie wpisz w terminal
+  # Wersja systemu. By dokonać dużej aktualizacji, zmień stateVersion a następnie wpisz w terminal. 
+  # Zmiana stateVersion spowoduje że config może być niekompatybilny z nową wersją i będzie wymagać manualnej interwencji.
+  # Możesz też zmienić tylko kanał a zostawić stateVersion, ale to może powodować błędy na dłuższą metę.
   # sudo nix-channel --add https://channels.nixos.org/nixos-25.05 nixos
   system.stateVersion = "25.05";
 }

@@ -1,18 +1,17 @@
 { config, lib, pkgs, ... }:
 
 {
-# Zezwól na audio w priorytecie realtime
-  security.rtkit.enable = true;
+  security.rtkit.enable = true; # Zezwól na audio w priorytecie realtime
 
   services = {
-    pulseaudio.enable = false; # Systemowy pulseaudio
+    pulseaudio.enable = false; # Systemowy pulseaudio zamiast pipewire
 
     pipewire = { # Włącz pipewire
       enable = true;
-      alsa.enable = true;
+      alsa.enable = true; # Włącz emulacje ALSA
       alsa.support32Bit = true;
-      pulse.enable = true; # Emulacja Pulseaudio
-      extraConfig.pipewire."92-low-latency" = { # RT audio
+      pulse.enable = true; # Włącz Emulacje Pulseaudio
+      extraConfig.pipewire."92-low-latency" = { # Niskie opóźnienie
         "context.properties" = {
           "default.clock.rate" = 48000;
           "default.clock.quantum" = 32;

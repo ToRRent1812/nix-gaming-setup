@@ -5,7 +5,7 @@
   networking = {
     hostName = "nixos"; # Nazwa hosta
     networkmanager.enable = true; # Włącz internet
-    wireless.enable = false;  # Włącz WIFI
+    wireless.enable = false;  # Włącz wsparcie WIFI
     firewall.enable = false; # Zapora sieciowa
     dhcpcd.wait = "background"; # Nie czekaj na internet by uruchomić system
     dhcpcd.extraConfig = "noarp";

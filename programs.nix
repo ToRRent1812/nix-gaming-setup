@@ -3,77 +3,87 @@
 {
 # Programy zainstalowane dla wszystkich użytkowników, które nie posiadają modułów wbudowanych w nix (sekcja programs)
   environment.systemPackages = with pkgs; [
-  # System
-  nur.repos.novel2430.zen-browser-bin  # Przeglądarka
-  kitty             # Ulubiony terminal
-  gtk3         # GUI Potrzebne do niektórych programów
-  github-desktop
-  #dotnetCorePackages.dotnet_8.sdk
-  sublime4          # Najlepszy edytor tekstu
-  vscode-fhs          # Programowanie
-  adwaita-icon-theme # Ikony dla aplikacji GTK4
-  epapirus-icon-theme
-  hugo              # Strona internetowa
-  onlyoffice-desktopeditors # Pakiet biurowy
-  #upscaler          # Upscale zdjęć
-  qbittorrent       # Torrenty czasem się przydają
-  rustdesk-flutter # Zdalny pulpit
-  qdirstat          # Analiza danych
-  #nettools          # narzędzia sieciowe
-  tealdeer          # tldr w konsoli
-  fastfetch
-  gparted
-# KDE Plazma
-  kdePackages.kdenlive # Do montażu
-  nur.repos.shadowrz.klassy-qt6 # Motyw Klassy, obecnie nie kompatybilne
-  avidemux          # Przycinanie filmów
-  haruna            # Oglądanie filmów
-  darkly
-  # Gaming tools
-  mangohud          # FPSY, temperatury
-  unstable.protonup-qt
-  winetricks
-  unstable.lutris   # Najnowszy lutris
-  unstable.heroic   # Najnowszy Heroic Games Launcher
-  adwsteamgtk       # Upiększ steam
-  nur.repos.rogreat.faugus-launcher
-  #unstable.nexusmods-app-unfree
-  r2modman # Mod manager
-  # Twitch/Youtube
-  cameractrls-gtk4       # Zarządzanie kamerą
-  chatterino2       # Czytam chat
-  audacious         # Muzyka
-  audacious-plugins # Pluginy
-  easyeffects       # Efekty mikrofonu
-  scrcpy            # Przechwyć wideo z telefonu
-  sqlitebrowser     # Przeglądaj bazę sqlite
-  # Gry
-  vcmi		    # Heroes 3
-  bs-manager 	    # Beat Saber Launcher
-  unstable.fheroes2 # Heroes 2
-  (tetrio-desktop.override {withTetrioPlus = true;})
-#Emulacja
-  unstable.rpcs3
+  
+  ## System
+  nur.repos.novel2430.zen-browser-bin   # Przeglądarka
+  hunspell                              # Sprawdzanie pisowni
+  hunspellDicts.pl-pl                   # Polski słownik
+  hunspellDicts.en_US                   # Angielski słownik
+  kitty                                 # Ulubiony terminal
+  gtk3                                  # GUI Potrzebne do niektórych programów
+  sublime4                              # Najlepszy edytor tekstu
+  adwaita-icon-theme                    # Ikony dla aplikacji GTK4, np. do lutrisa
+  epapirus-icon-theme                   # Ikony systemowe
+  onlyoffice-desktopeditors             # Pakiet biurowy
+  poedit                                # Program do tłumaczeń
+  qbittorrent                           # Torrenty czasem się przydają
+  rustdesk-flutter                      # Microsoft India Support
+  qdirstat                              # Analiza dysków
+  #nettools                             # narzędzia sieciowe potrzebne do zerotiera
+  tealdeer                              # tldr w konsoli
+  fastfetch                             # Informacje o systemie w terminalu
+  gparted                               # Partycjonowanie dysków
+
+  ## KDE Plazma
+  kdePackages.kdenlive                  # Do Edycji wideo
+  nur.repos.shadowrz.klassy-qt6         # Motyw Klassy
+  avidemux                              # Przycinanie filmów
+  haruna                                # Oglądanie filmów
+  #darkly                               # Motyw Darkly
+
+  ## Narzędzia do gier
+  mangohud                              # FPSY, temperatury
+  unstable.protonup-qt                  # Aktualizacje proton-ge
+  winetricks                            # Do instalacji bibliotek w wine
+  unstable.lutris                       # Najnowszy lutris
+  unstable.heroic                       # Najnowszy Heroic Games Launcher
+  adwsteamgtk                           # Upiększ steam
+  nur.repos.rogreat.faugus-launcher     # Faugus Launcher
+  #unstable.nexusmods-app-unfree        # Nexus Mods do modowania gier
+  r2modman                              # Mod manager do Risk Of Rain 2 i innych
+
+  ## Twitch/Youtube
+  cameractrls-gtk4                      # Zarządzanie kamerą
+  chatterino2                           # Czytam chat
+  (audacious.override {withPlugins = true;}) # Muzyka
+  easyeffects                           # Efekty mikrofonu/słuchawek
+  scrcpy                                # Przechwyć obraz z telefonu
+  sqlitebrowser                         # Przeglądaj bazę sqlite
+
+  ## Gry
+  vcmi                                  # Heroes 3
+  bs-manager                            # Beat Saber Launcher
+  unstable.fheroes2                     # Heroes 2
+  (tetrio-desktop.override {withTetrioPlus = true;}) # Tetris io
+
+  ## Emulacja
+  unstable.rpcs3                        # PS3
+  duckstation                           # PS1
   #ps3-disk-dumper
-  #unstable.pcsx2
-  #shadps4
-  #dolphin-emu
-  #ppsspp
-  unstable.xemu
-  unstable.xenia-canary
-  #fceux
-  # Komunikacja
-  (discord.override { withOpenASAR = true; withVencord = true; })
-  discord-rpc       # Rich presence
-  caprine           # Messenger
-  teamspeak3        # TS3
-# Pytong dla kdenlive AI + programowanie 
-dotnet-sdk
-dotnet-runtime
-dotnet-aspnetcore
-(python3.withPackages (python-pkgs: with python-pkgs; [
+  unstable.pcsx2                        # PS2
+  #shadps4                              # PS4
+  dolphin-emu                           # GameCube i Wii
+  ppsspp                                # PSP 
+  unstable.xemu                         # Xbox
+  unstable.xenia-canary                 # Xbox 360
+  #fceux                                # NES
+  
+  ## Komunikacja
+  (discord.override { withOpenASAR = true; withVencord = true; }) # Discord z vencord i openasar
+  discord-rpc                           # Rich presence
+  caprine                               # Messenger
+  teamspeak3                            # TS3
+
+  ## Programowanie + biblioteki do kdenlive AI
+  github-desktop                        # GitHub       
+  vscode-fhs                            # Programowanie
+  hugo                                  # Do strony internetowej
+  dotnet-sdk
+  dotnet-runtime
+  dotnet-aspnetcore
+  (python3.withPackages (python-pkgs: with python-pkgs; [
         pip
-	pygobject3
+	      pygobject3
         openai-whisper
         srt
         torch
@@ -90,13 +100,13 @@ environment.variables = rec { # Naprawia integracje systemu z GTK (Np Zen browse
   }; 
 
 programs = {
-    kdeconnect.enable = true; # KDE Connect
-    firefox.enable = false; # Wyłącz Instalację Firefox
-    thunderbird.enable = true; # Aktywuj mozilla thunderbird
-    steam = { # Włącz steam
-      enable = true;
-      protontricks.enable = true; # Włącz wsparcie protontricks
-      remotePlay.openFirewall = true; # Steam Remote Play
+    kdeconnect.enable = true;           # Dodaj KDE Connect
+    firefox.enable = false;             # Wyłącz Instalację Firefox
+    thunderbird.enable = true;          # Dodaj mozilla thunderbird
+    steam = { 
+      enable = true;                    # Włącz steam
+      protontricks.enable = true;       # dodaj protontricks
+      remotePlay.openFirewall = true;   # Steam Remote Play
       dedicatedServer.openFirewall = true; # Otwórz porty dla Source Dedicated Server
       localNetworkGameTransfers.openFirewall = true; # Otwórz porty dla Steam Local Network Game Transfers
       extest.enable = true; # Tłumacz kliknięcia X11 na wayland dla steaminput
@@ -108,11 +118,19 @@ programs = {
       capSysNice = true;
     };
 
-    obs-studio = { # Włącz wsparcie Obs-studio
+    obs-studio = { # Dodaj Obs-studio
       enable = true;
-      package = pkgs.unstable.obs-studio;
+      package = pkgs.unstable.obs-studio; # Wersja niestabilna dopóki aitum-multistream nie jest w stabilnej
       enableVirtualCamera = true;
-      plugins = with pkgs.unstable.obs-studio-plugins; [ waveform obs-vkcapture obs-tuna obs-text-pthread obs-pipewire-audio-capture obs-gstreamer obs-aitum-multistream];
+      plugins = with pkgs.unstable.obs-studio-plugins; [ # Lista pluginów
+        waveform
+        obs-vkcapture
+        obs-tuna
+        obs-text-pthread
+        obs-pipewire-audio-capture
+        obs-gstreamer
+        obs-aitum-multistream
+        ];
     };
 };
 }

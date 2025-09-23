@@ -3,15 +3,17 @@
 {
 # Wszystko strikte związane z VR
     services.wivrn = {
-      enable = true;
+      enable = true; # Dodaj WiVRN
       openFirewall = true;
       defaultRuntime = true;
+      #highPriority = true;
       autoStart = false;
+      #steam.importOXRRuntimes = true;
       extraPackages = [pkgs.xrizer];
     };
 
     programs.alvr = {
-        enable = true;
+        enable = true; # Dodaj ALVR
         openFirewall = true;
     };
 }
