@@ -6,9 +6,9 @@
       enable = true; # Dodaj WiVRN
       openFirewall = true;
       defaultRuntime = true;
-      #highPriority = true;
+      highPriority = true;
       autoStart = false;
-      #steam.importOXRRuntimes = true;
+      steam.importOXRRuntimes = true;
     };
 
     programs.alvr = {

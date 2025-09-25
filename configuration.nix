@@ -87,16 +87,11 @@
 
     cdemu = {  # Włącz wsparcie płyt i ich montowania
       enable = true;
-      gui = false;
+      gui = true;
       group = "wheel";
     };
 
-    nix-ld = { #Tutaj można dodać brakujące biblioteki dla aplikacji które pobraliśmy z sieci
-      enable = true;
-      #libraries = with pkgs; [
-      #
-      #];
-    };
+    nix-ld.enable = true; # Pozwala ładować statyczne bibloteki. Użyteczne jak ściągasz gotowe linuxowe gry i programy.
 
     nh = { #Rozszerzenie komend nixos
       enable = true;
@@ -118,13 +113,12 @@
       syntaxHighlighting.enable = true; # Włącz podświetlanie składni
       enableLsColors = true;          # Włącz kolory w ls
       shellAliases = {                # Aliasy komend
-        nswitch = "sudo nh os switch -f '<nixpkgs/nixos>'";
-        nboot = "sudo nh os boot -f '<nixpkgs/nixos>'";
+        nswitch = "nh os switch --ask -f '<nixpkgs/nixos>'";
+        nboot = "nh os boot --ask -f '<nixpkgs/nixos>'";
         nref = "sudo nix-channel --update -v";
         nrep = "sudo nix-channel --repair";
-        nup = "tldr --update && nref && sudo nh os boot -f '<nixpkgs/nixos>' --update";
-        nlive = "tldr --update && nref && sudo nh os switch -f '<nixpkgs/nixos>' --update";
-        ngarbo = "sudo nix-collect-garbage -d 7";
+        nup = "tldr --update && nref && sudo nh os boot --ask -f '<nixpkgs/nixos>'";
+        nlive = "tldr --update && nref && sudo nh os switch --ask -f '<nixpkgs/nixos>'";
         game = "sudo /run/current-system/sw/bin/sh -c 'echo high > /sys/class/drm/card1/device/power_dpm_force_performance_level'";
         pbot = "/home/rabbit/Dokumenty/STREAM/PhantomBot/launch.sh";
         kitty-themes = "kitty +kitten themes";
@@ -133,7 +127,7 @@
         zero = "sudo zerotier-cli";
         zero-fix = "sudo route add -host 255.255.255.255 dev ztks575eoa && route -n && sudo zerotier-cli status";
       };
-      histSize = 30000;              # Rozmiar historii
+      histSize = 30000; # Rozmiar historii
       ohMyZsh = { # Włącz i ustaw oh-my-zsh
         enable = true;
         plugins = [ "git" "command-not-found" ];
@@ -148,9 +142,9 @@
     };
   };
 
-  # Wersja systemu. By dokonać dużej aktualizacji, zmień stateVersion a następnie wpisz w terminal. 
-  # Zmiana stateVersion spowoduje że config może być niekompatybilny z nową wersją i będzie wymagać manualnej interwencji.
-  # Możesz też zmienić tylko kanał a zostawić stateVersion, ale to może powodować błędy na dłuższą metę.
+  # Wersja startowa systemu. By dokonać dużej aktualizacji, wpisz w terminal.
   # sudo nix-channel --add https://channels.nixos.org/nixos-25.05 nixos
+  # Zmiana stateVersion spowoduje że config może być niekompatybilny z nową wersją i będzie wymagać manualnej interwencji. Nie musisz zmieniać stateVersion by zaktualizować Nixos.
+  # Jeżeli będziesz po latach instalować NixOS z tym configiem, to koniecznie użyj iso z tą samą wersją jako start.
   system.stateVersion = "25.05";
 }

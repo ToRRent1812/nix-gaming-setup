@@ -22,7 +22,6 @@
   tealdeer                              # tldr w konsoli
   fastfetch                             # Informacje o systemie w terminalu
   gparted                               # Partycjonowanie dysków
-  qpwgraph                              # Wizualne routowanie dźwięku
 
   ## KDE Plazma
   kdePackages.kdenlive                  # Do Edycji wideo
@@ -83,10 +82,8 @@
   dotnet-aspnetcore
   gtk3                                  # GUI Potrzebne do niektórych programów
   gtk4
-  gobject-introspection
   (python3.withPackages (python-pkgs: with python-pkgs; [
         pip
-        pygobject3
         openai-whisper
         srt
         torch
