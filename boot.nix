@@ -43,17 +43,4 @@
         powertop.enable = true;
         cpuFreqGovernor = "performance"; #power, performance, ondemand
   };
-
-  # Wysoka wydajność AMD GPU
-  systemd.services.highgpu = {
-    enable = true;
-    wantedBy = [ "default.target" ];
-    after = [ "graphical.target" ];
-    description = "AMD GPU set to High";
-
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = "sudo /run/current-system/sw/bin/sh -c 'echo high > /sys/class/drm/card1/device/power_dpm_force_performance_level'";
-    };
-  };
 }

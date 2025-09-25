@@ -10,7 +10,6 @@
   hunspellDicts.pl-pl                   # Polski słownik
   hunspellDicts.en_US                   # Angielski słownik
   kitty                                 # Ulubiony terminal
-  gtk3                                  # GUI Potrzebne do niektórych programów
   sublime4                              # Najlepszy edytor tekstu
   adwaita-icon-theme                    # Ikony dla aplikacji GTK4, np. do lutrisa
   epapirus-icon-theme                   # Ikony systemowe
@@ -23,6 +22,7 @@
   tealdeer                              # tldr w konsoli
   fastfetch                             # Informacje o systemie w terminalu
   gparted                               # Partycjonowanie dysków
+  qpwgraph                              # Wizualne routowanie dźwięku
 
   ## KDE Plazma
   kdePackages.kdenlive                  # Do Edycji wideo
@@ -81,9 +81,12 @@
   dotnet-sdk
   dotnet-runtime
   dotnet-aspnetcore
+  gtk3                                  # GUI Potrzebne do niektórych programów
+  gtk4
+  gobject-introspection
   (python3.withPackages (python-pkgs: with python-pkgs; [
         pip
-	      pygobject3
+        pygobject3
         openai-whisper
         srt
         torch

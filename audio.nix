@@ -14,9 +14,10 @@
       extraConfig.pipewire."92-low-latency" = { # Niskie opóźnienie
         "context.properties" = {
           "default.clock.rate" = 48000;
-          "default.clock.quantum" = 32;
-          "default.clock.min-quantum" = 32;
-          "default.clock.max-quantum" = 32;
+	  #"default.clock.allowed-rates = [ 44100 48000 ];
+          "default.clock.quantum" = 96;
+          "default.clock.min-quantum" = 96;
+          "default.clock.max-quantum" = 480;
         };
       };
       extraConfig.pipewire-pulse."92-low-latency" = {
@@ -24,16 +25,16 @@
         {
           name = "libpipewire-module-protocol-pulse";
           args = {
-            pulse.min.req = "32/48000";
-            pulse.default.req = "32/48000";
-            pulse.max.req = "32/48000";
-            pulse.min.quantum = "32/48000";
-            pulse.max.quantum = "32/48000";
+            pulse.min.req = "96/48000";
+            pulse.default.req = "96/48000";
+            pulse.max.req = "480/48000";
+            pulse.min.quantum = "96/48000";
+            pulse.max.quantum = "480/48000";
           };
         }
         ];
         stream.properties = {
-          node.latency = "32/48000";
+          node.latency = "96/48000";
           resample.quality = 10;
         };
       };

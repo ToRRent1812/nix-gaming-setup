@@ -1,8 +1,5 @@
 { config, lib, pkgs, ... }:
 
-let
-  #unstableTarball = fetchTarball https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz; #Dodaj repozytorium Bleeding Edge
-in
 {
   imports =
     [ # Inne configi do zaimportowania
@@ -33,11 +30,11 @@ in
 
   # Automatyczne czyszczenie staroci
   nix = {
-    gc = {
-      automatic = true;
-      dates = "daily";
-      options = "--delete-older-than 14d"; # Usuwaj generacje starsze niż 14 dni
-    };
+    #gc = {
+    #  automatic = true;
+    #  dates = "daily";
+    #  options = "--delete-older-than 14d"; # Usuwaj generacje starsze niż 14 dni
+    #};
     settings = {
       auto-optimise-store = true;
       experimental-features = [ "nix-command" ];
@@ -101,6 +98,12 @@ in
       #];
     };
 
+    nh = { #Rozszerzenie komend nixos
+      enable = true;
+      clean.enable = true; # Włącz automatyczne czyszczenie
+      clean.extraArgs = "--keep-since 14d --keep 7"; # Utrzymaj generacje z ostatnich 14 dni i 7 najnowszych
+    };
+
     appimage.enable = true;           # Włącz wsparcie AppImage
     appimage.binfmt = true; 
     java.enable = true;               # Włącz wsparcie java
@@ -115,15 +118,20 @@ in
       syntaxHighlighting.enable = true; # Włącz podświetlanie składni
       enableLsColors = true;          # Włącz kolory w ls
       shellAliases = {                # Aliasy komend
-        nup = "tldr --update && sudo nix-channel --update && sudo nixos-rebuild boot --upgrade";
-        nlive = "tldr --update && sudo nix-channel --update && sudo nixos-rebuild switch --upgrade";
-        nref = "sudo nix-channel --update";
+        nswitch = "sudo nh os switch -f '<nixpkgs/nixos>'";
+        nboot = "sudo nh os boot -f '<nixpkgs/nixos>'";
+        nref = "sudo nix-channel --update -v";
+        nrep = "sudo nix-channel --repair";
+        nup = "tldr --update && nref && sudo nh os boot -f '<nixpkgs/nixos>' --update";
+        nlive = "tldr --update && nref && sudo nh os switch -f '<nixpkgs/nixos>' --update";
+        ngarbo = "sudo nix-collect-garbage -d 7";
+        game = "sudo /run/current-system/sw/bin/sh -c 'echo high > /sys/class/drm/card1/device/power_dpm_force_performance_level'";
         pbot = "/home/rabbit/Dokumenty/STREAM/PhantomBot/launch.sh";
         kitty-themes = "kitty +kitten themes";
         errors = "journalctl -p 3";
         kimsufi = "kitty +kitten ssh debian@54.38.195.168";
-        zero="sudo zerotier-cli";
-        zero-fix="sudo route add -host 255.255.255.255 dev ztks575eoa && route -n && sudo zerotier-cli status";
+        zero = "sudo zerotier-cli";
+        zero-fix = "sudo route add -host 255.255.255.255 dev ztks575eoa && route -n && sudo zerotier-cli status";
       };
       histSize = 30000;              # Rozmiar historii
       ohMyZsh = { # Włącz i ustaw oh-my-zsh

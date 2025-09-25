@@ -9,11 +9,11 @@
       #highPriority = true;
       autoStart = false;
       #steam.importOXRRuntimes = true;
-      extraPackages = [pkgs.xrizer];
     };
 
     programs.alvr = {
         enable = true; # Dodaj ALVR
         openFirewall = true;
+        package = pkgs.unstable.alvr;
     };
 }
