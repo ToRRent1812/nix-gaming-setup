@@ -22,6 +22,9 @@
   tealdeer                              # tldr w konsoli
   fastfetch                             # Informacje o systemie w terminalu
   gparted                               # Partycjonowanie dysków
+  qpwgraph                              # Wizualny edytor połączeń dźwiękowych
+  p7zip                                 # Terminalowy 7-zip potrzebny do Gamma-launcher
+  unrar                                 # Terminalowy rar/unrar potrzebny do Gamma-launcher
 
   ## KDE Plazma
   kdePackages.kdenlive                  # Do Edycji wideo
@@ -39,7 +42,8 @@
   adwsteamgtk                           # Upiększ steam
   nur.repos.rogreat.faugus-launcher     # Faugus Launcher
   #unstable.nexusmods-app-unfree        # Nexus Mods do modowania gier
-  r2modman                              # Mod manager do Risk Of Rain 2 i innych
+  unstable.r2modman                     # Mod manager do Risk Of Rain 2 i innych
+  wineWowPackages.stable		# wine stabilny
 
   ## Twitch/Youtube
   cameractrls-gtk4                      # Zarządzanie kamerą
@@ -47,24 +51,26 @@
   (audacious.override {withPlugins = true;}) # Muzyka
   easyeffects                           # Efekty mikrofonu/słuchawek
   scrcpy                                # Przechwyć obraz z telefonu
-  sqlitebrowser                         # Przeglądaj bazę sqlite
+  sqlitebrowser                         # Przeglądaj bazę sqlite\
 
   ## Gry
-  vcmi                                  # Heroes 3
+  unstable.vcmi                         # Heroes 3
   bs-manager                            # Beat Saber Launcher
   unstable.fheroes2                     # Heroes 2
+  nur.repos.ataraxiasjel.gamma-launcher # Stalker Gamma
+  urbanterror                           # Urban Terror
   (tetrio-desktop.override {withTetrioPlus = true;}) # Tetris io
 
   ## Emulacja
   unstable.rpcs3                        # PS3
   duckstation                           # PS1
-  #ps3-disk-dumper
   unstable.pcsx2                        # PS2
   #shadps4                              # PS4
   dolphin-emu                           # GameCube i Wii
   ppsspp                                # PSP 
   unstable.xemu                         # Xbox
   unstable.xenia-canary                 # Xbox 360
+  mednaffe                              # TurboGrafx/Sega Genesis
   #fceux                                # NES
   
   ## Komunikacja
@@ -80,9 +86,9 @@
   dotnet-sdk
   dotnet-runtime
   dotnet-aspnetcore
-  gtk3                                  # GUI Potrzebne do niektórych programów
-  gtk4
-  (python3.withPackages (python-pkgs: with python-pkgs; [
+  gtk3
+  love
+  (python3.withPackages (python-pkgs: with python-pkgs; [ # Do kdenlive AI
         pip
         openai-whisper
         srt
@@ -113,7 +119,7 @@ programs = {
       #extraCompatPackages = [ pkgs.proton-ge-bin ]; # Dodaje auto-aktualizowany proton-ge
     };
 
-    gamescope = { # Włącz/wyłącz wsparcie Gamescope
+    gamescope = { # Włącz/wyłącz sesje Gamescope
       enable = false;
       capSysNice = true;
     };

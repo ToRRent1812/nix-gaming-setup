@@ -5,9 +5,10 @@
   boot = {
     loader.systemd-boot.enable = true;            # Użyj systemd-boot
     loader.efi.canTouchEfiVariables = true;
+    tmp.cleanOnBoot = true;			  # Czyszczenie TMP przy ładowaniu systemu
     kernelPackages = pkgs.linuxPackages_zen;      # Jądro ZEN dla graczy
     extraModulePackages = [ config.boot.kernelPackages.vhba ]; # Dodatkowe moduły/sterowniki jądra
-    kernelParams = [ "usbcore.autosuspend=600" "mitigations=off" ]; # Parametry jądra
+    kernelParams = [ "nohibernate" "usbcore.autosuspend=600" "mitigations=off" ]; # Parametry jądra
     kernel.sysctl = {
       "kernel.split_lock_mitigate" = 0;           # Wyłącza split_lock, rekomendowane do gier
       "vm.max_map_count" = 2147483642;            # Jak w SteamOS, niemal maksymalny możliwy map_count
@@ -41,6 +42,6 @@
   powerManagement = {
         enable = true;
         powertop.enable = true;
-        cpuFreqGovernor = "performance"; #power, performance, ondemand
+        cpuFreqGovernor = "ondemand"; #power, performance, ondemand
   };
 }

@@ -96,7 +96,7 @@
     nh = { #Rozszerzenie komend nixos
       enable = true;
       clean.enable = true; # Włącz automatyczne czyszczenie
-      clean.extraArgs = "--keep-since 14d --keep 7"; # Utrzymaj generacje z ostatnich 14 dni i 7 najnowszych
+      clean.extraArgs = "--keep-since 10d --keep 7"; # Utrzymaj generacje z ostatnich 10 dni i 7 najnowszych
     };
 
     appimage.enable = true;           # Włącz wsparcie AppImage
@@ -117,8 +117,8 @@
         nboot = "nh os boot --ask -f '<nixpkgs/nixos>'";
         nref = "sudo nix-channel --update -v";
         nrep = "sudo nix-channel --repair";
-        nup = "tldr --update && nref && sudo nh os boot --ask -f '<nixpkgs/nixos>'";
-        nlive = "tldr --update && nref && sudo nh os switch --ask -f '<nixpkgs/nixos>'";
+        nup = "tldr --update && nref && nboot";
+        nlive = "tldr --update && nref && nswitch";
         game = "sudo /run/current-system/sw/bin/sh -c 'echo high > /sys/class/drm/card1/device/power_dpm_force_performance_level'";
         pbot = "/home/rabbit/Dokumenty/STREAM/PhantomBot/launch.sh";
         kitty-themes = "kitty +kitten themes";

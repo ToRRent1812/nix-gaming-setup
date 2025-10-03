@@ -1,6 +1,21 @@
 { config, lib, pkgs, ... }:
-
 {
+  systemd.services.nixChannelUpdate = {
+    description = "Weekly refresh";
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = [ "${pkgs.nix}/bin/nix-channel --update" ];
+    };
+  };
+
+  systemd.timers.nixChannelUpdate = {
+    description = "Weekly refresh";
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = "weekly";
+      Persistent = true;
+    };
+  };
 # Usługi
   services = {
     fwupd.enable = true; # Włącz wsparcie aktualizatora firmware
