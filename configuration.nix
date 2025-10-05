@@ -79,7 +79,7 @@
 
   xdg.terminal-exec = {
     enable = true;
-    settings.default = ["kitty.desktop"]; # Ustaw kitty jako domyślny terminal
+    settings.default = ["konsole.desktop"]; # Ustaw kitty jako domyślny terminal
   };
 
   # Wbudowane w nixos moduły programów i ich opcje. Programy użytkowe są w programs.nix
@@ -123,7 +123,7 @@
         pbot = "/home/rabbit/Dokumenty/STREAM/PhantomBot/launch.sh";
         kitty-themes = "kitty +kitten themes";
         errors = "journalctl -p 3";
-        kimsufi = "kitty +kitten ssh debian@54.38.195.168";
+        kimsufi = "ssh debian@54.38.195.168";
         zero = "sudo zerotier-cli";
         zero-fix = "sudo route add -host 255.255.255.255 dev ztks575eoa && route -n && sudo zerotier-cli status";
       };

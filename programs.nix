@@ -9,15 +9,14 @@
   hunspell                              # Sprawdzanie pisowni
   hunspellDicts.pl-pl                   # Polski słownik
   hunspellDicts.en_US                   # Angielski słownik
-  kitty                                 # Ulubiony terminal
   sublime4                              # Najlepszy edytor tekstu
   adwaita-icon-theme                    # Ikony dla aplikacji GTK4, np. do lutrisa
   epapirus-icon-theme                   # Ikony systemowe
   onlyoffice-desktopeditors             # Pakiet biurowy
   poedit                                # Program do tłumaczeń
   qbittorrent                           # Torrenty czasem się przydają
-  rustdesk-flutter                      # Microsoft India Support
-  qdirstat                              # Analiza dysków
+  rustdesk	                        # Microsoft India Support
+  qdirstat        	                # Analiza dysków
   #nettools                             # narzędzia sieciowe potrzebne do zerotiera
   tealdeer                              # tldr w konsoli
   fastfetch                             # Informacje o systemie w terminalu
@@ -65,7 +64,7 @@
   unstable.rpcs3                        # PS3
   duckstation                           # PS1
   unstable.pcsx2                        # PS2
-  #shadps4                              # PS4
+  shadps4                              # PS4
   dolphin-emu                           # GameCube i Wii
   ppsspp                                # PSP 
   unstable.xemu                         # Xbox
@@ -87,7 +86,6 @@
   dotnet-runtime
   dotnet-aspnetcore
   gtk3
-  love
   (python3.withPackages (python-pkgs: with python-pkgs; [ # Do kdenlive AI
         pip
         openai-whisper
@@ -116,7 +114,7 @@ programs = {
       dedicatedServer.openFirewall = true; # Otwórz porty dla Source Dedicated Server
       localNetworkGameTransfers.openFirewall = true; # Otwórz porty dla Steam Local Network Game Transfers
       extest.enable = true; # Tłumacz kliknięcia X11 na wayland dla steaminput
-      #extraCompatPackages = [ pkgs.proton-ge-bin ]; # Dodaje auto-aktualizowany proton-ge
+      extraCompatPackages = [ pkgs.proton-ge-bin ]; # Dodaje auto-aktualizowany proton-ge
     };
 
     gamescope = { # Włącz/wyłącz sesje Gamescope
