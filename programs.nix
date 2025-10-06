@@ -15,13 +15,14 @@
   onlyoffice-desktopeditors             # Pakiet biurowy
   poedit                                # Program do tłumaczeń
   qbittorrent                           # Torrenty czasem się przydają
-  rustdesk	                        # Microsoft India Support
-  qdirstat        	                # Analiza dysków
+  rustdesk                              # Microsoft India Support
+  qdirstat                              # Analiza dysków
   #nettools                             # narzędzia sieciowe potrzebne do zerotiera
   tealdeer                              # tldr w konsoli
   fastfetch                             # Informacje o systemie w terminalu
   gparted                               # Partycjonowanie dysków
   qpwgraph                              # Wizualny edytor połączeń dźwiękowych
+  google-fonts                          # Paczka czcionek od Google Fonts
   p7zip                                 # Terminalowy 7-zip potrzebny do Gamma-launcher
   unrar                                 # Terminalowy rar/unrar potrzebny do Gamma-launcher
 
@@ -42,7 +43,7 @@
   nur.repos.rogreat.faugus-launcher     # Faugus Launcher
   #unstable.nexusmods-app-unfree        # Nexus Mods do modowania gier
   unstable.r2modman                     # Mod manager do Risk Of Rain 2 i innych
-  wineWowPackages.stable		# wine stabilny
+  wineWowPackages.stable                # wine stabilny
 
   ## Twitch/Youtube
   cameractrls-gtk4                      # Zarządzanie kamerą
@@ -64,7 +65,7 @@
   unstable.rpcs3                        # PS3
   duckstation                           # PS1
   unstable.pcsx2                        # PS2
-  shadps4                              # PS4
+  shadps4                               # PS4
   dolphin-emu                           # GameCube i Wii
   ppsspp                                # PSP 
   unstable.xemu                         # Xbox
@@ -86,6 +87,7 @@
   dotnet-runtime
   dotnet-aspnetcore
   gtk3
+  godot
   (python3.withPackages (python-pkgs: with python-pkgs; [ # Do kdenlive AI
         pip
         openai-whisper

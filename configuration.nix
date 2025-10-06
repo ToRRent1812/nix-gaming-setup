@@ -48,7 +48,7 @@
     OBS_VKCAPTURE_QUIET = 1;               # Wyłącz zbędne logi z vk capture do OBS Studio
   };
 
-  # Konto użytkownika.
+  # Konto użytkownika. Zmień rabbit na własny nick podany w instalacji. Zmień rabbit również w pliku services.nix, zakładka Displaymanager
   users.users.rabbit = {
     isNormalUser = true;
     description = "rabbit";
@@ -79,7 +79,7 @@
 
   xdg.terminal-exec = {
     enable = true;
-    settings.default = ["konsole.desktop"]; # Ustaw kitty jako domyślny terminal
+    settings.default = ["konsole.desktop"]; # Ustaw konsole jako domyślny terminal
   };
 
   # Wbudowane w nixos moduły programów i ich opcje. Programy użytkowe są w programs.nix
@@ -113,15 +113,15 @@
       syntaxHighlighting.enable = true; # Włącz podświetlanie składni
       enableLsColors = true;          # Włącz kolory w ls
       shellAliases = {                # Aliasy komend
-        nswitch = "nh os switch --ask -f '<nixpkgs/nixos>'";
-        nboot = "nh os boot --ask -f '<nixpkgs/nixos>'";
+        nswitch = "nh os switch -a -f '<nixpkgs/nixos>'";
+        nboot = "nh os boot -a -f '<nixpkgs/nixos>'";
         nref = "sudo nix-channel --update -v";
         nrep = "sudo nix-channel --repair";
+        ntest = "nix-shell -p";
         nup = "tldr --update && nref && nboot";
         nlive = "tldr --update && nref && nswitch";
         game = "sudo /run/current-system/sw/bin/sh -c 'echo high > /sys/class/drm/card1/device/power_dpm_force_performance_level'";
         pbot = "/home/rabbit/Dokumenty/STREAM/PhantomBot/launch.sh";
-        kitty-themes = "kitty +kitten themes";
         errors = "journalctl -p 3";
         kimsufi = "ssh debian@54.38.195.168";
         zero = "sudo zerotier-cli";

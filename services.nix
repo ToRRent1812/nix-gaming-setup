@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 {
-  systemd.services.nixChannelUpdate = {
+  systemd.services.nixChannelUpdate = { # Cotygodniowe odświeżenie serwera nix
     description = "Weekly refresh";
     serviceConfig = {
       Type = "oneshot";
@@ -8,12 +8,24 @@
     };
   };
 
-  systemd.timers.nixChannelUpdate = {
+  systemd.timers.nixChannelUpdate = { # Tygodniowa aktywacja powyższego odświeżenia
     description = "Weekly refresh";
     wantedBy = [ "timers.target" ];
     timerConfig = {
       OnCalendar = "weekly";
       Persistent = true;
+    };
+  };
+
+  systemd.services.gpuHigh = { # Wysoka wydajność karty graficznej radeon
+    description = "GPU High";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "default.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStartPre = [ "/bin/sleep 120" ]; # Odczekaj 2 minuty przed zmianą planu
+      ExecStart = [ "/run/current-system/sw/bin/sh -c 'echo high > /sys/class/drm/card1/device/power_dpm_force_performance_level'" ];
+      RemainAfterExit = true;
     };
   };
 # Usługi
