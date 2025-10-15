@@ -118,11 +118,11 @@
         nref = "sudo nix-channel --update -v";
         nrep = "sudo nix-channel --repair";
         ntest = "nix-shell -p";
-        nup = "tldr --update && nref && nboot";
-        nlive = "tldr --update && nref && nswitch";
+        nup = "tldr --update && sudo journalctl --vacuum-time=7d && nref && nboot";
+        nlive = "tldr --update && sudo journalctl --vacuum-time=7d && nref && nswitch";
         game = "sudo /run/current-system/sw/bin/sh -c 'echo high > /sys/class/drm/card1/device/power_dpm_force_performance_level'";
         pbot = "/home/rabbit/Dokumenty/STREAM/PhantomBot/launch.sh";
-        errors = "journalctl -p 3";
+        errors = "sudo journalctl --vacuum-time=7d && journalctl -p 3";
         kimsufi = "ssh debian@54.38.195.168";
         zero = "sudo zerotier-cli";
         zero-fix = "sudo route add -host 255.255.255.255 dev ztks575eoa && route -n && sudo zerotier-cli status";
