@@ -27,20 +27,20 @@
   unrar                                 # Terminalowy rar/unrar potrzebny do Gamma-launcher
 
   ## KDE Plazma
-  kdePackages.kdenlive                  # Do Edycji wideo
-  nur.repos.shadowrz.klassy-qt6         # Motyw Klassy
+  kdePackages.kdenlive                  # Do Edycji wideo  
+  nur.repos.shadowrz.klassy-qt6         # Dekoracje okien Klassy
   avidemux                              # Przycinanie filmów
   haruna                                # Oglądanie filmów
   #darkly                               # Motyw Darkly
 
   ## Narzędzia do gier
   mangohud                              # FPSY, temperatury
-  unstable.protonup-qt                  # Aktualizacje proton-ge
+  #unstable.protonup-qt                  # Aktualizacje proton-ge
   winetricks                            # Do instalacji bibliotek w wine
   unstable.lutris                       # Najnowszy lutris
   unstable.heroic                       # Najnowszy Heroic Games Launcher
   adwsteamgtk                           # Upiększ steam
-  nur.repos.rogreat.faugus-launcher     # Faugus Launcher
+  unstable.faugus-launcher		# Faugus Launcher
   #unstable.nexusmods-app-unfree        # Nexus Mods do modowania gier
   unstable.r2modman                     # Mod manager do Risk Of Rain 2 i innych
   wineWowPackages.stable                # wine stabilny
