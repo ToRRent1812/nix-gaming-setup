@@ -5,7 +5,7 @@
   environment.systemPackages = with pkgs; [
   
   ## System
-  nur.repos.novel2430.zen-browser-bin   # Przeglądarka
+  nur.repos.novel2430.zen-browser-bin   # Przeglądarka  
   hunspell                              # Sprawdzanie pisowni
   hunspellDicts.pl-pl                   # Polski słownik
   hunspellDicts.en_US                   # Angielski słownik
@@ -35,7 +35,7 @@
 
   ## Narzędzia do gier
   mangohud                              # FPSY, temperatury
-  #unstable.protonup-qt                  # Aktualizacje proton-ge
+  unstable.protonup-qt                  # Aktualizacje proton-ge
   winetricks                            # Do instalacji bibliotek w wine
   unstable.lutris                       # Najnowszy lutris
   unstable.heroic                       # Najnowszy Heroic Games Launcher
@@ -62,7 +62,7 @@
   (tetrio-desktop.override {withTetrioPlus = true;}) # Tetris io
 
   ## Emulacja
-  unstable.rpcs3                        # PS3
+  rpcs3                        # PS3
   duckstation                           # PS1
   unstable.pcsx2                        # PS2
   shadps4                               # PS4
@@ -87,7 +87,6 @@
   dotnet-runtime
   dotnet-aspnetcore
   gtk3
-  godot
   (python3.withPackages (python-pkgs: with python-pkgs; [ # Do kdenlive AI
         pip
         openai-whisper
@@ -116,7 +115,7 @@ programs = {
       dedicatedServer.openFirewall = true; # Otwórz porty dla Source Dedicated Server
       localNetworkGameTransfers.openFirewall = true; # Otwórz porty dla Steam Local Network Game Transfers
       extest.enable = true; # Tłumacz kliknięcia X11 na wayland dla steaminput
-      extraCompatPackages = [ pkgs.proton-ge-bin ]; # Dodaje auto-aktualizowany proton-ge
+      #extraCompatPackages = [ pkgs.unstable.proton-ge-bin ]; # Dodaje auto-aktualizowany proton-ge
     };
 
     gamescope = { # Włącz/wyłącz sesje Gamescope

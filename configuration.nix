@@ -25,6 +25,7 @@
     };
     permittedInsecurePackages = [ 
       "openssl-1.1.1w"          # Któryś program, chyba rustdesk tego tymczasowo wymaga
+      "mbedtls-2.28.10"
     ];
   };
 
@@ -96,7 +97,7 @@
     nh = { #Rozszerzenie komend nixos
       enable = true;
       clean.enable = true; # Włącz automatyczne czyszczenie
-      clean.extraArgs = "--keep-since 10d --keep 7"; # Utrzymaj generacje z ostatnich 10 dni i 7 najnowszych
+      clean.extraArgs = "--keep 5"; # Utrzymaj ostanie 5 generacji na dysku
     };
 
     appimage.enable = true;           # Włącz wsparcie AppImage
@@ -113,8 +114,8 @@
       syntaxHighlighting.enable = true; # Włącz podświetlanie składni
       enableLsColors = true;          # Włącz kolory w ls
       shellAliases = {                # Aliasy komend
-        nswitch = "nh os switch -a -f '<nixpkgs/nixos>'";
-        nboot = "nh os boot -a -f '<nixpkgs/nixos>'";
+        nswitch = "tldr --update && sudo journalctl --vacuum-time=7d && nh os switch -a -f '<nixpkgs/nixos>'";
+        nboot = "tldr --update && sudo journalctl --vacuum-time=7d && nh os boot -a -f '<nixpkgs/nixos>'";
         nref = "sudo nix-channel --update -v";
         nrep = "sudo nix-channel --repair";
         ntest = "nix-shell -p";
