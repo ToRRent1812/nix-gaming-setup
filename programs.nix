@@ -118,8 +118,8 @@ programs = {
       #extraCompatPackages = [ pkgs.unstable.proton-ge-bin ]; # Dodaje auto-aktualizowany proton-ge
     };
 
-    gamescope = { # Włącz/wyłącz sesje Gamescope
-      enable = false;
+    gamescope = { # Włącz/wyłącz Gamescope
+      enable = true;
       capSysNice = true;
     };
 

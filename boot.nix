@@ -38,6 +38,8 @@
     algorithm = "lz4";
   };
 
+  services.swapspace.enable = true; #Automatyczne zarządzanie partycjami SWAP gdy są konieczne
+
   # Profil zasilania CPU
   powerManagement = {
         enable = true;

@@ -39,7 +39,8 @@
     };
 
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/e5c6ac95-c755-413c-8069-c5f29237c6d3"; }
+    [ { device = "/dev/disk/by-uuid/e5c6ac95-c755-413c-8069-c5f29237c6d3";
+	options = [ "discard" ]; } #Nie zajeżdzaj mocno SSD gdy jest na nim swap
     ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking

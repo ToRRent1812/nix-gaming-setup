@@ -93,6 +93,8 @@
     };
 
     nix-ld.enable = true; # Pozwala ładować statyczne bibloteki. Użyteczne jak ściągasz gotowe linuxowe gry i programy.
+    nix-ld.libraries = with pkgs; [
+    ];
 
     nh = { #Rozszerzenie komend nixos
       enable = true;
