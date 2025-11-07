@@ -18,11 +18,11 @@
   };
 # Usługi
   services = {
-    fwupd.enable = true; # Włącz wsparcie aktualizatora firmware
-    xserver.enable = false; # Włącz X11. Wyłącz by zostawić tylko Wayland
+    fwupd.enable = true;          # Włącz wsparcie aktualizatora firmware
+    xserver.enable = false;       # Włącz sesję X11. Wyłącz by zostawić tylko Wayland
     passSecretService.package = pkgs.libsecret; # Wsparcie dla menedżera haseł, wymagane do niektórych programów
-    passSecretService.enable = true; # Włącz wsparcie dla menedżera haseł
-    envfs.enable = true;
+    passSecretService.enable = true;  # Włącz wsparcie dla menedżera haseł
+    envfs.enable = true;              # Wsparcie dla envfs, wymagane do niektórych programów
 
     xserver.xkb = { # Polska klawiatura
       layout = "pl";
@@ -32,9 +32,9 @@
     displayManager = {
       sddm.enable = true; # Plasma login manager
       sddm.wayland.enable = true; # Włącz SDDM w trybie Wayland
-      autoLogin.user = "rabbit";
-      autoLogin.enable = true;
-      defaultSession = "plasma"; # Plasma-wayland jako default
+      autoLogin.user = "rabbit";  # Użytkownik do automatycznego logowania
+      autoLogin.enable = true;    # Włącz automatyczne logowanie
+      defaultSession = "plasma";  # Plasma-wayland jako default
 
     };
     desktopManager.plasma6.enable = true; # Plasma 6
@@ -42,7 +42,7 @@
     printing.enable = false; # Wsparcie drukarek
 
     libinput.enable = false; # Wsparcie touchpadów
-    # Kontrolery https://gitlab.com/fabiscafe/game-devices-udev
+    # Wsparcie kontrolerów https://gitlab.com/fabiscafe/game-devices-udev
     udev.extraRules = ''
       # 8BitDo Generic Device
 ## This rule applies to many 8BitDo devices.

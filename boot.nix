@@ -4,8 +4,8 @@
 # Bootloader
   boot = {
     loader.systemd-boot.enable = true;            # Użyj systemd-boot
-    loader.efi.canTouchEfiVariables = true;
-    tmp.cleanOnBoot = true;			  # Czyszczenie TMP przy ładowaniu systemu
+    loader.efi.canTouchEfiVariables = true;       # Pozwól na modyfikację zmiennych EFI
+    tmp.cleanOnBoot = true;                       # Czyszczenie TMP przy ładowaniu systemu
     kernelPackages = pkgs.linuxPackages_zen;      # Jądro ZEN dla graczy
     extraModulePackages = [ config.boot.kernelPackages.vhba ]; # Dodatkowe moduły/sterowniki jądra
     kernelParams = [ "nohibernate" "usbcore.autosuspend=600" "mitigations=off" ]; # Parametry jądra
@@ -17,7 +17,7 @@
       "kernel.sched_cfs_bandwidth_slice_us" = 3000; # Krótszy czas przydzielania CPU na proces
       "net.ipv4.tcp_fin_timeout" = 5;               # Szybsze zamykanie połączeń TCP
       "vm.dirty_ratio" = 3;                       # To oraz opcje niżej przyspieszają kopiowanie na pendrive
-      "vm.dirty_bytes" = 50331648;
+      "vm.dirty_bytes" = 50331648; 
       "vm.dirty_background_bytes" = 16777216;
       "vm.dirty_background_ratio" = 2;
       "vm.dirty_expire_centisecs" = 3000;
@@ -37,7 +37,6 @@
     enable = true;
     algorithm = "lz4";
   };
-
   services.swapspace.enable = true; #Automatyczne zarządzanie partycjami SWAP gdy są konieczne
 
   # Profil zasilania CPU

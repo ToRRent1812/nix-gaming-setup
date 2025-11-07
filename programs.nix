@@ -17,7 +17,6 @@
   qbittorrent                           # Torrenty czasem się przydają
   rustdesk                              # Microsoft India Support
   qdirstat                              # Analiza dysków
-  #nettools                             # narzędzia sieciowe potrzebne do zerotiera
   tealdeer                              # tldr w konsoli
   fastfetch                             # Informacje o systemie w terminalu
   gparted                               # Partycjonowanie dysków
@@ -40,7 +39,7 @@
   unstable.lutris                       # Najnowszy lutris
   unstable.heroic                       # Najnowszy Heroic Games Launcher
   adwsteamgtk                           # Upiększ steam
-  unstable.faugus-launcher		# Faugus Launcher
+  unstable.faugus-launcher		          # Faugus Launcher
   #unstable.nexusmods-app-unfree        # Nexus Mods do modowania gier
   unstable.r2modman                     # Mod manager do Risk Of Rain 2 i innych
   wineWowPackages.stable                # wine stabilny
@@ -51,7 +50,7 @@
   (audacious.override {withPlugins = true;}) # Muzyka
   easyeffects                           # Efekty mikrofonu/słuchawek
   scrcpy                                # Przechwyć obraz z telefonu
-  sqlitebrowser                         # Przeglądaj bazę sqlite\
+  sqlitebrowser                         # Przeglądaj bazę sqlite
 
   ## Gry
   unstable.vcmi                         # Heroes 3
@@ -62,7 +61,7 @@
   (tetrio-desktop.override {withTetrioPlus = true;}) # Tetris io
 
   ## Emulacja
-  rpcs3                        # PS3
+  unstable.rpcs3                        # PS3
   duckstation                           # PS1
   unstable.pcsx2                        # PS2
   shadps4                               # PS4
@@ -71,6 +70,7 @@
   unstable.xemu                         # Xbox
   unstable.xenia-canary                 # Xbox 360
   mednaffe                              # TurboGrafx/Sega Genesis
+  flycast                               # Dreamcast
   #fceux                                # NES
   
   ## Komunikacja
@@ -83,7 +83,7 @@
   github-desktop                        # GitHub       
   vscode-fhs                            # Programowanie
   hugo                                  # Do strony internetowej
-  dotnet-sdk
+  dotnet-sdk                            # .NET SDK do kompilacji modów CS2
   dotnet-runtime
   dotnet-aspnetcore
   gtk3
@@ -126,7 +126,7 @@ programs = {
     obs-studio = { # Dodaj Obs-studio
       enable = true;
       package = pkgs.unstable.obs-studio; # Wersja niestabilna dopóki aitum-multistream nie jest w stabilnej
-      enableVirtualCamera = true;
+      enableVirtualCamera = true;         # Wsparcie wirtualnej kamery
       plugins = with pkgs.unstable.obs-studio-plugins; [ # Lista pluginów
         waveform
         obs-vkcapture

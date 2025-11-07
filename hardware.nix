@@ -31,9 +31,7 @@
   #  })
  # ];
 
-
-
-    ## Nvidia
+  ## Nvidia
   #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta; # Kanał Beta/New-Feature
   #services.xserver.videoDrivers = ["nvidia"];
   #hardware.nvidia = {

@@ -14,7 +14,7 @@
       extraConfig.pipewire."92-low-latency" = { # Niskie opóźnienie
         "context.properties" = {
           "default.clock.rate" = 48000;
-	  #"default.clock.allowed-rates = [ 44100 48000 ];
+          "default.clock.allowed-rates" = [ 44100 48000 ];
           "default.clock.quantum" = 96;
           "default.clock.min-quantum" = 96;
           "default.clock.max-quantum" = 480;
@@ -34,8 +34,8 @@
         }
         ];
         stream.properties = {
-          node.latency = "96/48000";
-          resample.quality = 10;
+          node.latency = "96/48000"; # Ustaw niskie opóźnienie
+          resample.quality = 10; # Najlepsza jakość resamplingu
         };
       };
     };

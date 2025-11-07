@@ -4,7 +4,6 @@
   imports =
     [ # Inne configi do zaimportowania
       ./hardware-configuration.nix
-      ./zerotier.nix
       ./services.nix
       ./vr.nix
       ./programs.nix
@@ -55,7 +54,6 @@
     description = "rabbit";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     #packages = with pkgs; [ # Programy tylko dla użytkownika
-    #  kdePackages.kate
     #];
   };
   users.defaultUserShell = pkgs.zsh;        # Ustaw zsh domyślnie dla wszystkich
@@ -116,19 +114,19 @@
       syntaxHighlighting.enable = true; # Włącz podświetlanie składni
       enableLsColors = true;          # Włącz kolory w ls
       shellAliases = {                # Aliasy komend
-        nswitch = "tldr --update && sudo journalctl --vacuum-time=7d && nh os switch -a -f '<nixpkgs/nixos>'";
-        nboot = "tldr --update && sudo journalctl --vacuum-time=7d && nh os boot -a -f '<nixpkgs/nixos>'";
-        nref = "sudo nix-channel --update -v";
-        nrep = "sudo nix-channel --repair";
-        ntest = "nix-shell -p";
-        nup = "tldr --update && sudo journalctl --vacuum-time=7d && nref && nboot";
-        nlive = "tldr --update && sudo journalctl --vacuum-time=7d && nref && nswitch";
-        game = "sudo /run/current-system/sw/bin/sh -c 'echo high > /sys/class/drm/card1/device/power_dpm_force_performance_level'";
-        pbot = "/home/rabbit/Dokumenty/STREAM/PhantomBot/launch.sh";
-        errors = "sudo journalctl --vacuum-time=7d && journalctl -p 3";
-        kimsufi = "ssh debian@54.38.195.168";
-        zero = "sudo zerotier-cli";
-        zero-fix = "sudo route add -host 255.255.255.255 dev ztks575eoa && route -n && sudo zerotier-cli status";
+        nswitch = "tldr --update && sudo journalctl --vacuum-time=7d && nh os switch -a -f '<nixpkgs/nixos>'";  # nowa generacja systemu na żywo
+        nboot = "tldr --update && sudo journalctl --vacuum-time=7d && nh os boot -a -f '<nixpkgs/nixos>'";      # nowa generacja systemu po restarcie
+        nref = "sudo nix-channel --update -v";  # odświeżenie kanałów nixos
+        nrep = "sudo nix-channel --repair";     # naprawienie kanałów nixos
+        ntest = "nix-shell -p";                 # testowanie pakietów w izolowanym środowisku
+        nup = "tldr --update && sudo journalctl --vacuum-time=7d && nref && nboot"; # aktualizacja systemu po restarcie
+        nlive = "tldr --update && sudo journalctl --vacuum-time=7d && nref && nswitch"; # aktualizacja systemu na żywo
+        game = "sudo /run/current-system/sw/bin/sh -c 'echo high > /sys/class/drm/card1/device/power_dpm_force_performance_level'"; # włącz tryb wysokiej wydajności grafiki przed graniem. Robi to samo co gamemode
+        pbot = "/home/rabbit/Dokumenty/STREAM/PhantomBot/launch.sh"; # uruchomienie bota do streamu
+        errors = "sudo journalctl --vacuum-time=7d && journalctl -p 3"; # pokaż błędy z dziennika systemowego
+        kimsufi = "ssh debian@54.38.195.168";   # połączenie z serwerem
+        zero = "sudo zerotier-cli";             # skrót do zarządzania ZeroTier
+        zero-fix = "sudo route add -host 255.255.255.255 dev ztks575eoa && route -n && sudo zerotier-cli status"; # naprawa server browser LAN w grach
       };
       histSize = 30000; # Rozmiar historii
       ohMyZsh = { # Włącz i ustaw oh-my-zsh
