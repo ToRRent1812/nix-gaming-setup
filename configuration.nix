@@ -114,13 +114,13 @@
       syntaxHighlighting.enable = true; # Włącz podświetlanie składni
       enableLsColors = true;          # Włącz kolory w ls
       shellAliases = {                # Aliasy komend
-        nswitch = "tldr --update && sudo journalctl --vacuum-time=7d && nh os switch -a -f '<nixpkgs/nixos>'";  # nowa generacja systemu na żywo
-        nboot = "tldr --update && sudo journalctl --vacuum-time=7d && nh os boot -a -f '<nixpkgs/nixos>'";      # nowa generacja systemu po restarcie
-        nref = "sudo nix-channel --update -v";  # odświeżenie kanałów nixos
-        nrep = "sudo nix-channel --repair";     # naprawienie kanałów nixos
-        ntest = "nix-shell -p";                 # testowanie pakietów w izolowanym środowisku
-        nup = "tldr --update && sudo journalctl --vacuum-time=7d && nref && nboot"; # aktualizacja systemu po restarcie
-        nlive = "tldr --update && sudo journalctl --vacuum-time=7d && nref && nswitch"; # aktualizacja systemu na żywo
+        nix-switch = "tldr --update && sudo journalctl --vacuum-time=7d && nh os switch -a -f '<nixpkgs/nixos>'";  # nowa generacja systemu na żywo
+        nix-boot = "tldr --update && sudo journalctl --vacuum-time=7d && nh os boot -a -f '<nixpkgs/nixos>'";      # nowa generacja systemu po restarcie
+        nix-ref = "sudo nix-channel --update -v";  # odświeżenie kanałów nixos
+        nix-rep = "sudo nix-channel --repair";     # naprawienie kanałów nixos
+        nix-test = "nix-shell -p";                 # testowanie pakietów w izolowanym środowisku
+        nix-up = "tldr --update && sudo journalctl --vacuum-time=7d && nix-ref && nix-boot"; # aktualizacja systemu po restarcie
+        nix-live = "tldr --update && sudo journalctl --vacuum-time=7d && nix-ref && nix-switch"; # aktualizacja systemu na żywo
         game = "sudo /run/current-system/sw/bin/sh -c 'echo high > /sys/class/drm/card1/device/power_dpm_force_performance_level'"; # włącz tryb wysokiej wydajności grafiki przed graniem. Robi to samo co gamemode
         pbot = "/home/rabbit/Dokumenty/STREAM/PhantomBot/launch.sh"; # uruchomienie bota do streamu
         errors = "sudo journalctl --vacuum-time=7d && journalctl -p 3"; # pokaż błędy z dziennika systemowego

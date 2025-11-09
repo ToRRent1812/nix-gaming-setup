@@ -43,6 +43,6 @@
   powerManagement = {
         enable = true;
         powertop.enable = true;
-        cpuFreqGovernor = "ondemand"; #power, performance, ondemand
+        cpuFreqGovernor = "performance"; #power, performance, ondemand
   };
 }

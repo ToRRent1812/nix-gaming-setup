@@ -20,7 +20,7 @@
     };
   };
 
-  # Wymień stabilny mesa na kanał niestabilny. Wymusi bardzo długą kompilację!!!
+   #Wymień stabilny mesa na kanał niestabilny. Wymusi bardzo długą kompilację!!!
   #nixpkgs.overlays = [
   #  (self: super: {
   #    mesa = pkgs.unstable.mesa;
@@ -29,7 +29,7 @@
   #    libglvnd = pkgs.unstable.libglvnd;
   #    driversi686Linux.mesa = pkgs.unstable.driversi686Linux.mesa;
   #  })
- # ];
+  #];
 
   ## Nvidia
   #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta; # Kanał Beta/New-Feature
