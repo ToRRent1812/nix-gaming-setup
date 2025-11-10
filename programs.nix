@@ -19,7 +19,7 @@
   qdirstat                              # Analiza dysków
   tealdeer                              # tldr w konsoli
   fastfetch                             # Informacje o systemie w terminalu
-  gparted                               # Partycjonowanie dysków
+  #gparted                               # Partycjonowanie dysków
   qpwgraph                              # Wizualny edytor połączeń dźwiękowych
   google-fonts                          # Paczka czcionek od Google Fonts
   p7zip                                 # Terminalowy 7-zip potrzebny do Gamma-launcher
@@ -42,14 +42,13 @@
   unstable.faugus-launcher		          # Faugus Launcher
   #unstable.nexusmods-app-unfree        # Nexus Mods do modowania gier
   unstable.r2modman                     # Mod manager do Risk Of Rain 2 i innych
-  wineWowPackages.stable                # wine stabilny
 
   ## Twitch/Youtube
-  cameractrls-gtk4                      # Zarządzanie kamerą
+  (cameractrls.override {withGtk = 3;}) # Zarządzanie kamerą
   chatterino2                           # Czytam chat
   (audacious.override {withPlugins = true;}) # Muzyka
   easyeffects                           # Efekty mikrofonu/słuchawek
-  scrcpy                                # Przechwyć obraz z telefonu
+  #scrcpy                                # Przechwyć obraz z telefonu
   sqlitebrowser                         # Przeglądaj bazę sqlite
 
   ## Gry
