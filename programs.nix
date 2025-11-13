@@ -34,6 +34,7 @@
 
   ## Narzędzia do gier
   mangohud                              # FPSY, temperatury
+  unstable.wineWowPackages.staging	# najnowszy wine-staging
   unstable.protonup-qt                  # Aktualizacje proton-ge
   winetricks                            # Do instalacji bibliotek w wine
   unstable.lutris                       # Najnowszy lutris
@@ -119,7 +120,7 @@ programs = {
 
     gamescope = { # Włącz/wyłącz Gamescope
       enable = true;
-      capSysNice = true;
+      capSysNice = false;
     };
 
     obs-studio = { # Dodaj Obs-studio
