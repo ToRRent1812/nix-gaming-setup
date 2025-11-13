@@ -24,7 +24,6 @@
 	    options = [
       "defaults"
       "noatime"
-      "errors=remount-ro"
       "nofail"
       "rw"
       "users"
@@ -39,8 +38,7 @@
     };
 
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/e5c6ac95-c755-413c-8069-c5f29237c6d3";
-	      options = [ "defaults" "discard=once" ]; } #Nie zajeżdzaj mocno SSD gdy jest na nim swap
+    [ { device = "/dev/disk/by-uuid/e5c6ac95-c755-413c-8069-c5f29237c6d3"; }
     ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking

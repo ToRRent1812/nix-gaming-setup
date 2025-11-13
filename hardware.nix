@@ -48,6 +48,8 @@
     };
   };
 
+  services.fstrim.enable = true; # Włącz trim dla SSD
+
   # Aktywuj wirtualizację dla virt managera
   virtualisation = {
     libvirtd.enable = true;

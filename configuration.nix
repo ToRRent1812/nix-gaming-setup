@@ -52,7 +52,7 @@
   users.users.rabbit = {
     isNormalUser = true;
     description = "rabbit";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "users" ];
     #packages = with pkgs; [ # Programy tylko dla użytkownika
     #];
   };
@@ -122,9 +122,7 @@
         nix-up = "tldr --update && sudo journalctl --vacuum-time=7d && nix-ref && nix-boot"; # aktualizacja systemu po restarcie
         nix-live = "tldr --update && sudo journalctl --vacuum-time=7d && nix-ref && nix-switch"; # aktualizacja systemu na żywo
         game = "sudo /run/current-system/sw/bin/sh -c 'echo high > /sys/class/drm/card1/device/power_dpm_force_performance_level'"; # włącz tryb wysokiej wydajności grafiki przed graniem. Robi to samo co gamemode
-        pbot = "/home/rabbit/Dokumenty/STREAM/PhantomBot/launch.sh"; # uruchomienie bota do streamu
         errors = "sudo journalctl --vacuum-time=7d && journalctl -p 3"; # pokaż błędy z dziennika systemowego
-        kimsufi = "ssh debian@54.38.195.168";   # połączenie z serwerem
         zero = "sudo zerotier-cli";             # skrót do zarządzania ZeroTier
         zero-fix = "sudo route add -host 255.255.255.255 dev ztks575eoa && route -n && sudo zerotier-cli status"; # naprawa server browser LAN w grach
       };

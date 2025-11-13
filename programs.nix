@@ -130,6 +130,7 @@ programs = {
       plugins = with pkgs.unstable.obs-studio-plugins; [ # Lista pluginów
         waveform
         obs-vkcapture
+        obs-markdown
         obs-tuna
         obs-text-pthread
         obs-pipewire-audio-capture
