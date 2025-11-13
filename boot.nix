@@ -24,7 +24,11 @@
       "vm.dirty_writeback_centisecs" = 1500;
       "vm.min_free_kbytes" = 59030;
     };
-    supportedFilesystems.exfat = true;            # Obsługa exFAT którą potrzebuje do pendrive
+    supportedFilesystems = { 
+      exfat=true; # Obsługa exFAT którą potrzebuje do pendrive
+      ntfs=true; 
+    }; # Obsługa NTFS dla fanatyków windowsa
+
   };
 
   # Szybsze zamykanie systemu
@@ -37,7 +41,6 @@
     enable = true;
     algorithm = "lz4";
   };
-  services.swapspace.enable = true; #Automatyczne zarządzanie partycjami SWAP gdy są konieczne
 
   # Profil zasilania CPU
   powerManagement = {
