@@ -24,11 +24,7 @@
       "vm.dirty_writeback_centisecs" = 1500;
       "vm.min_free_kbytes" = 59030;
     };
-    supportedFilesystems = { 
-      exfat=true; # Obsługa exFAT którą potrzebuje do pendrive
-      ntfs=true; 
-    }; # Obsługa NTFS dla fanatyków windowsa
-
+    supportedFilesystems = ["exfat" "ntfs" "btrfs"];
   };
 
   # Szybsze zamykanie systemu
