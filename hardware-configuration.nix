@@ -21,20 +21,18 @@
   fileSystems."/mnt/nvme" =
     { device = "/dev/disk/by-uuid/dae26402-a2d8-46a9-bce1-bc1e62dd5dec";
       fsType = "ext4";
-	    options = [
-      "defaults"
-      "noatime"
-      "nofail"
-      "rw"
-      "users"
-      "exec"
-      ];
     };
 
   fileSystems."/boot" =
     { device = "/dev/disk/by-uuid/0A3C-2CC6";
       fsType = "vfat";
       options = [ "fmask=0077" "dmask=0077" ];
+    };
+
+  fileSystems."/bin" =
+    { device = "/usr/bin";
+      fsType = "none";
+      options = [ "bind" ];
     };
 
   swapDevices =
@@ -47,6 +45,8 @@
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
   # networking.interfaces.enp34s0.useDHCP = lib.mkDefault true;
+  # networking.interfaces.virbr0.useDHCP = lib.mkDefault true;
+  # networking.interfaces.ztks575eoa.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
