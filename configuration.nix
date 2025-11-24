@@ -97,7 +97,7 @@
     nh = { #Rozszerzenie komend nixos
       enable = true;
       clean.enable = true; # Włącz automatyczne czyszczenie
-      clean.extraArgs = "--keep 5"; # Utrzymaj ostanie 5 generacji na dysku
+      clean.extraArgs = "--keep 4"; # Utrzymaj ostanie 4 generacje na dysku
     };
 
     appimage.enable = true;           # Włącz wsparcie AppImage

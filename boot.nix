@@ -6,7 +6,7 @@
     loader.systemd-boot.enable = true;            # Użyj systemd-boot
     loader.efi.canTouchEfiVariables = true;       # Pozwól na modyfikację zmiennych EFI
     tmp.cleanOnBoot = true;                       # Czyszczenie TMP przy ładowaniu systemu
-    kernelPackages = pkgs.linuxPackages_zen;      # Jądro ZEN dla graczy
+    kernelPackages = pkgs.linuxPackages_xanmod_latest;      # Jądro Xanmod dla graczy
     extraModulePackages = [ config.boot.kernelPackages.vhba ]; # Dodatkowe moduły/sterowniki jądra
     kernelParams = [ "nohibernate" "usbcore.autosuspend=600" "mitigations=off" ]; # Parametry jądra
     kernel.sysctl = {
@@ -24,7 +24,7 @@
       "vm.dirty_writeback_centisecs" = 1500;
       "vm.min_free_kbytes" = 59030;
     };
-    supportedFilesystems = ["exfat" "ntfs" "btrfs"];
+    supportedFilesystems = ["exfat" "btrfs"];
   };
 
   # Szybsze zamykanie systemu

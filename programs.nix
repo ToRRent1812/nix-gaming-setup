@@ -61,7 +61,7 @@
   (tetrio-desktop.override {withTetrioPlus = true;}) # Tetris io
 
   ## Emulacja
-  rpcs3                                 # PS3
+  unstable.rpcs3                        # PS3
   duckstation                           # PS1
   unstable.pcsx2                        # PS2
   shadps4                               # PS4
