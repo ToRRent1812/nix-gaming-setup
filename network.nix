@@ -13,4 +13,8 @@
     nameservers = [ "1.1.1.1" "1.0.0.1" ]; # Cloudflare DNS
   };
   systemd.services.NetworkManager-wait-online.enable = false; # Nie czekaj na internet by uruchomić system
+
+  services.zerotierone = {
+      enable = true;                # Włącz usługę ZeroTier do grania z kolegami po LAN
+    };
 }

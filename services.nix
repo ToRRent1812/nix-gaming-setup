@@ -19,10 +19,12 @@
 # Usługi
   services = {
     fwupd.enable = true;          # Włącz wsparcie aktualizatora firmware
+    swapspace.enable = true;      # Dynamicznie powiększa i pomniejsza swap gdy jest potrzeba
     xserver.enable = false;       # Włącz sesję X11. Wyłącz by zostawić tylko Wayland
     passSecretService.package = pkgs.libsecret; # Wsparcie dla menedżera haseł, wymagane do niektórych programów
     passSecretService.enable = true;  # Włącz wsparcie dla menedżera haseł
     envfs.enable = true;              # Wsparcie dla envfs, wymagane do niektórych programów
+    #lact.enable = true;          # Dodaj menedżer zarządzania AMD, musi być też włączony hardware.amdgpu.overdrive.enable
 
     xserver.xkb = { # Polska klawiatura
       layout = "pl";

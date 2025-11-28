@@ -14,13 +14,13 @@
   papirus-icon-theme                    # Ikony systemowe
   onlyoffice-desktopeditors             # Pakiet biurowy
   poedit                                # Program do tłumaczeń
-  qbittorrent                           # Torrenty czasem się przydają
   rustdesk                              # Microsoft India Support
   qdirstat                              # Analiza dysków
   tealdeer                              # tldr w konsoli
   fastfetch                             # Informacje o systemie w terminalu
   #gparted                               # Partycjonowanie dysków
   qpwgraph                              # Wizualny edytor połączeń dźwiękowych
+  qbittorrent
   google-fonts                          # Paczka czcionek od Google Fonts
   p7zip                                 # Terminalowy 7-zip potrzebny do Gamma-launcher
   unrar                                 # Terminalowy rar/unrar potrzebny do Gamma-launcher
@@ -78,7 +78,6 @@
   (discord.override { withOpenASAR = true; withVencord = true; }) # Discord z vencord i openasar
   discord-rpc                           # Rich presence
   caprine                               # Messenger
-  teamspeak3                            # TS3
 
   ## Programowanie + biblioteki do kdenlive AI
   github-desktop                        # GitHub       

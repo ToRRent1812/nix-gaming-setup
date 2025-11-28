@@ -7,7 +7,10 @@
     #xone.enable = true;              # Włącz wsparcie xboxowego dongla usb
     steam-hardware.enable = true;     # Włącz wsparcie dla kontrolerów steamowych + Valve index
 
-    amdgpu.opencl.enable = true;      # Włącz OpenCL dla AMD GPU
+    amdgpu = {
+      opencl.enable = true;      # Włącz OpenCL dla AMD GPU
+      #overdrive.enable = true;   # Pozwól na Overclock potrzebny przez program LACT
+    };
 
     graphics = {
         enable = true;                # Aktywuj akcelerację w aplikacjach 64 bitowych

@@ -24,7 +24,6 @@
     };
     permittedInsecurePackages = [ 
       "openssl-1.1.1w"          # Któryś program, chyba rustdesk tego tymczasowo wymaga
-      "qtwebengine-5.15.19"
     ];
   };
 
@@ -114,15 +113,15 @@
       syntaxHighlighting.enable = true; # Włącz podświetlanie składni
       enableLsColors = true;          # Włącz kolory w ls
       shellAliases = {                # Aliasy komend
-        nix-switch = "tldr --update && sudo journalctl --vacuum-time=7d && nh os switch -a -f '<nixpkgs/nixos>'";  # nowa generacja systemu na żywo
-        nix-boot = "tldr --update && sudo journalctl --vacuum-time=7d && nh os boot -a -f '<nixpkgs/nixos>'";      # nowa generacja systemu po restarcie
+        nix-switch = "tldr --update && sudo journalctl --vacuum-time=2d && nh os switch -a -f '<nixpkgs/nixos>'";  # nowa generacja systemu na żywo
+        nix-boot = "tldr --update && sudo journalctl --vacuum-time=2d && nh os boot -a -f '<nixpkgs/nixos>'";      # nowa generacja systemu po restarcie
         nix-ref = "sudo nix-channel --update -v";  # odświeżenie kanałów nixos
         nix-rep = "sudo nix-channel --repair";     # naprawienie kanałów nixos
         nix-test = "nix-shell -p";                 # testowanie pakietów w izolowanym środowisku
-        nix-up = "tldr --update && sudo journalctl --vacuum-time=7d && nix-ref && nix-boot"; # aktualizacja systemu po restarcie
-        nix-live = "tldr --update && sudo journalctl --vacuum-time=7d && nix-ref && nix-switch"; # aktualizacja systemu na żywo
+        nix-up = "tldr --update && sudo journalctl --vacuum-time=2d && nix-ref && nix-boot"; # aktualizacja systemu po restarcie
+        nix-live = "tldr --update && sudo journalctl --vacuum-time=2d && nix-ref && nix-switch"; # aktualizacja systemu na żywo
         game = "sudo /run/current-system/sw/bin/sh -c 'echo high > /sys/class/drm/card1/device/power_dpm_force_performance_level'"; # włącz tryb wysokiej wydajności grafiki przed graniem. Robi to samo co gamemode
-        errors = "sudo journalctl --vacuum-time=7d && journalctl -p 3"; # pokaż błędy z dziennika systemowego
+        errors = "sudo journalctl --vacuum-time=2d && journalctl -p 3"; # pokaż błędy z dziennika systemowego
         zero = "sudo zerotier-cli";             # skrót do zarządzania ZeroTier
         zero-fix = "sudo route add -host 255.255.255.255 dev ztks575eoa && route -n && sudo zerotier-cli status"; # naprawa server browser LAN w grach
       };
@@ -145,5 +144,5 @@
   # sudo nix-channel --add https://channels.nixos.org/nixos-25.11 nixos
   # Zmiana stateVersion spowoduje że config może być niekompatybilny z nową wersją i będzie wymagać manualnej interwencji. Nie musisz zmieniać stateVersion by zaktualizować Nixos.
   # Jeżeli będziesz po latach instalować NixOS z tym configiem, to koniecznie użyj iso z tą samą wersją jako start.
-  system.stateVersion = "25.05";
+  system.stateVersion = "25.11";
 }
