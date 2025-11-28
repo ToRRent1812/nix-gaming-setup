@@ -11,7 +11,7 @@
   hunspellDicts.en_US                   # Angielski słownik
   sublime4                              # Najlepszy edytor tekstu
   adwaita-icon-theme                    # Ikony dla aplikacji GTK4, np. do lutrisa
-  epapirus-icon-theme                   # Ikony systemowe
+  papirus-icon-theme                    # Ikony systemowe
   onlyoffice-desktopeditors             # Pakiet biurowy
   poedit                                # Program do tłumaczeń
   qbittorrent                           # Torrenty czasem się przydają
@@ -58,12 +58,13 @@
   unstable.fheroes2                     # Heroes 2
   nur.repos.ataraxiasjel.gamma-launcher # Stalker Gamma
   urbanterror                           # Urban Terror
+  #sm64ex                               # PCtowy port Super Mario 64
   (tetrio-desktop.override {withTetrioPlus = true;}) # Tetris io
 
   ## Emulacja
   unstable.rpcs3                        # PS3
   duckstation                           # PS1
-  unstable.pcsx2                        # PS2
+  pcsx2                                 # PS2
   shadps4                               # PS4
   dolphin-emu                           # GameCube i Wii
   ppsspp                                # PSP 
@@ -125,9 +126,9 @@ programs = {
 
     obs-studio = { # Dodaj Obs-studio
       enable = true;
-      package = pkgs.unstable.obs-studio; # Wersja niestabilna dopóki aitum-multistream nie jest w stabilnej
+      package = pkgs.obs-studio; # Wersja niestabilna dopóki aitum-multistream nie jest w stabilnej
       enableVirtualCamera = true;         # Wsparcie wirtualnej kamery
-      plugins = with pkgs.unstable.obs-studio-plugins; [ # Lista pluginów
+      plugins = with pkgs.obs-studio-plugins; [ # Lista pluginów
         waveform
         obs-vkcapture
         obs-markdown

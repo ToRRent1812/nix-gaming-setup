@@ -24,7 +24,7 @@
     };
     permittedInsecurePackages = [ 
       "openssl-1.1.1w"          # Któryś program, chyba rustdesk tego tymczasowo wymaga
-      "mbedtls-2.28.10"
+      "qtwebengine-5.15.19"
     ];
   };
 
@@ -142,7 +142,7 @@
   };
 
   # Wersja startowa systemu. By dokonać dużej aktualizacji, wpisz w terminal.
-  # sudo nix-channel --add https://channels.nixos.org/nixos-25.05 nixos
+  # sudo nix-channel --add https://channels.nixos.org/nixos-25.11 nixos
   # Zmiana stateVersion spowoduje że config może być niekompatybilny z nową wersją i będzie wymagać manualnej interwencji. Nie musisz zmieniać stateVersion by zaktualizować Nixos.
   # Jeżeli będziesz po latach instalować NixOS z tym configiem, to koniecznie użyj iso z tą samą wersją jako start.
   system.stateVersion = "25.05";
