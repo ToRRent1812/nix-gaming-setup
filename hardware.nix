@@ -4,7 +4,7 @@
 # Sprzęt
   hardware = {
     xpadneo.enable = true;            # Włącz sterownik xinput
-    #xone.enable = true;              # Włącz wsparcie xboxowego dongla usb
+    #xone.enable = true;              # Włącz wsparcie xboxowego dongla usb, nie można łączyć z xpadneo
     steam-hardware.enable = true;     # Włącz wsparcie dla kontrolerów steamowych + Valve index
 
     amdgpu = {

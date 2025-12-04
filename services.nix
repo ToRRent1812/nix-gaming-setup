@@ -1,21 +1,5 @@
 { config, lib, pkgs, ... }:
 {
-  systemd.services.nixChannelUpdate = { # Cotygodniowe odświeżenie serwera nix
-    description = "Weekly refresh";
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = [ "${pkgs.nix}/bin/nix-channel --update" ];
-    };
-  };
-
-  systemd.timers.nixChannelUpdate = { # Tygodniowa aktywacja powyższego odświeżenia
-    description = "Weekly refresh";
-    wantedBy = [ "timers.target" ];
-    timerConfig = {
-      OnCalendar = "weekly";
-      Persistent = true;
-    };
-  };
 # Usługi
   services = {
     fwupd.enable = true;          # Włącz wsparcie aktualizatora firmware
@@ -37,7 +21,6 @@
       autoLogin.user = "rabbit";  # Użytkownik do automatycznego logowania
       autoLogin.enable = true;    # Włącz automatyczne logowanie
       defaultSession = "plasma";  # Plasma-wayland jako default
-
     };
     desktopManager.plasma6.enable = true; # Plasma 6
 
@@ -139,20 +122,6 @@ SUBSYSTEMS=="usb", ATTRS{idVendor}=="045e", ATTRS{idProduct}=="02ea", MODE="0660
 SUBSYSTEM=="usb", ATTRS{idVendor}=="045e", ATTRS{idProduct}=="02fd", MODE="0660", TAG+="uaccess"
 KERNEL=="hidraw*", KERNELS=="*045e:02fd*", MODE="0660", TAG+="uaccess"
 SUBSYSTEMS=="input", ATTRS{name}=="Xbox Wireless Controller", MODE="0660", TAG+="uaccess"
-# Hori RAP4
-KERNEL=="hidraw*", ATTRS{idVendor}=="0f0d", ATTRS{idProduct}=="008a", MODE="0660", TAG+="uaccess"
-# Hori HORIPAD 4 FPS
-KERNEL=="hidraw*", ATTRS{idVendor}=="0f0d", ATTRS{idProduct}=="0055", MODE="0660", TAG+="uaccess"
-# Hori HORIPAD 4 FPS Plus
-KERNEL=="hidraw*", ATTRS{idVendor}=="0f0d", ATTRS{idProduct}=="0066", MODE="0660", TAG+="uaccess"
-# Hori HORIPAD S; USB
-KERNEL=="hidraw*", ATTRS{idVendor}=="0f0d", ATTRS{idProduct}=="00c1", MODE="0660", TAG+="uaccess"
-# Hori Pokkén Tournament DX Pro Pad for Nintendo Switch; USB
-KERNEL=="hidraw*", ATTRS{idVendor}=="0f0d", ATTRS{idProduct}=="0092", MODE="0660", TAG+="uaccess"
-# Hori Nintendo Switch HORIPAD Wired Controller; USB
-KERNEL=="hidraw*", ATTRS{idVendor}=="0f0d", ATTRS{idProduct}=="00c1", MODE="0660", TAG+="uaccess"
-# Hori Wireless HORIPAD for Steam; USB
-KERNEL=="hidraw*", ATTRS{idVendor}=="0f0d", ATTRS{idProduct}=="01ab", MODE="0660", TAG+="uaccess"
     '';
   };
 }

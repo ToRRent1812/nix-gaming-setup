@@ -24,6 +24,7 @@
     };
     permittedInsecurePackages = [ 
       "openssl-1.1.1w"          # Któryś program, chyba rustdesk tego tymczasowo wymaga
+      "qtwebengine-5.15.19"     # TeamSpeak3 tego wymaga
     ];
   };
 
@@ -59,7 +60,7 @@
   users.groups.libvirtd.members = ["rabbit"]; # Dodaj mnie do wirtualizacji
 
   # Włącz wsparcie Flatpak, portal XDG oraz dodaj Flathub
-  /*services.flatpak.enable = true;
+  services.flatpak.enable = true;
   fonts.fontDir.enable = true;
   systemd.services.flatpak-repo = {
     wantedBy = [ "multi-user.target" ];
@@ -67,7 +68,7 @@
     script = ''
       flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo && flatpak --user override --filesystem=host
     '';
-  };*/
+  };
 
   # Aktywuj portale XDG
   xdg.portal = {
@@ -95,8 +96,6 @@
 
     nh = { #Rozszerzenie komend nixos
       enable = true;
-      clean.enable = true; # Włącz automatyczne czyszczenie
-      clean.extraArgs = "--keep 4"; # Utrzymaj ostanie 4 generacje na dysku
     };
 
     appimage.enable = true;           # Włącz wsparcie AppImage
@@ -113,13 +112,13 @@
       syntaxHighlighting.enable = true; # Włącz podświetlanie składni
       enableLsColors = true;          # Włącz kolory w ls
       shellAliases = {                # Aliasy komend
-        nix-switch = "tldr --update && sudo journalctl --vacuum-time=2d && nh os switch -a -f '<nixpkgs/nixos>'";  # nowa generacja systemu na żywo
-        nix-boot = "tldr --update && sudo journalctl --vacuum-time=2d && nh os boot -a -f '<nixpkgs/nixos>'";      # nowa generacja systemu po restarcie
+        nix-switch = "nh clean all --keep 3 && nh os switch -f '<nixpkgs/nixos>'";  # nowa generacja systemu na żywo
+        nix-boot = "nh clean all --keep 3 && nh os boot -f '<nixpkgs/nixos>'";      # nowa generacja systemu po restarcie
         nix-ref = "sudo nix-channel --update -v";  # odświeżenie kanałów nixos
         nix-rep = "sudo nix-channel --repair";     # naprawienie kanałów nixos
         nix-test = "nix-shell -p";                 # testowanie pakietów w izolowanym środowisku
-        nix-up = "tldr --update && sudo journalctl --vacuum-time=2d && nix-ref && nix-boot"; # aktualizacja systemu po restarcie
-        nix-live = "tldr --update && sudo journalctl --vacuum-time=2d && nix-ref && nix-switch"; # aktualizacja systemu na żywo
+        nix-up = "tldr --update && sudo journalctl --vacuum-time=2d && nix-ref && nh clean all --keep 3 && nix-boot"; # aktualizacja systemu po restarcie
+        nix-live = "tldr --update && sudo journalctl --vacuum-time=2d && nix-ref && nh clean all --keep 3 && nix-switch"; # aktualizacja systemu na żywo
         game = "sudo /run/current-system/sw/bin/sh -c 'echo high > /sys/class/drm/card1/device/power_dpm_force_performance_level'"; # włącz tryb wysokiej wydajności grafiki przed graniem. Robi to samo co gamemode
         errors = "sudo journalctl --vacuum-time=2d && journalctl -p 3"; # pokaż błędy z dziennika systemowego
         zero = "sudo zerotier-cli";             # skrót do zarządzania ZeroTier
@@ -140,9 +139,12 @@
     };
   };
 
-  # Wersja startowa systemu. By dokonać dużej aktualizacji, wpisz w terminal.
+  # Wersja na której zainstalowałeś nixos.
+  # By dokonać dużej aktualizacji, wpisz w terminal.
   # sudo nix-channel --add https://channels.nixos.org/nixos-25.11 nixos
-  # Zmiana stateVersion spowoduje że config może być niekompatybilny z nową wersją i będzie wymagać manualnej interwencji. Nie musisz zmieniać stateVersion by zaktualizować Nixos.
-  # Jeżeli będziesz po latach instalować NixOS z tym configiem, to koniecznie użyj iso z tą samą wersją jako start.
+  # 25.11 zastąp nową wersją
+  # Zmiana stateVersion poniżej spowoduje że config może być niekompatybilny i będzie wymagać manualnej interwencji.
+  # Nie musisz zmieniać stateVersion by zaktualizować Nixos!
+  # Jeżeli będziesz po latach instalować NixOS z tym configiem, to pamiętaj by zmienić stateVersion zgodnie z wersją iso której użyłeś
   system.stateVersion = "25.11";
 }

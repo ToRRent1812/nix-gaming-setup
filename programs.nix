@@ -21,9 +21,8 @@
   #gparted                               # Partycjonowanie dysków
   qpwgraph                              # Wizualny edytor połączeń dźwiękowych
   qbittorrent
+  #winboat                              # Windows apki w Linux
   google-fonts                          # Paczka czcionek od Google Fonts
-  p7zip                                 # Terminalowy 7-zip potrzebny do Gamma-launcher
-  unrar                                 # Terminalowy rar/unrar potrzebny do Gamma-launcher
 
   ## KDE Plazma
   kdePackages.kdenlive                  # Do Edycji wideo  
@@ -33,16 +32,17 @@
   #darkly                               # Motyw Darkly
 
   ## Narzędzia do gier
+  sidequest
   mangohud                              # FPSY, temperatury
-  unstable.wineWowPackages.staging	# najnowszy wine-staging
+  unstable.wineWowPackages.staging      # najnowszy wine-staging
   unstable.protonup-qt                  # Aktualizacje proton-ge
   winetricks                            # Do instalacji bibliotek w wine
   unstable.lutris                       # Najnowszy lutris
   unstable.heroic                       # Najnowszy Heroic Games Launcher
   adwsteamgtk                           # Upiększ steam
-  unstable.faugus-launcher		          # Faugus Launcher
+  unstable.faugus-launcher		        # Faugus Launcher
   #unstable.nexusmods-app-unfree        # Nexus Mods do modowania gier
-  unstable.r2modman                     # Mod manager do Risk Of Rain 2 i innych
+  unstable.gale                         # Mod Manager dla wielu gier indie(Thunderstore)
 
   ## Twitch/Youtube
   (cameractrls.override {withGtk = 3;}) # Zarządzanie kamerą
@@ -56,7 +56,6 @@
   unstable.vcmi                         # Heroes 3
   bs-manager                            # Beat Saber Launcher
   unstable.fheroes2                     # Heroes 2
-  nur.repos.ataraxiasjel.gamma-launcher # Stalker Gamma
   urbanterror                           # Urban Terror
   #sm64ex                               # PCtowy port Super Mario 64
   (tetrio-desktop.override {withTetrioPlus = true;}) # Tetris io
@@ -78,6 +77,7 @@
   (discord.override { withOpenASAR = true; withVencord = true; }) # Discord z vencord i openasar
   discord-rpc                           # Rich presence
   caprine                               # Messenger
+  teamspeak3                            # TS3
 
   ## Programowanie + biblioteki do kdenlive AI
   github-desktop                        # GitHub       

@@ -16,5 +16,6 @@
 
   services.zerotierone = {
       enable = true;                # Włącz usługę ZeroTier do grania z kolegami po LAN
+      #joinNetworks = [ "123456" ]; # ID sieci ZeroTier
     };
 }

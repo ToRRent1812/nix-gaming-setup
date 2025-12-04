@@ -6,9 +6,10 @@
     loader.systemd-boot.enable = true;            # Użyj systemd-boot
     loader.efi.canTouchEfiVariables = true;       # Pozwól na modyfikację zmiennych EFI
     tmp.cleanOnBoot = true;                       # Czyszczenie TMP przy ładowaniu systemu
-    kernelPackages = pkgs.linuxPackages_zen;      # Jądro Zen dla graczy
-    extraModulePackages = [ config.boot.kernelPackages.vhba ]; # Dodatkowe moduły/sterowniki jądra
-    kernelParams = [ "nohibernate" "usbcore.autosuspend=600" "mitigations=off" ]; # Parametry jądra
+    kernelPackages = pkgs.linuxPackages_lqx;   # Jądro systemu https://nixos.wiki/wiki/Linux_kernel
+    extraModulePackages = with config.boot.kernelPackages; [ vhba ]; # Dodatkowe moduły/sterowniki jądra
+    kernelModules = ["vhba"];
+    kernelParams = [ "nohibernate" "usbcore.autosuspend=3600" "mitigations=off" ]; # Parametry jądra
     kernel.sysctl = {
       "kernel.split_lock_mitigate" = 0;           # Wyłącza split_lock, rekomendowane do gier
       "vm.max_map_count" = 2147483642;            # Jak w SteamOS, niemal maksymalny możliwy map_count
@@ -24,7 +25,7 @@
       "vm.dirty_writeback_centisecs" = 1500;
       "vm.min_free_kbytes" = 59030;
     };
-    supportedFilesystems = ["exfat" "btrfs"];
+    supportedFilesystems = ["exfat"];
   };
 
   # Szybsze zamykanie systemu
