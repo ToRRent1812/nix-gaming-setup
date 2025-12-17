@@ -6,7 +6,7 @@
     loader.systemd-boot.enable = true;            # Użyj systemd-boot
     loader.efi.canTouchEfiVariables = true;       # Pozwól na modyfikację zmiennych EFI
     tmp.cleanOnBoot = true;                       # Czyszczenie TMP przy ładowaniu systemu
-    kernelPackages = pkgs.linuxPackages_lqx;   # Jądro systemu https://nixos.wiki/wiki/Linux_kernel
+    kernelPackages = pkgs.linuxPackages_latest;   # Jądro systemu https://nixos.wiki/wiki/Linux_kernel
     extraModulePackages = with config.boot.kernelPackages; [ vhba ]; # Dodatkowe moduły/sterowniki jądra
     kernelModules = ["vhba"];
     kernelParams = [ "nohibernate" "usbcore.autosuspend=3600" "mitigations=off" ]; # Parametry jądra

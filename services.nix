@@ -8,7 +8,7 @@
     passSecretService.package = pkgs.libsecret; # Wsparcie dla menedżera haseł, wymagane do niektórych programów
     passSecretService.enable = true;  # Włącz wsparcie dla menedżera haseł
     envfs.enable = true;              # Wsparcie dla envfs, wymagane do niektórych programów
-    #lact.enable = true;          # Dodaj menedżer zarządzania AMD, musi być też włączony hardware.amdgpu.overdrive.enable
+    lact.enable = true;          # Dodaj menedżer zarządzania AMD, musi być też włączony hardware.amdgpu.overdrive.enable
 
     xserver.xkb = { # Polska klawiatura
       layout = "pl";

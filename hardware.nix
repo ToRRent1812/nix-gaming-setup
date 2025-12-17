@@ -9,7 +9,7 @@
 
     amdgpu = {
       opencl.enable = true;      # Włącz OpenCL dla AMD GPU
-      #overdrive.enable = true;   # Pozwól na Overclock potrzebny przez program LACT
+      overdrive.enable = true;   # Pozwól na Overclock potrzebny przez program LACT
     };
 
     graphics = {
@@ -55,6 +55,7 @@
 
   # Aktywuj wirtualizację dla virt managera
   virtualisation = {
+    waydroid.enable = false;     # Android na linuxie
     libvirtd.enable = true;
     spiceUSBRedirection.enable = true;
     docker.enable = false;

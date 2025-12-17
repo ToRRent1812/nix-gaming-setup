@@ -29,6 +29,9 @@
   nur.repos.shadowrz.klassy-qt6         # Dekoracje okien Klassy
   avidemux                              # Przycinanie filmów
   haruna                                # Oglądanie filmów
+  #deadbeef-with-plugins
+  (audacious.override {withPlugins = true;}) # Muzyka
+  rsgain
   #darkly                               # Motyw Darkly
 
   ## Narzędzia do gier
@@ -40,14 +43,13 @@
   unstable.lutris                       # Najnowszy lutris
   unstable.heroic                       # Najnowszy Heroic Games Launcher
   adwsteamgtk                           # Upiększ steam
-  unstable.faugus-launcher		        # Faugus Launcher
+  unstable.faugus-launcher              # Faugus Launcher
   #unstable.nexusmods-app-unfree        # Nexus Mods do modowania gier
-  unstable.gale                         # Mod Manager dla wielu gier indie(Thunderstore)
+  gale                                  # Mod Manager dla wielu gier indie(Thunderstore)
 
   ## Twitch/Youtube
   (cameractrls.override {withGtk = 3;}) # Zarządzanie kamerą
   chatterino2                           # Czytam chat
-  (audacious.override {withPlugins = true;}) # Muzyka
   easyeffects                           # Efekty mikrofonu/słuchawek
   #scrcpy                                # Przechwyć obraz z telefonu
   sqlitebrowser                         # Przeglądaj bazę sqlite
@@ -130,10 +132,8 @@ programs = {
       plugins = with pkgs.obs-studio-plugins; [ # Lista pluginów
         waveform
         obs-vkcapture
-        obs-markdown
         obs-tuna
         obs-text-pthread
-        obs-pipewire-audio-capture
         obs-gstreamer
         obs-aitum-multistream
         ];

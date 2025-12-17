@@ -23,8 +23,8 @@
       nur = import (fetchTarball "https://github.com/nix-community/NUR/archive/main.tar.gz") { inherit pkgs; };
     };
     permittedInsecurePackages = [ 
-      "openssl-1.1.1w"          # Któryś program, chyba rustdesk tego tymczasowo wymaga
-      "qtwebengine-5.15.19"     # TeamSpeak3 tego wymaga
+      "openssl-1.1.1w"          # rustdesk tego tymczasowo wymaga
+      "qtwebengine-5.15.19"     # Teamspeak 3 tego tymczasowo wymaga
     ];
   };
 
