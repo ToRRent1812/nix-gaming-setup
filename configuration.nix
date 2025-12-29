@@ -24,7 +24,6 @@
     };
     permittedInsecurePackages = [ 
       "openssl-1.1.1w"          # rustdesk tego tymczasowo wymaga
-      "qtwebengine-5.15.19"     # Teamspeak 3 tego tymczasowo wymaga
     ];
   };
 

@@ -79,7 +79,6 @@
   (discord.override { withOpenASAR = true; withVencord = true; }) # Discord z vencord i openasar
   discord-rpc                           # Rich presence
   caprine                               # Messenger
-  teamspeak3                            # TS3
 
   ## Programowanie + biblioteki do kdenlive AI
   github-desktop                        # GitHub       
