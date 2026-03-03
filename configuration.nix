@@ -21,9 +21,10 @@
     {
       unstable = import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz") { config = config.nixpkgs.config; };
       nur = import (fetchTarball "https://github.com/nix-community/NUR/archive/main.tar.gz") { inherit pkgs; };
+      #previous = import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/refs/tags/25.05.tar.gz") { config = config.nixpkgs.config; };
     };
     permittedInsecurePackages = [ 
-      "openssl-1.1.1w"          # rustdesk tego tymczasowo wymaga
+      "openssl-1.1.1w"          # Któryś program, chyba rustdesk tego tymczasowo wymaga
     ];
   };
 
@@ -90,8 +91,6 @@
     };
 
     nix-ld.enable = true; # Pozwala ładować statyczne bibloteki. Użyteczne jak ściągasz gotowe linuxowe gry i programy.
-    nix-ld.libraries = with pkgs; [
-    ];
 
     nh = { #Rozszerzenie komend nixos
       enable = true;
@@ -118,7 +117,6 @@
         nix-test = "nix-shell -p";                 # testowanie pakietów w izolowanym środowisku
         nix-up = "tldr --update && sudo journalctl --vacuum-time=2d && nix-ref && nh clean all --keep 3 && nix-boot"; # aktualizacja systemu po restarcie
         nix-live = "tldr --update && sudo journalctl --vacuum-time=2d && nix-ref && nh clean all --keep 3 && nix-switch"; # aktualizacja systemu na żywo
-        game = "sudo /run/current-system/sw/bin/sh -c 'echo high > /sys/class/drm/card1/device/power_dpm_force_performance_level'"; # włącz tryb wysokiej wydajności grafiki przed graniem. Robi to samo co gamemode
         errors = "sudo journalctl --vacuum-time=2d && journalctl -p 3"; # pokaż błędy z dziennika systemowego
         zero = "sudo zerotier-cli";             # skrót do zarządzania ZeroTier
         zero-fix = "sudo route add -host 255.255.255.255 dev ztks575eoa && route -n && sudo zerotier-cli status"; # naprawa server browser LAN w grach
@@ -145,5 +143,5 @@
   # Zmiana stateVersion poniżej spowoduje że config może być niekompatybilny i będzie wymagać manualnej interwencji.
   # Nie musisz zmieniać stateVersion by zaktualizować Nixos!
   # Jeżeli będziesz po latach instalować NixOS z tym configiem, to pamiętaj by zmienić stateVersion zgodnie z wersją iso której użyłeś
-  system.stateVersion = "25.11";
+  system.stateVersion = "25.05";
 }

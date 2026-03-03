@@ -10,7 +10,7 @@
   hunspellDicts.pl-pl                   # Polski słownik
   hunspellDicts.en_US                   # Angielski słownik
   sublime4                              # Najlepszy edytor tekstu
-  adwaita-icon-theme                    # Ikony dla aplikacji GTK4, np. do lutrisa
+  #adwaita-icon-theme                    # Ikony dla aplikacji GTK4, np. do lutrisa
   papirus-icon-theme                    # Ikony systemowe
   onlyoffice-desktopeditors             # Pakiet biurowy
   poedit                                # Program do tłumaczeń
@@ -23,28 +23,27 @@
   qbittorrent
   #winboat                              # Windows apki w Linux
   google-fonts                          # Paczka czcionek od Google Fonts
+  unrar
 
   ## KDE Plazma
   kdePackages.kdenlive                  # Do Edycji wideo  
-  nur.repos.shadowrz.klassy-qt6         # Dekoracje okien Klassy
+  unstable.klassy                   # Dekoracje okien Klassy
   avidemux                              # Przycinanie filmów
   haruna                                # Oglądanie filmów
-  #deadbeef-with-plugins
-  (audacious.override {withPlugins = true;}) # Muzyka
-  rsgain
+  (audacious.override { withPlugins = true; }) # Muzyka
+
   #darkly                               # Motyw Darkly
 
   ## Narzędzia do gier
   sidequest
   mangohud                              # FPSY, temperatury
-  unstable.wineWowPackages.staging      # najnowszy wine-staging
-  unstable.protonup-qt                  # Aktualizacje proton-ge
+  unstable.wineWow64Packages.staging      # najnowszy wine-staging
+  unstable.protonplus
   winetricks                            # Do instalacji bibliotek w wine
   unstable.lutris                       # Najnowszy lutris
   unstable.heroic                       # Najnowszy Heroic Games Launcher
   adwsteamgtk                           # Upiększ steam
   unstable.faugus-launcher              # Faugus Launcher
-  #unstable.nexusmods-app-unfree        # Nexus Mods do modowania gier
   gale                                  # Mod Manager dla wielu gier indie(Thunderstore)
 
   ## Twitch/Youtube
@@ -55,12 +54,10 @@
   sqlitebrowser                         # Przeglądaj bazę sqlite
 
   ## Gry
-  unstable.vcmi                         # Heroes 3
   bs-manager                            # Beat Saber Launcher
   unstable.fheroes2                     # Heroes 2
-  urbanterror                           # Urban Terror
-  #sm64ex                               # PCtowy port Super Mario 64
-  (tetrio-desktop.override {withTetrioPlus = true;}) # Tetris io
+  librewolf                             # Do Tetr.io
+  urbanterror
 
   ## Emulacja
   unstable.rpcs3                        # PS3
@@ -73,15 +70,18 @@
   unstable.xenia-canary                 # Xbox 360
   mednaffe                              # TurboGrafx/Sega Genesis
   flycast                               # Dreamcast
-  #fceux                                # NES
+  fceux                                 # NES
+  mame                                  # Arcade
   
   ## Komunikacja
   (discord.override { withOpenASAR = true; withVencord = true; }) # Discord z vencord i openasar
   discord-rpc                           # Rich presence
   caprine                               # Messenger
+  element-desktop
 
   ## Programowanie + biblioteki do kdenlive AI
   github-desktop                        # GitHub       
+  flatpak-builder
   vscode-fhs                            # Programowanie
   hugo                                  # Do strony internetowej
   dotnet-sdk                            # .NET SDK do kompilacji modów CS2
@@ -116,7 +116,6 @@ programs = {
       dedicatedServer.openFirewall = true; # Otwórz porty dla Source Dedicated Server
       localNetworkGameTransfers.openFirewall = true; # Otwórz porty dla Steam Local Network Game Transfers
       extest.enable = true; # Tłumacz kliknięcia X11 na wayland dla steaminput
-      #extraCompatPackages = [ pkgs.unstable.proton-ge-bin ]; # Dodaje auto-aktualizowany proton-ge
     };
 
     gamescope = { # Włącz/wyłącz Gamescope
