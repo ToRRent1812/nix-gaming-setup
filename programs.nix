@@ -10,78 +10,75 @@
   hunspellDicts.pl-pl                   # Polski słownik
   hunspellDicts.en_US                   # Angielski słownik
   sublime4                              # Najlepszy edytor tekstu
-  #adwaita-icon-theme                    # Ikony dla aplikacji GTK4, np. do lutrisa
   papirus-icon-theme                    # Ikony systemowe
   onlyoffice-desktopeditors             # Pakiet biurowy
-  poedit                                # Program do tłumaczeń
+  stable.poedit                         # Program do tłumaczeń
   rustdesk                              # Microsoft India Support
   qdirstat                              # Analiza dysków
   tealdeer                              # tldr w konsoli
   fastfetch                             # Informacje o systemie w terminalu
-  #gparted                               # Partycjonowanie dysków
+  #gparted                              # Partycjonowanie dysków
   qpwgraph                              # Wizualny edytor połączeń dźwiękowych
-  qbittorrent
+  qbittorrent                           # Klient do torrentów
   #winboat                              # Windows apki w Linux
   google-fonts                          # Paczka czcionek od Google Fonts
   unrar
+  gearlever
 
   ## KDE Plazma
-  kdePackages.kdenlive                  # Do Edycji wideo  
-  unstable.klassy                   # Dekoracje okien Klassy
+  kdePackages.kdenlive                  # Do Edycji wideo
+  klassy                                # Dekoracje okien Klassy
   avidemux                              # Przycinanie filmów
   haruna                                # Oglądanie filmów
   (audacious.override { withPlugins = true; }) # Muzyka
-
-  #darkly                               # Motyw Darkly
+  handbrake                             # Konwerter filmów
 
   ## Narzędzia do gier
   sidequest
   mangohud                              # FPSY, temperatury
-  unstable.wineWow64Packages.staging      # najnowszy wine-staging
-  unstable.protonplus
+  wineWow64Packages.staging             # najnowszy wine-staging
+  protonplus                            # Aktualizacje proton-ge
   winetricks                            # Do instalacji bibliotek w wine
-  unstable.lutris                       # Najnowszy lutris
-  unstable.heroic                       # Najnowszy Heroic Games Launcher
-  adwsteamgtk                           # Upiększ steam
-  unstable.faugus-launcher              # Faugus Launcher
+  lutris                                # Najnowszy lutris
+  heroic                                # Najnowszy Heroic Games Launcher
+  faugus-launcher                       # Faugus Launcher
   gale                                  # Mod Manager dla wielu gier indie(Thunderstore)
+  wayvr
 
   ## Twitch/Youtube
   (cameractrls.override {withGtk = 3;}) # Zarządzanie kamerą
   chatterino2                           # Czytam chat
   easyeffects                           # Efekty mikrofonu/słuchawek
-  #scrcpy                                # Przechwyć obraz z telefonu
+  #scrcpy                               # Przechwyć obraz z telefonu
   sqlitebrowser                         # Przeglądaj bazę sqlite
 
   ## Gry
   bs-manager                            # Beat Saber Launcher
-  unstable.fheroes2                     # Heroes 2
-  librewolf                             # Do Tetr.io
-  urbanterror
+  fheroes2                              # Heroes 2
+  vcmi                                  # VCMI
+  urbanterror                           # Urban Terror
 
   ## Emulacja
-  unstable.rpcs3                        # PS3
-  duckstation                           # PS1
+  rpcs3                                 # PS3
   pcsx2                                 # PS2
   shadps4                               # PS4
   dolphin-emu                           # GameCube i Wii
   ppsspp                                # PSP 
-  unstable.xemu                         # Xbox
-  unstable.xenia-canary                 # Xbox 360
+  xemu                                  # Xbox
+  xenia-canary                          # Xbox 360
   mednaffe                              # TurboGrafx/Sega Genesis
-  flycast                               # Dreamcast
-  fceux                                 # NES
+  stable.flycast                        # Dreamcast
+  nestopia-ue                           # NES
   mame                                  # Arcade
   
   ## Komunikacja
   (discord.override { withOpenASAR = true; withVencord = true; }) # Discord z vencord i openasar
   discord-rpc                           # Rich presence
   caprine                               # Messenger
-  element-desktop
 
   ## Programowanie + biblioteki do kdenlive AI
   github-desktop                        # GitHub       
-  flatpak-builder
+  flatpak-builder                       # Do tworzenia flatpaków
   vscode-fhs                            # Programowanie
   hugo                                  # Do strony internetowej
   dotnet-sdk                            # .NET SDK do kompilacji modów CS2
@@ -93,8 +90,14 @@
         openai-whisper
         srt
         torch
+        torchvision
+        pillow
+        hydra-core
+        iopath
+        sam2
+        opencv4
       ]))
-  ];
+];
 
 environment.plasma6.excludePackages = with pkgs.kdePackages; [ #Usuwanie zbędnych aplikacji domyślnych z plazmy
   kdepim-runtime
@@ -118,22 +121,21 @@ programs = {
       extest.enable = true; # Tłumacz kliknięcia X11 na wayland dla steaminput
     };
 
-    gamescope = { # Włącz/wyłącz Gamescope
-      enable = true;
-      capSysNice = false;
+    gamescope = {
+      enable = true;                      # Dodaj/usuń Gamescope
+      capSysNice = false;                 # Zezwól na wysoki priorytet
     };
 
-    obs-studio = { # Dodaj Obs-studio
-      enable = true;
-      package = pkgs.obs-studio; # Wersja niestabilna dopóki aitum-multistream nie jest w stabilnej
+    obs-studio = {
+      enable = true;                      # Dodaj obs-studio do systemu
       enableVirtualCamera = true;         # Wsparcie wirtualnej kamery
       plugins = with pkgs.obs-studio-plugins; [ # Lista pluginów
         waveform
         obs-vkcapture
         obs-tuna
         obs-text-pthread
-        obs-gstreamer
-        obs-aitum-multistream
+        obs-retro-effects
+        obs-stroke-glow-shadow
         ];
     };
 };

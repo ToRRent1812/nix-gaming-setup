@@ -3,13 +3,24 @@
 {
 # Bootloader
   boot = {
-    loader.systemd-boot.enable = true;            # Użyj systemd-boot
     loader.efi.canTouchEfiVariables = true;       # Pozwól na modyfikację zmiennych EFI
+    loader.limine.enable = true;            # Użyj Limine
+    loader.limine.efiSupport = true;
+    loader.limine.style.wallpapers = [pkgs.nixos-artwork.wallpapers.simple-dark-gray-bottom.gnomeFilePath];
+    loader.limine.extraConfig = "timeout:3"
     tmp.cleanOnBoot = true;                       # Czyszczenie TMP przy ładowaniu systemu
     kernelPackages = pkgs.linuxPackages_zen;   # Jądro systemu https://nixos.wiki/wiki/Linux_kernel
     extraModulePackages = with config.boot.kernelPackages; [ vhba ]; # Dodatkowe moduły/sterowniki jądra
     kernelModules = ["vhba"];
     kernelParams = [ "nohibernate" "usbcore.autosuspend=3600" "mitigations=off" ]; # Parametry jądra
+    kernelPatches = [{
+      name = "amdgpu-ignore-ctx-privileges";
+      patch = pkgs.fetchpatch {
+        name = "cap_sys_nice_begone.patch";
+        url = "https://github.com/Frogging-Family/community-patches/raw/master/linux61-tkg/cap_sys_nice_begone.mypatch";
+        hash = "sha256-Y3a0+x2xvHsfLax/uwycdJf3xLxvVfkfDVqjkxNaYEo=";
+      };
+    }];
     kernel.sysctl = {
       "kernel.split_lock_mitigate" = 0;           # Wyłącza split_lock, rekomendowane do gier
       "vm.max_map_count" = 2147483642;            # Jak w SteamOS, niemal maksymalny możliwy map_count

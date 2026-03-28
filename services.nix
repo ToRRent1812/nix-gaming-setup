@@ -10,6 +10,13 @@
     envfs.enable = true;              # Wsparcie dla envfs, wymagane do niektórych programów
     lact.enable = true;          # Dodaj menedżer zarządzania AMD, musi być też włączony hardware.amdgpu.overdrive.enable
 
+    # Wysoki priorytet gier dzięki ananicy od cachyos
+    ananicy = {
+      enable = true;
+      package = pkgs.ananicy-cpp;
+      rulesProvider = pkgs.ananicy-rules-cachyos;
+    };
+
     xserver.xkb = { # Polska klawiatura
       layout = "pl";
       variant = "";

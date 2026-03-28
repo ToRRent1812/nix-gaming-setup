@@ -19,12 +19,11 @@
     allowUnfree = true;         # Programy nie-wolnościowe (steam, discord, itp)
     packageOverrides = pkgs:
     {
-      unstable = import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz") { config = config.nixpkgs.config; };
       nur = import (fetchTarball "https://github.com/nix-community/NUR/archive/main.tar.gz") { inherit pkgs; };
-      #previous = import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/refs/tags/25.05.tar.gz") { config = config.nixpkgs.config; };
+      stable = import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/refs/tags/25.11.tar.gz") { config = config.nixpkgs.config; };
     };
     permittedInsecurePackages = [ 
-      "openssl-1.1.1w"          # Któryś program, chyba rustdesk tego tymczasowo wymaga
+      "openssl-1.1.1w"          # sublime wymaga
     ];
   };
 
@@ -120,6 +119,7 @@
         errors = "sudo journalctl --vacuum-time=2d && journalctl -p 3"; # pokaż błędy z dziennika systemowego
         zero = "sudo zerotier-cli";             # skrót do zarządzania ZeroTier
         zero-fix = "sudo route add -host 255.255.255.255 dev ztks575eoa && route -n && sudo zerotier-cli status"; # naprawa server browser LAN w grach
+        lowercase="find . -depth | while read -r f; do mv \"$f\" \"\$(dirname \"$f\")/\$(basename \"$f\" | tr 'A-Z' 'a-z')\"; done"
       };
       histSize = 30000; # Rozmiar historii
       ohMyZsh = { # Włącz i ustaw oh-my-zsh
@@ -143,5 +143,5 @@
   # Zmiana stateVersion poniżej spowoduje że config może być niekompatybilny i będzie wymagać manualnej interwencji.
   # Nie musisz zmieniać stateVersion by zaktualizować Nixos!
   # Jeżeli będziesz po latach instalować NixOS z tym configiem, to pamiętaj by zmienić stateVersion zgodnie z wersją iso której użyłeś
-  system.stateVersion = "25.05";
+  system.stateVersion = "25.11";
 }
