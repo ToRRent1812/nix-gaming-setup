@@ -20,10 +20,11 @@
   #gparted                              # Partycjonowanie dysków
   qpwgraph                              # Wizualny edytor połączeń dźwiękowych
   qbittorrent                           # Klient do torrentów
-  #winboat                              # Windows apki w Linux
   google-fonts                          # Paczka czcionek od Google Fonts
-  unrar
-  gearlever
+  unrar                                 # Wypakowywanie archiwów .rar
+  gearlever                             # Pomocnik plików appimage
+  kitty                                 # Terminal ze wsparciem GPU
+  btrfs-assistant                       # Asystent dysków btrfs
 
   ## KDE Plazma
   kdePackages.kdenlive                  # Do Edycji wideo
@@ -31,7 +32,6 @@
   avidemux                              # Przycinanie filmów
   haruna                                # Oglądanie filmów
   (audacious.override { withPlugins = true; }) # Muzyka
-  handbrake                             # Konwerter filmów
 
   ## Narzędzia do gier
   sidequest
@@ -43,7 +43,7 @@
   heroic                                # Najnowszy Heroic Games Launcher
   faugus-launcher                       # Faugus Launcher
   gale                                  # Mod Manager dla wielu gier indie(Thunderstore)
-  wayvr
+  wayvr                                 # Dashboard VR
 
   ## Twitch/Youtube
   (cameractrls.override {withGtk = 3;}) # Zarządzanie kamerą
@@ -80,7 +80,7 @@
   github-desktop                        # GitHub       
   flatpak-builder                       # Do tworzenia flatpaków
   vscode-fhs                            # Programowanie
-  hugo                                  # Do strony internetowej
+  stable.hugo                           # Do strony internetowej
   dotnet-sdk                            # .NET SDK do kompilacji modów CS2
   dotnet-runtime
   dotnet-aspnetcore
@@ -112,13 +112,14 @@ programs = {
     kdeconnect.enable = true;           # Dodaj KDE Connect
     firefox.enable = false;             # Wyłącz Instalację Firefox
     thunderbird.enable = true;          # Dodaj mozilla thunderbird
+    direnv.enable = true;               # Do programowania w vscode
     steam = { 
-      enable = true;                    # Włącz steam
-      protontricks.enable = true;       # dodaj protontricks
-      remotePlay.openFirewall = true;   # Steam Remote Play
-      dedicatedServer.openFirewall = true; # Otwórz porty dla Source Dedicated Server
-      localNetworkGameTransfers.openFirewall = true; # Otwórz porty dla Steam Local Network Game Transfers
-      extest.enable = true; # Tłumacz kliknięcia X11 na wayland dla steaminput
+      enable = true;                                  # Włącz steam
+      protontricks.enable = true;                     # dodaj protontricks
+      remotePlay.openFirewall = true;                 # Steam Remote Play
+      dedicatedServer.openFirewall = true;            # Otwórz porty dla Source Dedicated Server
+      localNetworkGameTransfers.openFirewall = true;  # Otwórz porty dla Steam Local Network Game Transfers
+      #extest.enable = true;                           # Tłumacz kliknięcia X11 na wayland dla steaminput
     };
 
     gamescope = {
@@ -131,6 +132,8 @@ programs = {
       enableVirtualCamera = true;         # Wsparcie wirtualnej kamery
       plugins = with pkgs.obs-studio-plugins; [ # Lista pluginów
         waveform
+        input-overlay
+        obs-aitum-multistream
         obs-vkcapture
         obs-tuna
         obs-text-pthread

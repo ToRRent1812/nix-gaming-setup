@@ -3,7 +3,7 @@
 {
 # Sprzęt
   hardware = {
-    #xpadneo.enable = true;            # Włącz sterownik xinput bluetooth
+    #xpadneo.enable = true;           # Włącz sterownik dla bezprzewodowego pada Xbox One
     #xone.enable = true;              # Włącz wsparcie xboxowego dongla usb, nie można łączyć z xpadneo
     steam-hardware.enable = true;     # Włącz wsparcie dla kontrolerów steamowych + Valve index
 
@@ -21,18 +21,9 @@
       enable = false;
       powerOnBoot = true;
     };
-  };
 
-   #Wymień stabilny mesa na kanał niestabilny. Wymusi bardzo długą kompilację!!!
-  #nixpkgs.overlays = [
-  #  (self: super: {
-  #    mesa = pkgs.unstable.mesa;
-  #    mesa_drivers = pkgs.unstable.mesa_drivers;
-  #    libGL = pkgs.unstable.libGL;
-  #    libglvnd = pkgs.unstable.libglvnd;
-  #    driversi686Linux.mesa = pkgs.unstable.driversi686Linux.mesa;
-  #  })
-  #];
+    uinput.enable = true; # Włącza tworzenie wirtualnych urządzeń, użyteczne do makro
+  };
 
   ## Nvidia
   #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta; # Kanał Beta/New-Feature
@@ -43,7 +34,7 @@
     #nvidiaSettings = true;
   #};
 
-  # Dodaj wsparcie podpinania pendrive (LOL)
+  # Dodaj wsparcie podpinania/odpinania dysków
   services = {
     udisks2 = {
       enable = true;

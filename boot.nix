@@ -4,16 +4,23 @@
 # Bootloader
   boot = {
     loader.efi.canTouchEfiVariables = true;       # Pozwól na modyfikację zmiennych EFI
-    loader.limine.enable = true;            # Użyj Limine
-    loader.limine.efiSupport = true;
-    loader.limine.style.wallpapers = [pkgs.nixos-artwork.wallpapers.simple-dark-gray-bottom.gnomeFilePath];
-    loader.limine.extraConfig = "timeout:3"
+    loader.limine = {
+      enable = true;            # Użyj Limine
+      efiSupport = true;
+      style.wallpapers = [pkgs.nixos-artwork.wallpapers.simple-dark-gray-bottom.gnomeFilePath];
+      extraConfig = "timeout:2";
+      extraEntries = ''
+        /Windows
+          protocol: efi
+          path: uuid(6C50-3788):/EFI/Microsoft/Boot/bootmgfw.efi
+      '';
+    };
     tmp.cleanOnBoot = true;                       # Czyszczenie TMP przy ładowaniu systemu
     kernelPackages = pkgs.linuxPackages_zen;   # Jądro systemu https://nixos.wiki/wiki/Linux_kernel
     extraModulePackages = with config.boot.kernelPackages; [ vhba ]; # Dodatkowe moduły/sterowniki jądra
     kernelModules = ["vhba"];
-    kernelParams = [ "nohibernate" "usbcore.autosuspend=3600" "mitigations=off" ]; # Parametry jądra
-    kernelPatches = [{
+    kernelParams = [ "nohibernate" "usbcore.autosuspend=7200" "mitigations=off" ]; # Parametry jądra
+    kernelPatches = [{ # Tymczasowo patch do VR
       name = "amdgpu-ignore-ctx-privileges";
       patch = pkgs.fetchpatch {
         name = "cap_sys_nice_begone.patch";
@@ -36,7 +43,7 @@
       "vm.dirty_writeback_centisecs" = 1500;
       "vm.min_free_kbytes" = 59030;
     };
-    supportedFilesystems = ["exfat"];
+    supportedFilesystems = ["exfat" "btrfs"];
   };
 
   # Szybsze zamykanie systemu

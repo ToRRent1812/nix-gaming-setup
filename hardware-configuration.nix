@@ -16,11 +16,13 @@
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/bf27599e-ce5b-4124-b59c-bcb069f72fb3";
       fsType = "ext4";
+      options = [ "noatime" ];
     };
 
   fileSystems."/mnt/nvme" =
-    { device = "/dev/disk/by-uuid/dae26402-a2d8-46a9-bce1-bc1e62dd5dec";
-      fsType = "ext4";
+    { device = "/dev/disk/by-uuid/0182f1cb-ba94-484c-bfeb-04ac2575a4c1";
+      fsType = "btrfs";
+      options = [ "compress=zstd" "noatime" ];
     };
 
   fileSystems."/boot" =

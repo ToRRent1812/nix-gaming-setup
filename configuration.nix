@@ -29,11 +29,6 @@
 
   # Automatyczne czyszczenie staroci
   nix = {
-    #gc = {
-    #  automatic = true;
-    #  dates = "daily";
-    #  options = "--delete-older-than 14d"; # Usuwaj generacje starsze niż 14 dni
-    #};
     settings = {
       auto-optimise-store = true;
       experimental-features = [ "nix-command" ];
@@ -52,8 +47,6 @@
     isNormalUser = true;
     description = "rabbit";
     extraGroups = [ "networkmanager" "wheel" "docker" "users" ];
-    #packages = with pkgs; [ # Programy tylko dla użytkownika
-    #];
   };
   users.defaultUserShell = pkgs.zsh;        # Ustaw zsh domyślnie dla wszystkich
   users.groups.libvirtd.members = ["rabbit"]; # Dodaj mnie do wirtualizacji
@@ -77,7 +70,7 @@
 
   xdg.terminal-exec = {
     enable = true;
-    settings.default = ["konsole.desktop"]; # Ustaw konsole jako domyślny terminal
+    settings.default = ["kitty.desktop"]; # Ustaw kitty jako domyślny terminal
   };
 
   # Wbudowane w nixos moduły programów i ich opcje. Programy użytkowe są w programs.nix
@@ -109,17 +102,17 @@
       syntaxHighlighting.enable = true; # Włącz podświetlanie składni
       enableLsColors = true;          # Włącz kolory w ls
       shellAliases = {                # Aliasy komend
-        nix-switch = "nh clean all --keep 3 && nh os switch -f '<nixpkgs/nixos>'";  # nowa generacja systemu na żywo
-        nix-boot = "nh clean all --keep 3 && nh os boot -f '<nixpkgs/nixos>'";      # nowa generacja systemu po restarcie
+        nix-switch = "nh clean all --keep 2 && nh os switch -f '<nixpkgs/nixos>'";  # nowa generacja systemu na żywo
+        nix-boot = "nh clean all --keep 2 && nh os boot -f '<nixpkgs/nixos>'";      # nowa generacja systemu po restarcie
         nix-ref = "sudo nix-channel --update -v";  # odświeżenie kanałów nixos
         nix-rep = "sudo nix-channel --repair";     # naprawienie kanałów nixos
         nix-test = "nix-shell -p";                 # testowanie pakietów w izolowanym środowisku
-        nix-up = "tldr --update && sudo journalctl --vacuum-time=2d && nix-ref && nh clean all --keep 3 && nix-boot"; # aktualizacja systemu po restarcie
-        nix-live = "tldr --update && sudo journalctl --vacuum-time=2d && nix-ref && nh clean all --keep 3 && nix-switch"; # aktualizacja systemu na żywo
+        nix-up = "tldr --update && flatpak update -y && sudo journalctl --vacuum-time=2d && nix-ref && nh clean all --keep 2 && nix-boot"; # aktualizacja systemu po restarcie
+        nix-live = "tldr --update && flatpak update -y && sudo journalctl --vacuum-time=2d && nix-ref && nh clean all --keep 2 && nix-switch"; # aktualizacja systemu na żywo
         errors = "sudo journalctl --vacuum-time=2d && journalctl -p 3"; # pokaż błędy z dziennika systemowego
         zero = "sudo zerotier-cli";             # skrót do zarządzania ZeroTier
         zero-fix = "sudo route add -host 255.255.255.255 dev ztks575eoa && route -n && sudo zerotier-cli status"; # naprawa server browser LAN w grach
-        lowercase="find . -depth | while read -r f; do mv \"$f\" \"\$(dirname \"$f\")/\$(basename \"$f\" | tr 'A-Z' 'a-z')\"; done"
+        lowercase="find . -depth | while read -r f; do mv \"$f\" \"\$(dirname \"$f\")/\$(basename \"$f\" | tr 'A-Z' 'a-z')\"; done";
       };
       histSize = 30000; # Rozmiar historii
       ohMyZsh = { # Włącz i ustaw oh-my-zsh
@@ -143,5 +136,5 @@
   # Zmiana stateVersion poniżej spowoduje że config może być niekompatybilny i będzie wymagać manualnej interwencji.
   # Nie musisz zmieniać stateVersion by zaktualizować Nixos!
   # Jeżeli będziesz po latach instalować NixOS z tym configiem, to pamiętaj by zmienić stateVersion zgodnie z wersją iso której użyłeś
-  system.stateVersion = "25.11";
+  system.stateVersion = "25.05";
 }
