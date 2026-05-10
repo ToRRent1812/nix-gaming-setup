@@ -31,11 +31,11 @@
       options = [ "fmask=0077" "dmask=0077" ];
     };
 
-  fileSystems."/bin" =
-    { device = "/usr/bin";
-      fsType = "none";
-      options = [ "bind" ];
-    };
+  #fileSystems."/bin" =
+  #  { device = "/usr/bin";
+  #    fsType = "none";
+  #    options = [ "bind" ];
+  #  };
 
   swapDevices =
     [ { device = "/dev/disk/by-uuid/e5c6ac95-c755-413c-8069-c5f29237c6d3";

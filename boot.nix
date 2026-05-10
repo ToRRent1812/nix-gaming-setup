@@ -1,6 +1,9 @@
 { config, lib, pkgs, ... }:
 
 {
+## Przypinam 6.19.12 zen dopóki nie wyjdzie 7.1 albo 7.2
+    nixpkgs.overlays = [
+    (final: prev: { linuxPackages_zen = pkgs.pinnedkernel.linuxPackages_zen;})];
 # Bootloader
   boot = {
     loader.efi.canTouchEfiVariables = true;       # Pozwól na modyfikację zmiennych EFI
@@ -12,15 +15,15 @@
       extraEntries = ''
         /Windows
           protocol: efi
-          path: uuid(6C50-3788):/EFI/Microsoft/Boot/bootmgfw.efi
+          path: uuid(9b4c23ad-8c11-4ace-a1f5-0bc00d75acc5):/EFI/Microsoft/Boot/bootmgfw.efi
       '';
     };
     tmp.cleanOnBoot = true;                       # Czyszczenie TMP przy ładowaniu systemu
     kernelPackages = pkgs.linuxPackages_zen;   # Jądro systemu https://nixos.wiki/wiki/Linux_kernel
     extraModulePackages = with config.boot.kernelPackages; [ vhba ]; # Dodatkowe moduły/sterowniki jądra
     kernelModules = ["vhba"];
-    kernelParams = [ "nohibernate" "usbcore.autosuspend=7200" "mitigations=off" ]; # Parametry jądra
-    kernelPatches = [{ # Tymczasowo patch do VR
+    kernelParams = [ "nohibernate" "usbcore.autosuspend=-1" "mitigations=off" "nmi_watchdog=0" "nowatchdog" "transparent_hugepage=never" "audit=0" "split_lock_detect=off" "preempt=full" "loglevel=2" ]; # Parametry jądra
+    kernelPatches = [{
       name = "amdgpu-ignore-ctx-privileges";
       patch = pkgs.fetchpatch {
         name = "cap_sys_nice_begone.patch";
@@ -32,7 +35,7 @@
       "kernel.split_lock_mitigate" = 0;           # Wyłącza split_lock, rekomendowane do gier
       "vm.max_map_count" = 2147483642;            # Jak w SteamOS, niemal maksymalny możliwy map_count
       "vm.swappiness" = 10;                       # Procent aktywnego ruszania w swapie
-      "vm.vfs_cache_pressure" = 75;               # Mniej agresywne czyszczenie cache
+      "vm.vfs_cache_pressure" = 50;               # Mniej agresywne czyszczenie cache
       "kernel.sched_cfs_bandwidth_slice_us" = 3000; # Krótszy czas przydzielania CPU na proces
       "net.ipv4.tcp_fin_timeout" = 5;               # Szybsze zamykanie połączeń TCP
       "vm.dirty_ratio" = 3;                       # To oraz opcje niżej przyspieszają kopiowanie na pendrive

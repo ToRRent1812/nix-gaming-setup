@@ -5,38 +5,41 @@
   environment.systemPackages = with pkgs; [
   
   ## System
-  nur.repos.novel2430.zen-browser-bin   # Przeglądarka  
+  nur.repos.novel2430.zen-browser-bin   # Przeglądarka
   hunspell                              # Sprawdzanie pisowni
   hunspellDicts.pl-pl                   # Polski słownik
   hunspellDicts.en_US                   # Angielski słownik
   sublime4                              # Najlepszy edytor tekstu
   papirus-icon-theme                    # Ikony systemowe
-  onlyoffice-desktopeditors             # Pakiet biurowy
-  stable.poedit                         # Program do tłumaczeń
-  rustdesk                              # Microsoft India Support
+  poedit                                # Program do tłumaczeń
   qdirstat                              # Analiza dysków
   tealdeer                              # tldr w konsoli
   fastfetch                             # Informacje o systemie w terminalu
-  #gparted                              # Partycjonowanie dysków
+  gparted                               # Partycjonowanie dysków
   qpwgraph                              # Wizualny edytor połączeń dźwiękowych
   qbittorrent                           # Klient do torrentów
   google-fonts                          # Paczka czcionek od Google Fonts
   unrar                                 # Wypakowywanie archiwów .rar
+  p7zip                                 # Wypakowywanie archiwów .7z
   gearlever                             # Pomocnik plików appimage
   kitty                                 # Terminal ze wsparciem GPU
   btrfs-assistant                       # Asystent dysków btrfs
+  alsa-utils                            # alsamixer czasem się przydaje
+  waydroid-helper                      # Pomocnik zarządzania waydroidem
+  #distrobox                            # Kontenery dystrybucji
+  #kontainer                            # GUI do Distroboxa
 
   ## KDE Plazma
   kdePackages.kdenlive                  # Do Edycji wideo
   klassy                                # Dekoracje okien Klassy
   avidemux                              # Przycinanie filmów
   haruna                                # Oglądanie filmów
-  (audacious.override { withPlugins = true; }) # Muzyka
+  cantata                               # Klient do słuchania muzyki z MPD
+  kid3-kde                              # Program do tagowania muzyki
 
   ## Narzędzia do gier
   sidequest
   mangohud                              # FPSY, temperatury
-  wineWow64Packages.staging             # najnowszy wine-staging
   protonplus                            # Aktualizacje proton-ge
   winetricks                            # Do instalacji bibliotek w wine
   lutris                                # Najnowszy lutris
@@ -44,43 +47,33 @@
   faugus-launcher                       # Faugus Launcher
   gale                                  # Mod Manager dla wielu gier indie(Thunderstore)
   wayvr                                 # Dashboard VR
+  hydralauncher                         # Do gier z zatoki
 
   ## Twitch/Youtube
   (cameractrls.override {withGtk = 3;}) # Zarządzanie kamerą
   chatterino2                           # Czytam chat
-  easyeffects                           # Efekty mikrofonu/słuchawek
+  #easyeffects                           # Efekty mikrofonu/słuchawek
   #scrcpy                               # Przechwyć obraz z telefonu
   sqlitebrowser                         # Przeglądaj bazę sqlite
 
   ## Gry
   bs-manager                            # Beat Saber Launcher
-  fheroes2                              # Heroes 2
-  vcmi                                  # VCMI
   urbanterror                           # Urban Terror
 
   ## Emulacja
-  rpcs3                                 # PS3
-  pcsx2                                 # PS2
-  shadps4                               # PS4
-  dolphin-emu                           # GameCube i Wii
-  ppsspp                                # PSP 
-  xemu                                  # Xbox
   xenia-canary                          # Xbox 360
-  mednaffe                              # TurboGrafx/Sega Genesis
-  stable.flycast                        # Dreamcast
-  nestopia-ue                           # NES
   mame                                  # Arcade
   
   ## Komunikacja
-  (discord.override { withOpenASAR = true; withVencord = true; }) # Discord z vencord i openasar
+  (discord.override { withOpenASAR = true; withVencord = false; }) # Discord z vencord i openasar
   discord-rpc                           # Rich presence
   caprine                               # Messenger
 
   ## Programowanie + biblioteki do kdenlive AI
-  github-desktop                        # GitHub       
+  stable.github-desktop                        # GitHub
   flatpak-builder                       # Do tworzenia flatpaków
   vscode-fhs                            # Programowanie
-  stable.hugo                           # Do strony internetowej
+  hugo                                  # Do strony internetowej
   dotnet-sdk                            # .NET SDK do kompilacji modów CS2
   dotnet-runtime
   dotnet-aspnetcore
@@ -94,7 +87,7 @@
         pillow
         hydra-core
         iopath
-        sam2
+        #sam2
         opencv4
       ]))
 ];
@@ -113,6 +106,7 @@ programs = {
     firefox.enable = false;             # Wyłącz Instalację Firefox
     thunderbird.enable = true;          # Dodaj mozilla thunderbird
     direnv.enable = true;               # Do programowania w vscode
+    direnv.nix-direnv.enable = true;           # Lepszy direnv do cachowania paczek w shellu
     steam = { 
       enable = true;                                  # Włącz steam
       protontricks.enable = true;                     # dodaj protontricks
@@ -129,7 +123,7 @@ programs = {
 
     obs-studio = {
       enable = true;                      # Dodaj obs-studio do systemu
-      enableVirtualCamera = true;         # Wsparcie wirtualnej kamery
+      enableVirtualCamera = false;         # Wsparcie wirtualnej kamery
       plugins = with pkgs.obs-studio-plugins; [ # Lista pluginów
         waveform
         input-overlay

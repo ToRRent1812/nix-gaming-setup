@@ -3,7 +3,7 @@
 {
 # Sprzęt
   hardware = {
-    #xpadneo.enable = true;           # Włącz sterownik dla bezprzewodowego pada Xbox One
+    #xpadneo.enable = true;           # Włącz wsparcie bluetooth do padów xboxowych
     #xone.enable = true;              # Włącz wsparcie xboxowego dongla usb, nie można łączyć z xpadneo
     steam-hardware.enable = true;     # Włącz wsparcie dla kontrolerów steamowych + Valve index
 
@@ -25,16 +25,7 @@
     uinput.enable = true; # Włącza tworzenie wirtualnych urządzeń, użyteczne do makro
   };
 
-  ## Nvidia
-  #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta; # Kanał Beta/New-Feature
-  #services.xserver.videoDrivers = ["nvidia"];
-  #hardware.nvidia = {
-    #modesetting.enable = true;
-    #open = true;
-    #nvidiaSettings = true;
-  #};
-
-  # Dodaj wsparcie podpinania/odpinania dysków
+  # Dodaj wsparcie podpinania pendrive (LOL)
   services = {
     udisks2 = {
       enable = true;
@@ -46,9 +37,11 @@
 
   # Aktywuj wirtualizację dla virt managera
   virtualisation = {
-    waydroid.enable = false;     # Android na linuxie
+    waydroid.enable = true;     # Android na linuxie
     libvirtd.enable = true;
     spiceUSBRedirection.enable = true;
     docker.enable = false;
+    podman.enable = false; # Do distrobox
+    podman.dockerCompat = false;
   };
 }
