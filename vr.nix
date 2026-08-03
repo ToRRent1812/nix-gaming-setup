@@ -6,12 +6,11 @@
       enable = true;       # Dodaj WiVRN
       openFirewall = true; # Otwórz zaporę sieciową dla WiVRN
       highPriority = true;  # Ustaw wysoki priorytet procesu
-      autoStart = false;    # Nie uruchamiaj automatycznie przy starcie systemu
       steam.importOXRRuntimes = true; # Importuj runtime openXR do Steama
     };
 
     programs.alvr = {
-        enable = true;       # Dodaj ALVR
+        enable = false;       # Dodaj ALVR
         openFirewall = true; # Otwórz zaporę sieciową dla ALVR
     };
 }

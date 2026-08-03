@@ -5,7 +5,8 @@
   environment.systemPackages = with pkgs; [
   
   ## System
-  nur.repos.novel2430.zen-browser-bin   # Przeglądarka
+  linuxConsoleTools
+  busybox
   hunspell                              # Sprawdzanie pisowni
   hunspellDicts.pl-pl                   # Polski słownik
   hunspellDicts.en_US                   # Angielski słownik
@@ -28,6 +29,7 @@
   waydroid-helper                      # Pomocnik zarządzania waydroidem
   #distrobox                            # Kontenery dystrybucji
   #kontainer                            # GUI do Distroboxa
+  rsgain                                # Normalizacja audio
 
   ## KDE Plazma
   kdePackages.qtwebengine               # Do wtyczki pogodowej
@@ -41,11 +43,12 @@
   ## Narzędzia do gier
   sidequest
   mangohud                              # FPSY, temperatury
-  protonplus                            # Aktualizacje proton-ge
+  unstable.protonplus                   # Aktualizacje proton-ge
+  wineWow64Packages.stable
   winetricks                            # Do instalacji bibliotek w wine
   lutris                                # Najnowszy lutris
   heroic                                # Najnowszy Heroic Games Launcher
-  faugus-launcher                       # Faugus Launcher
+  unstable.faugus-launcher              # Faugus Launcher
   gale                                  # Mod Manager dla wielu gier indie(Thunderstore)
   wayvr                                 # Dashboard VR
   hydralauncher                         # Do gier z zatoki
@@ -71,9 +74,9 @@
   caprine                               # Messenger
 
   ## Programowanie + biblioteki do kdenlive AI
-  stable.github-desktop                 # GitHub
+  github-desktop                 # GitHub
   vscode-fhs                            # Programowanie
-  opencode
+  unstable.opencode
   hugo                                  # Do strony internetowej
   dotnet-sdk_10                         # .NET SDK do kompilacji modów CS2
   dotnet-runtime_10
@@ -118,7 +121,7 @@ programs = {
 
     gamescope = {
       enable = true;                      # Dodaj/usuń Gamescope
-      capSysNice = true;                 # Zezwól na wysoki priorytet
+      capSysNice = false;                 # Zezwól na wysoki priorytet
     };
 
     obs-studio = {

@@ -12,6 +12,7 @@
       efiSupport = true;
       style.wallpapers = [pkgs.nixos-artwork.wallpapers.simple-dark-gray-bottom.gnomeFilePath];
       extraConfig = "timeout:2";
+      # Dodaj Windows jako wybór systemu w limine
       extraEntries = ''
         /Windows
           protocol: efi

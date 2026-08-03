@@ -49,6 +49,7 @@
     udev.packages = with pkgs; [
       game-devices-udev-rules
     ];
+    #ACTION=="add", SUBSYSTEM=="input", ENV{ID_INPUT_JOYSTICK}=="1", ENV{ID_VENDOR_ID}=="3537", ENV{ID_MODEL_ID}=="1093", RUN+="/run/current-system/sw/bin/sh -c '/run/current-system/sw/bin/evdev-joystick --e /dev/input/by-id/usb-3537_Controller_00006F64096B22E0-event-joystick --axis 2 --deadzone 16 --fuzz 16; /run/current-system/sw/bin/evdev-joystick --e /dev/input/by-id/usb-3537_Controller_00006F64096B22E0-event-joystick --axis 5 --deadzone 16 --fuzz 16'"
 
     # Zasady udev bym mógł konfigurować mysz i klawiaturę w programie, pierwsze dwie to mchose a7 v2 ultra, trzecia to akko mod 008
     udev.extraRules = ''

@@ -18,13 +18,14 @@
     allowUnfree = true;         # Programy nie-wolnościowe (steam, discord, itp)
     packageOverrides = pkgs:
     {
-      nur = import (fetchTarball "https://github.com/nix-community/NUR/archive/main.tar.gz") { inherit pkgs; };
+      #nur = import (fetchTarball "https://github.com/nix-community/NUR/archive/main.tar.gz") { inherit pkgs; };
       unstable = import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/refs/heads/nixos-unstable.zip") { config = config.nixpkgs.config; };
-      stable = import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/refs/tags/25.11.tar.gz") { config = config.nixpkgs.config; };
+      #stable = import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/refs/tags/25.11.tar.gz") { config = config.nixpkgs.config; };
       #pinnedkernel = import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/f32b0250a690c5aceb0fbe033c896a1a1bc7ca70.tar.gz") { config = config.nixpkgs.config; };
     };
     permittedInsecurePackages = [ 
       "openssl-1.1.1w"          # sublime wymaga
+      "pnpm-10.29.2"            # vesktop
     ];
   };
 
