@@ -5,7 +5,6 @@
   networking = {
     hostName = "nixos";             # Nazwa hosta
     networkmanager.enable = true;   # Włącz internet
-    #wireless.enable = false;        # Włącz wsparcie WIFI
     firewall.enable = false;        # Zapora sieciowa
     enableIPv6 = false;             # Włącz wsparcie IPv6
     dhcpcd.wait = "background";     # Nie czekaj na internet by uruchomić system

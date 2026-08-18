@@ -5,8 +5,9 @@
   environment.systemPackages = with pkgs; [
   
   ## System
-  linuxConsoleTools
-  busybox
+  linuxConsoleTools                     # Użyteczne narzędzia do terminala
+  busybox                               # Użyteczne narzędzia sieciowe do terminala
+  easyeffects                           # 'Ulepszacz' dźwięku
   hunspell                              # Sprawdzanie pisowni
   hunspellDicts.pl-pl                   # Polski słownik
   hunspellDicts.en_US                   # Angielski słownik

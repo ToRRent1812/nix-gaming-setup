@@ -11,6 +11,7 @@
       ./audio.nix
       ./locale.nix
       ./network.nix
+      ./millenium.nix
     ];
 
   # Dodaj opcjonalne repozytoria. By zainstalować program, przed nazwą dopisz unstable. by zainstalować z NUR, dodaj nur.repos.
@@ -24,8 +25,7 @@
       #pinnedkernel = import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/f32b0250a690c5aceb0fbe033c896a1a1bc7ca70.tar.gz") { config = config.nixpkgs.config; };
     };
     permittedInsecurePackages = [ 
-      "openssl-1.1.1w"          # sublime wymaga
-      "pnpm-10.29.2"            # vesktop
+    "openssl-1.1.1w" # sublime wymaga
     ];
   };
 
@@ -113,11 +113,13 @@
         nix-boot = "nh os boot -f '<nixpkgs/nixos>'";      # nowa generacja systemu po restarcie
         nix-ref = "sudo nix-channel --update -v";  # odświeżenie kanałów nixos
         nix-rep = "sudo nix-channel --repair";     # naprawienie kanałów nixos
-        nix-up = "tldr --update && flatpak update -y && sudo journalctl --vacuum-time=2d && nix-ref && nix-boot && nh clean all --keep 4"; # aktualizacja systemu po restarcie
-        nix-live = "tldr --update && flatpak update -y && sudo journalctl --vacuum-time=2d && nix-ref && nix-switch && nh clean all --keep 4"; # aktualizacja systemu na żywo
+        nix-up = "tldr --update && flatpak update -y && sudo journalctl --vacuum-time=2d && nix-ref && nix-boot && nh clean all --keep 3"; # aktualizacja systemu po restarcie
+        nix-live = "tldr --update && flatpak update -y && sudo journalctl --vacuum-time=2d && nix-ref && nix-switch && nh clean all --keep 3"; # aktualizacja systemu na żywo
         errors = "sudo journalctl --vacuum-time=2d && journalctl -p 3"; # pokaż błędy z dziennika systemowego
         zero = "sudo zerotier-cli";             # skrót do zarządzania ZeroTier
         zero-fix = "sudo route add -host 255.255.255.255 dev ztks575eoa && route -n && sudo zerotier-cli status"; # naprawa server browser LAN w grach
+        rbot="cd /home/rabbit/Dokumenty/Github/rabbibot-go && nix-shell --run 'go run ./cmd/rabbibot/' shell.nix";
+        rabbitsync = "nix-shell -p python3 --run \"python3 -m py_compile '$HOME/Dokumenty/Github/rabbibot-go/scripts/update_rankings.py' && python3 '$HOME/Dokumenty/Github/rabbibot-go/scripts/update_rankings.py'\"";
         lowercase="find . -depth | while read -r f; do mv \"$f\" \"\$(dirname \"$f\")/\$(basename \"$f\" | tr 'A-Z' 'a-z')\"; done";
       };
       histSize = 30000; # Rozmiar historii
